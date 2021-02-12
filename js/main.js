@@ -66,7 +66,7 @@ AFRAME.registerComponent('3dmodel', {
     init: function () {
         this.el.addEventListener('model-loaded', e => {
             document.getElementById("carregando").innerHTML = "";
-            alert("Modelo carregado");
+            alert("Modelo carregado")
         })
     }
 });
@@ -78,9 +78,9 @@ function onMoveDevice(event) {
 
     if (acl && acl.x && acl.y && acl.z) {
         lastMotion = {
-            x: acl.x,
-            y: acl.y,
-            z: acl.z,
+            x: Math.round(acl.x * 10) / 10,
+            y: Math.round(acl.y * 10) / 10,
+            z: Math.round(acl.z * 10) / 10,
             time: new Date().getTime()
         }
     }
@@ -124,23 +124,18 @@ AFRAME.registerComponent('camera-data', {
 
             const now = new Date().getTime();
 
-            // const newPosition = {
-            //     x: Math.round((position.x + lastMotion.x) / (now - lastMotion.time) * 10) / 10,
-            //     y: Math.round((position.y + lastMotion.y) / (now - lastMotion.time) * 10) / 10,
-            //     z: Math.round((position.z + lastMotion.z) / (now - lastMotion.time) * 10) / 10
-            // };
+            const newPosition = {
+                x: Math.round(((position.x || 0) + lastMotion.x) / (now - lastMotion.time) * 10) / 10,
+                y: Math.round(((position.y || 0) + lastMotion.y) / (now - lastMotion.time) * 10) / 10,
+                z: Math.round(((position.z || 0) + lastMotion.z) / (now - lastMotion.time) * 10) / 10
+            };
 
-            // this.el.object3D.position.set(newPosition.x, newPosition.y, newPosition.z);
+            this.el.object3D.position.set(newPosition.x, newPosition.y, newPosition.z);
 
-            // document.getElementById("cameraPosition").innerHTML = `
-            //     ${newPosition.x},
-            //     ${newPosition.y},
-            //     ${newPosition.z}
-            // `;
             document.getElementById("cameraPosition").innerHTML = `
-                ${lastMotion.x},
-                ${lastMotion.y},
-                ${lastMotion.z}
+                ${newPosition.x},
+                ${newPosition.y},
+                ${newPosition.z}
             `;
 
             document.getElementById("cameraRotation").innerHTML = `
