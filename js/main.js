@@ -66,7 +66,6 @@ AFRAME.registerComponent('3dmodel', {
     init: function () {
         this.el.addEventListener('model-loaded', e => {
             document.getElementById("carregando").innerHTML = "";
-            alert("Modelo carregado");
         })
     }
 });
@@ -113,7 +112,7 @@ function createParticles() {
     }, 2000);
 }
 
-AFRAME.registerComponent('camera-data', {
+AFRAME.registerComponent('scene-objects', {
     tick: (function () {
         const position = new THREE.Vector3();
         const quaternion = new THREE.Quaternion();
@@ -125,9 +124,9 @@ AFRAME.registerComponent('camera-data', {
             const now = new Date().getTime();
 
             const newPosition = {
-                x: Math.round(((position.x || 0) + lastMotion.x) / (now - lastMotion.time) * 10) / 10,
-                y: Math.round(((position.y || 0) + lastMotion.y) / (now - lastMotion.time) * 10) / 10,
-                z: Math.round(((position.z || 0) + lastMotion.z) / (now - lastMotion.time) * 10) / 10
+                x: Math.round(((position.x || 0) - lastMotion.x) / (now - lastMotion.time) * 10) / 10,
+                y: Math.round(((position.y || 0) - lastMotion.y) / (now - lastMotion.time) * 10) / 10,
+                z: Math.round(((position.z || 0) - lastMotion.z) / (now - lastMotion.time) * 10) / 10
             };
 
             this.el.object3D.position.set(newPosition.x, newPosition.y, newPosition.z);

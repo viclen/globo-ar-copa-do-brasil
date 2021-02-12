@@ -14,6 +14,13 @@
     <link rel="stylesheet" href="style/style.css">
 
     <script>
+        // navigator.mediaDevices.getUserMedia({
+        //     video: true,
+        //     audio: false,
+        // }).then((data) => {
+        //     data.getVideoTracks()
+        // });
+
         navigator.xr.requestDevice = navigator.xr.requestDevice || function () {
             return new Promise((resolve, reject) => {
                 resolve({
@@ -38,7 +45,7 @@
 
     <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
 
-    <script id="scriptVersion" src="./js/main.js?14"></script>
+    <script id="scriptVersion" src="./js/main.js?15"></script>
 </head>
 
 <body style="margin: 0; overflow: hidden;">
@@ -64,13 +71,13 @@
 
     <a-scene id="arScene" ar-scene vr-mode-ui="enabled: false;" renderer="logarithmicDepthBuffer: true;" embedded
         arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;">
-        <a-entity visible="false" look-at="[gps-camera]" id="objects" smooth="true" smoothCount="10"
+        <a-entity scene-objects visible="false" look-at="[gps-camera]" id="objects" smooth="true" smoothCount="10"
             smoothTolerance=".1" smoothThreshold="5">
             <a-entity position="0 0 -10" rotation="0 0 0">
                 <a-entity id="particles" position="0 0 0"></a-entity>
 
-                <a-obj-model 3dmodel position="0 0 0" rotation="0 0 0" scale="1 1 1"
-                    src="models/trophy.obj" mtl="models/trophy.mtl">
+                <a-obj-model 3dmodel position="0 0 -1" rotation="0 0 0" scale="2 2 2" src="models/trophy.obj"
+                    mtl="models/trophy.mtl">
                 </a-obj-model>
 
                 <a-entity position="0 -1 0">
