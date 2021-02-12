@@ -78,9 +78,9 @@ function onMoveDevice(event) {
 
     if (acl && acl.x && acl.y && acl.z) {
         lastMotion = {
-            x: Math.round(acl.x * 10) / 10,
-            y: Math.round(acl.y * 10) / 10,
-            z: Math.round(acl.z * 10) / 10,
+            x: acl.x,
+            y: acl.y,
+            z: acl.z,
             time: new Date().getTime()
         }
     }
@@ -124,18 +124,23 @@ AFRAME.registerComponent('camera-data', {
 
             const now = new Date().getTime();
 
-            const newPosition = {
-                x: Math.round((position.x + lastMotion.x) / (now - lastMotion.time) * 10) / 10,
-                y: Math.round((position.y + lastMotion.y) / (now - lastMotion.time) * 10) / 10,
-                z: Math.round((position.z + lastMotion.z) / (now - lastMotion.time) * 10) / 10
-            };
+            // const newPosition = {
+            //     x: Math.round((position.x + lastMotion.x) / (now - lastMotion.time) * 10) / 10,
+            //     y: Math.round((position.y + lastMotion.y) / (now - lastMotion.time) * 10) / 10,
+            //     z: Math.round((position.z + lastMotion.z) / (now - lastMotion.time) * 10) / 10
+            // };
 
-            this.el.object3D.position.set(newPosition.x, newPosition.y, newPosition.z);
+            // this.el.object3D.position.set(newPosition.x, newPosition.y, newPosition.z);
 
+            // document.getElementById("cameraPosition").innerHTML = `
+            //     ${newPosition.x},
+            //     ${newPosition.y},
+            //     ${newPosition.z}
+            // `;
             document.getElementById("cameraPosition").innerHTML = `
-                ${newPosition.x},
-                ${newPosition.y},
-                ${newPosition.z}
+                ${lastMotion.x},
+                ${lastMotion.y},
+                ${lastMotion.z}
             `;
 
             document.getElementById("cameraRotation").innerHTML = `
