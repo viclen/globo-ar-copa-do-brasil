@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta aframe-injected="" name="mobile-web-app-capable" content="yes" />
+
+    <title>Globo AR - Bradesco</title>
+
+    <link rel="stylesheet" href="style/style.css">
+
+    <script>
+        navigator.xr.requestDevice = navigator.xr.requestDevice || function () {
+            return new Promise((resolve, reject) => {
+                resolve({
+                    supportsSession: new Promise((resolve, reject) => {
+                        resolve({
+                            immersive: true,
+                            exclusive: true
+                        });
+                    })
+                });
+            });
+        };
+    </script>
+
+    <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+    <script
+        src="https://cdn.jsdelivr.net/gh/aframevr/aframe@1c2407b26c61958baa93967b5412487cd94b290b/dist/aframe-master.min.js"></script>
+    <script src="https://rawgit.com/donmccurdy/aframe-extras/master/dist/aframe-extras.loaders.min.js"></script>
+    <script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script>
+    <script
+        src="https://unpkg.com/aframe-sprite-particles-component@^0.5.0/aframe-sprite-particles-component.js"></script>
+
+    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+
+    <script id="scriptVersion" src="./js/main.js?1"></script>
+</head>
+
+<body style="margin: 0; overflow: hidden;">
+    <img src="img/logo.png" class="logo">
+
+    <div class="fixed-front">
+        <div class="text" id="carregando" style="display: none;">
+            Carregando...<br>
+            Por favor espere
+        </div>
+
+        <div class="camera-info">
+            <div id="cameraPosition">
+            </div>
+            <div id="cameraRotation">
+            </div>
+        </div>
+    </div>
+
+    <div class="fixed-front" id="clickToStart">
+        <div class="text">
+            Clique para começar
+        </div>
+    </div>
+
+    <a-scene id="arScene" ar-scene vr-mode-ui="enabled: false;" renderer="logarithmicDepthBuffer: true;" embedded
+        arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;">
+        <a-entity visible="false" look-at="[gps-camera]" id="objects" smooth="true" smoothCount="10"
+            smoothTolerance=".1" smoothThreshold="5">
+            <a-entity position="0 0 -10" rotation="0 0 0">
+                <a-entity id="particles" position="0 0 0"></a-entity>
+
+                <a-entity 3dmodel position="0 0 -10" rotation="0 0 0" scale="0.01 0.01 0.01"
+                    gltf-model="url(models/champions_fbx/champions.fbx)" animation-mixer="clip: *">
+                </a-entity>
+
+                <a-entity position="0 -1 0">
+                    <!-- <a-entity
+                        sprite-particles="texture: url(img/star.png); spawnRate: 30; lifeTime: 1..10; opacity: 0,1,1,0; position: -5 -5 -5.. 5 5 5; velocity: -.2 -.2 -.2.. .2 .2 .2; usePerspective: false; particleSize: 50">
+                    </a-entity> -->
+                </a-entity>
+            </a-entity>
+        </a-entity>
+
+        <a-entity camera id="camera" wasd-controls-enabled="false" rotation-reader gps-camera look-controls camera-data
+            raycaster="objects: .clickable; interval: 1000; near: 2; far: 20; direction: 0 0 -1"
+            cursor="fuse: true; rayOrigin: mouse;">
+        </a-entity>
+
+        <a-light type="ambient" color="#FFF" intensity="2"></a-light>
+    </a-scene>
+
+    <script>
+        const splitted = document.getElementById("scriptVersion").getAttribute("src").split("?");
+        const version = splitted.length > 1 ? splitted[1] : 1;
+        alert("Versão " + version);
+    </script>
+</body>
+
+</html>
