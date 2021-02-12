@@ -121,12 +121,18 @@ AFRAME.registerComponent('scene-objects', {
             this.el.object3D.getWorldPosition(position);
             this.el.object3D.getWorldQuaternion(quaternion);
 
+            if (!position || isNaN(position.x) || isNaN(position.y) || isNaN(position.z)) {
+                return;
+            }
+
             const now = new Date().getTime();
 
+            const deltaTime = (now - lastMotion.time) / 1000;
+
             const newPosition = {
-                x: Math.round(((position.x || 0) - lastMotion.x) / (now - lastMotion.time) * 10) / 10,
-                y: Math.round(((position.y || 0) - lastMotion.y) / (now - lastMotion.time) * 10) / 10,
-                z: Math.round(((position.z || 0) - lastMotion.z) / (now - lastMotion.time) * 10) / 10
+                x: Math.round((position.x - lastMotion.x) * deltaTime * 100) / 100,
+                y: Math.round((position.y - lastMotion.y) * deltaTime * 100) / 100,
+                z: Math.round((position.z - lastMotion.z) * deltaTime * 100) / 100
             };
 
             this.el.object3D.position.set(newPosition.x, newPosition.y, newPosition.z);
