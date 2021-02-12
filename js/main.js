@@ -66,6 +66,7 @@ AFRAME.registerComponent('3dmodel', {
     init: function () {
         this.el.addEventListener('model-loaded', e => {
             document.getElementById("carregando").innerHTML = "";
+            alert("Modelo carregado");
         })
     }
 });
@@ -75,11 +76,13 @@ let lastMotion = { x: 0, y: 0, z: 0, time: new Date().getTime() };
 function onMoveDevice(event) {
     let acl = event.acceleration;
 
-    lastMotion = {
-        x: Math.round(acl.x * 10) / 10,
-        y: Math.round(acl.y * 10) / 10,
-        z: Math.round(acl.z * 10) / 10,
-        time: new Date().getTime()
+    if (acl && acl.x && acl.y && acl.z) {
+        lastMotion = {
+            x: Math.round(acl.x * 10) / 10,
+            y: Math.round(acl.y * 10) / 10,
+            z: Math.round(acl.z * 10) / 10,
+            time: new Date().getTime()
+        }
     }
 }
 
