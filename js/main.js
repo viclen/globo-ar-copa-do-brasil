@@ -130,7 +130,7 @@ AFRAME.registerComponent('camera-data', {
                 z: Math.round(((position.z || 0) + lastMotion.z) / (now - lastMotion.time) * 10) / 10
             };
 
-            // this.el.object3D.position.set(newPosition.x, newPosition.y, newPosition.z);
+            this.el.object3D.position.set(newPosition.x, newPosition.y, newPosition.z);
 
             document.getElementById("cameraPosition").innerHTML = `
                 ${newPosition.x},
