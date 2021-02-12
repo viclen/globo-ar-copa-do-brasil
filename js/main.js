@@ -127,10 +127,10 @@ AFRAME.registerComponent('camera-data', {
             const newPosition = {
                 x: Math.round(((position.x || 0) + lastMotion.x) / (now - lastMotion.time) * 10) / 10,
                 y: Math.round(((position.y || 0) + lastMotion.y) / (now - lastMotion.time) * 10) / 10,
-                z: Math.round(((position.z || 0) + lastMotion.z) / (now - lastMotion.time) * 10) / 10
+                z: Math.round(((position.z || -10) + lastMotion.z) / (now - lastMotion.time) * 10) / 10
             };
 
-            this.el.object3D.position.set(newPosition.x, newPosition.y, newPosition.z);
+            // this.el.object3D.position.set(newPosition.x, newPosition.y, newPosition.z);
 
             document.getElementById("cameraPosition").innerHTML = `
                 ${newPosition.x},
