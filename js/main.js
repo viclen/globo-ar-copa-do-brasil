@@ -48,8 +48,6 @@ AFRAME.registerComponent('ar-scene', {
         const clickToStart = document.getElementById('clickToStart');
 
         clickToStart.addEventListener('click', () => {
-            window.addEventListener("devicemotion", onMoveDevice);
-
             getLocation(showPosition);
             clickToStart.remove();
 
@@ -58,6 +56,8 @@ AFRAME.registerComponent('ar-scene', {
             });
 
             document.getElementById("carregando").style.display = "";
+
+            window.addEventListener("devicemotion", onMoveDevice);
         });
     }
 });
@@ -66,7 +66,7 @@ AFRAME.registerComponent('3dmodel', {
     init: function () {
         this.el.addEventListener('model-loaded', e => {
             document.getElementById("carregando").innerHTML = "";
-            alert("Modelo carregado")
+            alert("Modelo carregado");
         })
     }
 });

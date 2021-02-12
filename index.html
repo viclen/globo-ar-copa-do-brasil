@@ -38,12 +38,10 @@
 
     <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
 
-    <script id="scriptVersion" src="./js/main.js?8"></script>
+    <script id="scriptVersion" src="./js/main.js?10"></script>
 </head>
 
 <body style="margin: 0; overflow: hidden;">
-    <img src="img/logo.png" class="logo">
-
     <div class="fixed-front">
         <div class="text" id="carregando" style="display: none;">
             Carregando...<br>
@@ -71,13 +69,9 @@
             <a-entity position="0 0 -10" rotation="0 0 0">
                 <a-entity id="particles" position="0 0 0"></a-entity>
 
-                <!-- <a-entity 3dmodel position="0 0 -10" rotation="0 0 0" scale="0.01 0.01 0.01"
-                    gltf-model="url(models/champions/champions.fbx)" animation-mixer="clip: *">
-                </a-entity> -->
-
-                <a-entity 3dmodel position="0 0 -10" rotation="0 0 0" scale="1 1 1"
-                    gltf-model="url(models/trophy.obj)" animation-mixer="clip: *">
-                </a-entity>
+                <a-obj-model 3dmodel position="0 0 -10" rotation="0 0 0" scale="0.1 0.1 0.1"
+                    src="models/trophy.obj" mtl="models/trophy.mtl">
+                </a-obj-model>
 
                 <a-entity position="0 -1 0">
                     <!-- <a-entity
