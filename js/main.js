@@ -95,13 +95,14 @@ let motions = {
 function onMoveDevice(event) {
     let acl = event.acceleration;
 
-    const deltaTime = (new Date().getTime() - acceleration.time) / 1000;
+    const now = new Date().getTime();
+    const deltaTime = (now - acceleration.time) / 1000;
 
     acceleration = {
         x: Math.round(acl.x.withTolerance(0)) * deltaTime,
-        y: Math.round(acl.y.withTolerance(0) - 9.81) * deltaTime,
+        y: Math.round(acl.y.withTolerance(0.2) - 9.81) * deltaTime,
         z: Math.round(acl.z.withTolerance(0)) * deltaTime,
-        time: new Date().getTime()
+        time: now
     }
 
     velocity.x += acceleration.x;
@@ -174,11 +175,13 @@ AFRAME.registerComponent('scene-objects', {
                 return;
             }
 
-            const deltaTime = (new Date().getTime() - lastFrame) / 1000;
+            const now = new Date().getTime();
+            const deltaTime = (now - lastFrame) / 1000;
+            lastFrame = now;
 
             const newPosition = {
                 x: position.x - velocity.x * deltaTime,
-                y: position.y - velocity.y * deltaTime,
+                y: position.y - velocity.y * deltaTime * 0,
                 z: position.z - velocity.z * deltaTime
             };
 
@@ -186,7 +189,7 @@ AFRAME.registerComponent('scene-objects', {
 
             document.getElementById("cameraPosition").innerHTML = `
                 ${velocity.x},
-                ${velocity.y},
+                ${acceleration.y},
                 ${velocity.z}
             `;
 
