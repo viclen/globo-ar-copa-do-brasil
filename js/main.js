@@ -10,7 +10,7 @@ Number.prototype.withTolerance = function (tolerance = 0) {
             return this - tolerance
         }
     } else if (this < 0) {
-        if (this + tolerance > 0) {
+        if (this + tolerance < 0) {
             return this + tolerance
         }
     }
@@ -98,19 +98,19 @@ function onMoveDevice(event) {
         if (motions.x.length >= motionThreshold) {
             motions.x.shift();
         }
-        motions.x.push(Math.round(Number(acl.x).withTolerance(0.2) * 10) / 10);
+        motions.x.push(acl.x.withTolerance(0.2);
         if (motions.y.length >= motionThreshold) {
             motions.y.shift();
         }
-        motions.y.push(Math.round(Number(acl.y).withTolerance(0.2) * 10) / 10);
+        motions.y.push(acl.y.withTolerance(0.2);
         if (motions.z.length >= motionThreshold) {
             motions.z.shift();
         }
-        motions.z.push(Math.round(Number(acl.z).withTolerance(0.2) * 10) / 10);
+        motions.z.push(acl.z.withTolerance(0.2);
         lastMotion = {
-            x: motions.x.reduce((a, v, i) => (a * i + v) / (i + 1)),
-            y: motions.y.reduce((a, v, i) => (a * i + v) / (i + 1)),
-            z: motions.z.reduce((a, v, i) => (a * i + v) / (i + 1)),
+            x: Math.round(motions.x.reduce((a, v, i) => (a * i + v) / (i + 1)) * 10) / 10,
+            y: Math.round(motions.y.reduce((a, v, i) => (a * i + v) / (i + 1)) * 10) / 10,
+            z: Math.round(motions.z.reduce((a, v, i) => (a * i + v) / (i + 1)) * 10) / 10,
             time: new Date().getTime()
         }
     }
