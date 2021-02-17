@@ -70,16 +70,35 @@ AFRAME.registerComponent('3dmodel', {
     }
 });
 
+const motionThreshold = 5;
 let lastMotion = { x: 0, y: 0, z: 0, time: new Date().getTime() };
+let motions = {
+    x: [],
+    y: [],
+    z: []
+};
 
 function onMoveDevice(event) {
     let acl = event.acceleration;
 
     if (acl && acl.x && acl.y && acl.z) {
+        if (motions.x.length >= motionThreshold) {
+            motions.x.shift();
+        }
+        motions.x.push(Math.round(acl.x * 10) / 10);
+        if (motions.y.length >= motionThreshold) {
+            motions.y.shift();
+        }
+        motions.y.push(Math.round(acl.y * 10) / 10);
+        if (motions.z.length >= motionThreshold) {
+            motions.z.shift();
+        }
+        motions.z.push(Math.round(acl.z * 10) / 10);
+
         lastMotion = {
-            x: Math.round(acl.x * 10) / 10,
-            y: Math.round(acl.y * 10) / 10,
-            z: Math.round(acl.z * 10) / 10,
+            x: motions.x.reduce((a, v, i) => (a * i + v) / (i + 1)),
+            y: motions.y.reduce((a, v, i) => (a * i + v) / (i + 1)),
+            z: motions.z.reduce((a, v, i) => (a * i + v) / (i + 1)),
             time: new Date().getTime()
         }
     }
@@ -130,9 +149,9 @@ AFRAME.registerComponent('scene-objects', {
             const deltaTime = (now - lastMotion.time) / 1000;
 
             const newPosition = {
-                x: position.x + (Math.floor(lastMotion.x * 1000) / 1000) * deltaTime,
-                y: position.y + (Math.floor(lastMotion.y * 1000) / 1000) * deltaTime,
-                z: position.z + (Math.floor(lastMotion.z * 1000) / 1000)
+                x: position.x - (Math.floor(lastMotion.x * 1000) / 1000),
+                y: position.y - (Math.floor(lastMotion.y * 1000) / 1000),
+                z: position.z - (Math.floor(lastMotion.z * 1000) / 1000)
             };
 
             this.el.object3D.position.set(newPosition.x, newPosition.y, newPosition.z);
