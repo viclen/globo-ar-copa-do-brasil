@@ -165,11 +165,11 @@ let lastFrame = 0;
 AFRAME.registerComponent('scene-objects', {
     tick: (function () {
         const position = new THREE.Vector3();
-        const quaternion = new THREE.Quaternion();
+        // const quaternion = new THREE.Quaternion();
 
         return function () {
-            this.el.object3D.getWorldPosition(position);
-            this.el.object3D.getWorldQuaternion(quaternion);
+            // this.el.object3D.getWorldPosition(position);
+            // this.el.object3D.getWorldQuaternion(quaternion);
 
             if (!position || isNaN(position.x) || isNaN(position.y) || isNaN(position.z)) {
                 return;
@@ -180,7 +180,7 @@ AFRAME.registerComponent('scene-objects', {
             lastFrame = now;
 
             const newPosition = {
-                x: position.x - velocity.x * deltaTime,
+                x: position.x - velocity.x * deltaTime * 0,
                 y: position.y - velocity.y * deltaTime * 0,
                 z: position.z - velocity.z * deltaTime
             };
@@ -189,15 +189,15 @@ AFRAME.registerComponent('scene-objects', {
 
             document.getElementById("cameraPosition").innerHTML = `
                 ${velocity.x},
-                ${acceleration.y},
+                ${velocity.y},
                 ${velocity.z}
             `;
 
-            document.getElementById("cameraRotation").innerHTML = `
-                ${Math.round(quaternion.x * 180)},
-                ${Math.round(quaternion.y * 180)},
-                ${Math.round(quaternion.z * 180)}
-            `;
+            // document.getElementById("cameraRotation").innerHTML = `
+            //     ${Math.round(quaternion.x * 180)},
+            //     ${Math.round(quaternion.y * 180)},
+            //     ${Math.round(quaternion.z * 180)}
+            // `;
         };
     })()
 });

@@ -1,6 +1,6 @@
-const video = document.getElementById('video');
+// const video = document.getElementById('video');
 const button = document.getElementById('button');
-const select = document.getElementById('select');
+const select = document.getElementById('cameraRotation');
 let currentStream;
 
 function stopMediaTracks(stream) {
@@ -11,45 +11,40 @@ function stopMediaTracks(stream) {
 
 function gotDevices(mediaDevices) {
     select.innerHTML = '';
-    select.appendChild(document.createElement('option'));
-    let count = 1;
+    let html = "";
     mediaDevices.forEach(mediaDevice => {
         if (mediaDevice.kind === 'videoinput') {
-            const option = document.createElement('option');
-            option.value = mediaDevice.deviceId;
-            const label = mediaDevice.label || `Camera ${count++}`;
-            const textNode = document.createTextNode(label);
-            option.appendChild(textNode);
-            select.appendChild(option);
+            html += mediaDevice.deviceId + " - " + mediaDevice.label + "<br />";
         }
     });
+    select.innerHTML = html;
 }
 
-button.addEventListener('click', event => {
-    if (typeof currentStream !== 'undefined') {
-        stopMediaTracks(currentStream);
-    }
-    const videoConstraints = {};
-    if (select.value === '') {
-        videoConstraints.facingMode = 'environment';
-    } else {
-        videoConstraints.deviceId = { exact: select.value };
-    }
-    const constraints = {
-        video: videoConstraints,
-        audio: false
-    };
-    navigator.mediaDevices
-        .getUserMedia(constraints)
-        .then(stream => {
-            currentStream = stream;
-            video.srcObject = stream;
-            return navigator.mediaDevices.enumerateDevices();
-        })
-        .then(gotDevices)
-        .catch(error => {
-            console.error(error);
-        });
-});
+// button.addEventListener('click', event => {
+//     if (typeof currentStream !== 'undefined') {
+//         stopMediaTracks(currentStream);
+//     }
+//     const videoConstraints = {};
+//     if (select.value === '') {
+//         videoConstraints.facingMode = 'environment';
+//     } else {
+//         videoConstraints.deviceId = { exact: select.value };
+//     }
+//     const constraints = {
+//         video: videoConstraints,
+//         audio: false
+//     };
+//     navigator.mediaDevices
+//         .getUserMedia(constraints)
+//         .then(stream => {
+//             currentStream = stream;
+//             video.srcObject = stream;
+//             return navigator.mediaDevices.enumerateDevices();
+//         })
+//         .then(gotDevices)
+//         .catch(error => {
+//             console.error(error);
+//         });
+// });
 
 navigator.mediaDevices.enumerateDevices().then(gotDevices);
