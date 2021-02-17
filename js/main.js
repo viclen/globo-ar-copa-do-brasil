@@ -149,9 +149,9 @@ AFRAME.registerComponent('scene-objects', {
             const deltaTime = (now - lastMotion.time) / 1000;
 
             const newPosition = {
-                x: position.x - (Math.floor(lastMotion.x * 1000) / 1000),
-                y: position.y - (Math.floor(lastMotion.y * 1000) / 1000),
-                z: position.z - (Math.floor(lastMotion.z * 1000) / 1000)
+                x: position.x + (Math.floor(lastMotion.x * 100) / 100),
+                y: position.y + (Math.floor(lastMotion.y * 100) / 100),
+                z: position.z + (Math.floor(lastMotion.z * 100) / 100)
             };
 
             this.el.object3D.position.set(newPosition.x, newPosition.y, newPosition.z);
