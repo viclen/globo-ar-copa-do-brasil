@@ -70,7 +70,7 @@ AFRAME.registerComponent('3dmodel', {
     }
 });
 
-const motionThreshold = 2;
+const motionThreshold = 5;
 let lastMotion = { x: 0, y: 0, z: 0, time: new Date().getTime() };
 let motions = {
     x: [],
@@ -80,6 +80,14 @@ let motions = {
 
 function onMoveDevice(event) {
     let acl = event.acceleration;
+
+    lastMotion = {
+        x: Math.round(acl.x * 10) / 10,
+        y: Math.round(acl.y * 10) / 10,
+        z: Math.round(acl.z * 10) / 10,
+        time: new Date().getTime()
+    }
+    return;
 
     if (acl && acl.x && acl.y && acl.z) {
         if (motions.x.length >= motionThreshold) {
@@ -156,9 +164,9 @@ AFRAME.registerComponent('scene-objects', {
             this.el.object3D.position.set(newPosition.x, newPosition.y, newPosition.z);
 
             document.getElementById("cameraPosition").innerHTML = `
-                ${newPosition.x},
-                ${newPosition.y},
-                ${newPosition.z}
+                ${lastMotion.x},
+                ${lastMotion.y},
+                ${lastMotion.z}
             `;
 
             document.getElementById("cameraRotation").innerHTML = `
