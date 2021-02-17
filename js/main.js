@@ -5,13 +5,13 @@ window.mobileCheck = function () {
 };
 
 Number.prototype.withTolerance = function (tolerance = 0) {
-    if (number > 0) {
-        if (number - tolerance > 0) {
-            return number - tolerance
+    if (this > 0) {
+        if (this - tolerance > 0) {
+            return this - tolerance
         }
-    } else if (number < 0) {
-        if (number + tolerance > 0) {
-            return number + tolerance
+    } else if (this < 0) {
+        if (this + tolerance > 0) {
+            return this + tolerance
         }
     }
     return 0;
