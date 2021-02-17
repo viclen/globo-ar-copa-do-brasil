@@ -98,15 +98,15 @@ function onMoveDevice(event) {
         if (motions.x.length >= motionThreshold) {
             motions.x.shift();
         }
-        motions.x.push(acl.x.withTolerance(0.2);
+        motions.x.push(acl.x.withTolerance(0.2));
         if (motions.y.length >= motionThreshold) {
             motions.y.shift();
         }
-        motions.y.push(acl.y.withTolerance(0.2);
+        motions.y.push(acl.y.withTolerance(0.2));
         if (motions.z.length >= motionThreshold) {
             motions.z.shift();
         }
-        motions.z.push(acl.z.withTolerance(0.2);
+        motions.z.push(acl.z.withTolerance(0.2));
         lastMotion = {
             x: Math.round(motions.x.reduce((a, v, i) => (a * i + v) / (i + 1)) * 10) / 10,
             y: Math.round(motions.y.reduce((a, v, i) => (a * i + v) / (i + 1)) * 10) / 10,
