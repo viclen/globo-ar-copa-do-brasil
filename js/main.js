@@ -4,6 +4,19 @@ window.mobileCheck = function () {
     return check;
 };
 
+Number.prototype.withTolerance = function (tolerance = 0) {
+    if (number > 0) {
+        if (number - tolerance > 0) {
+            return number - tolerance
+        }
+    } else if (number < 0) {
+        if (number + tolerance > 0) {
+            return number + tolerance
+        }
+    }
+    return 0;
+};
+
 function getLocation(cb = () => { }) {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(cb);
@@ -81,27 +94,19 @@ let motions = {
 function onMoveDevice(event) {
     let acl = event.acceleration;
 
-    lastMotion = {
-        x: Math.round(acl.x * 10) / 10,
-        y: Math.round(acl.y * 10) / 10,
-        z: Math.round(acl.z * 10) / 10,
-        time: new Date().getTime()
-    }
-    return;
-
     if (acl && acl.x && acl.y && acl.z) {
         if (motions.x.length >= motionThreshold) {
             motions.x.shift();
         }
-        motions.x.push(Math.round(acl.x * 10) / 10);
+        motions.x.push(Math.round(Number(acl.x).withTolerance(0.2) * 10) / 10);
         if (motions.y.length >= motionThreshold) {
             motions.y.shift();
         }
-        motions.y.push(Math.round(acl.y * 10) / 10);
+        motions.y.push(Math.round(Number(acl.y).withTolerance(0.2) * 10) / 10);
         if (motions.z.length >= motionThreshold) {
             motions.z.shift();
         }
-        motions.z.push(Math.round(acl.z * 10) / 10);
+        motions.z.push(Math.round(Number(acl.z).withTolerance(0.2) * 10) / 10);
         lastMotion = {
             x: motions.x.reduce((a, v, i) => (a * i + v) / (i + 1)),
             y: motions.y.reduce((a, v, i) => (a * i + v) / (i + 1)),
