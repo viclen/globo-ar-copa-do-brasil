@@ -70,7 +70,7 @@ AFRAME.registerComponent('3dmodel', {
     }
 });
 
-const motionThreshold = 5;
+const motionThreshold = 2;
 let lastMotion = { x: 0, y: 0, z: 0, time: new Date().getTime() };
 let motions = {
     x: [],
@@ -94,7 +94,6 @@ function onMoveDevice(event) {
             motions.z.shift();
         }
         motions.z.push(Math.round(acl.z * 10) / 10);
-
         lastMotion = {
             x: motions.x.reduce((a, v, i) => (a * i + v) / (i + 1)),
             y: motions.y.reduce((a, v, i) => (a * i + v) / (i + 1)),
@@ -149,9 +148,9 @@ AFRAME.registerComponent('scene-objects', {
             const deltaTime = (now - lastMotion.time) / 1000;
 
             const newPosition = {
-                x: position.x + (Math.floor(lastMotion.x * 100) / 100),
-                y: position.y + (Math.floor(lastMotion.y * 100) / 100),
-                z: position.z + (Math.floor(lastMotion.z * 100) / 100)
+                x: position.x + lastMotion.x * deltaTime,
+                y: position.y + lastMotion.y * deltaTime,
+                z: position.z + lastMotion.z
             };
 
             this.el.object3D.position.set(newPosition.x, newPosition.y, newPosition.z);
