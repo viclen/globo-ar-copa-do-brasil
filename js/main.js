@@ -95,9 +95,9 @@ function onMoveDevice(event) {
     let acl = event.acceleration;
 
     lastMotion = {
-        x: Math.round(acl.x.withTolerance(0.2) * 10) / 10,
-        y: Math.round(acl.y.withTolerance(0.2) * 10) / 10,
-        z: Math.round(acl.z.withTolerance(0.2) * 10) / 10,
+        x: Math.round(acl.x.withTolerance(0.2) * 10) * 0.5,
+        y: Math.round(acl.y.withTolerance(0.2) * 10) * 0.5,
+        z: Math.round(acl.z.withTolerance(0.2) * 10) * 0.5,
         time: new Date().getTime()
     }
 
