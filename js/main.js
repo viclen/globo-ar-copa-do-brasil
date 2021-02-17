@@ -94,6 +94,15 @@ let motions = {
 function onMoveDevice(event) {
     let acl = event.acceleration;
 
+    lastMotion = {
+        x: Math.round(acl.x.withTolerance(0.2) * 10) / 10,
+        y: Math.round(acl.y.withTolerance(0.2) * 10) / 10,
+        z: Math.round(acl.z.withTolerance(0.2) * 10) / 10,
+        time: new Date().getTime()
+    }
+
+    return;
+
     if (acl && acl.x && acl.y && acl.z) {
         if (motions.x.length >= motionThreshold) {
             motions.x.shift();
