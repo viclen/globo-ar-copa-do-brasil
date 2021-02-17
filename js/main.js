@@ -84,7 +84,8 @@ AFRAME.registerComponent('3dmodel', {
 });
 
 const motionThreshold = 5;
-let lastMotion = { x: 0, y: 0, z: 0, time: new Date().getTime() };
+let acceleration = { x: 0, y: 0, z: 0, time: new Date().getTime() };
+let velocity = { x: 0, y: 0, z: 0 };
 let motions = {
     x: [],
     y: [],
@@ -94,15 +95,21 @@ let motions = {
 function onMoveDevice(event) {
     let acl = event.acceleration;
 
-    lastMotion = {
-        x: Math.round(acl.x.withTolerance(0.2) * 10) * 0.5,
-        y: Math.round(acl.y.withTolerance(0.2) * 10) * 0.5,
-        z: Math.round(acl.z.withTolerance(0.2) * 10) * 0.5,
+    const deltaTime = (new Date().getTime() - acceleration.time) / 1000;
+
+    acceleration = {
+        x: Math.round(acl.x.withTolerance(0)) * deltaTime,
+        y: Math.round(acl.y.withTolerance(0) - 9.81) * deltaTime,
+        z: Math.round(acl.z.withTolerance(0)) * deltaTime,
         time: new Date().getTime()
     }
 
-    return;
+    velocity.x += acceleration.x;
+    velocity.y += acceleration.y;
+    velocity.z += acceleration.z;
+}
 
+function movementThreshold(acl) {
     if (acl && acl.x && acl.y && acl.z) {
         if (motions.x.length >= motionThreshold) {
             motions.x.shift();
@@ -116,7 +123,7 @@ function onMoveDevice(event) {
             motions.z.shift();
         }
         motions.z.push(acl.z.withTolerance(0.2));
-        lastMotion = {
+        acceleration = {
             x: Math.round(motions.x.reduce((a, v, i) => (a * i + v) / (i + 1)) * 10) / 10,
             y: Math.round(motions.y.reduce((a, v, i) => (a * i + v) / (i + 1)) * 10) / 10,
             z: Math.round(motions.z.reduce((a, v, i) => (a * i + v) / (i + 1)) * 10) / 10,
@@ -152,6 +159,8 @@ function createParticles() {
     }, 2000);
 }
 
+let lastFrame = 0;
+
 AFRAME.registerComponent('scene-objects', {
     tick: (function () {
         const position = new THREE.Vector3();
@@ -165,22 +174,20 @@ AFRAME.registerComponent('scene-objects', {
                 return;
             }
 
-            const now = new Date().getTime();
-
-            const deltaTime = (now - lastMotion.time) / 1000;
+            const deltaTime = (new Date().getTime() - lastFrame) / 1000;
 
             const newPosition = {
-                x: position.x - lastMotion.x * deltaTime,
-                y: position.y - lastMotion.y * deltaTime,
-                z: position.z - lastMotion.z
+                x: position.x - velocity.x * deltaTime,
+                y: position.y - velocity.y * deltaTime,
+                z: position.z - velocity.z * deltaTime
             };
 
             this.el.object3D.position.set(newPosition.x, newPosition.y, newPosition.z);
 
             document.getElementById("cameraPosition").innerHTML = `
-                ${lastMotion.x},
-                ${lastMotion.y},
-                ${lastMotion.z}
+                ${velocity.x},
+                ${velocity.y},
+                ${velocity.z}
             `;
 
             document.getElementById("cameraRotation").innerHTML = `
