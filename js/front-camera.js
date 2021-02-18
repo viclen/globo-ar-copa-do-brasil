@@ -47,4 +47,6 @@ function gotDevices(mediaDevices) {
 //         });
 // });
 
-navigator.mediaDevices.enumerateDevices().then(gotDevices);
+navigator.mediaDevices.getUserMedia({ video: true }).then(() => {
+    navigator.mediaDevices.enumerateDevices().then(gotDevices);
+})
