@@ -1,10 +1,12 @@
 const constraints = { video: { facingMode: "user" }, audio: false };
 // Define constants
 let cameraView, cameraOutput, cameraSensor, cameraTrigger;
+let canvas;
 // Access the device camera and stream to cameraView
 function cameraStart() {
     cameraView = document.querySelector("video");
     cameraOutput = document.querySelector("#camera--output");
+    canvas = document.querySelector("canvas");
     cameraSensor = document.querySelector("#camera--sensor");
     cameraTrigger = document.querySelector("#camera--trigger");
 
@@ -18,34 +20,46 @@ function cameraStart() {
             console.error("Oops. Something is broken.", error);
         });
 
+    cameraOutput.onclick = () => shareImg();
+
     // Take a picture when cameraTrigger is tapped
     cameraTrigger.onclick = function () {
+        const context = canvas.getContext('2d');
+        context.clearRect(0, 0, canvas.width, canvas.height);
+
         cameraSensor.width = cameraView.videoWidth;
         cameraSensor.height = cameraView.videoHeight;
         cameraSensor.getContext("2d").drawImage(cameraView, 0, 0);
-        cameraOutput.src = cameraSensor.toDataURL("image/webp");
+        cameraSensor.getContext("2d").drawImage(canvas, 0, 0);
+        cameraOutput.src = cameraSensor.toDataURL("image/jpeg");
         cameraOutput.classList.add("taken");
-
-        new File();
-
-        setTimeout(() => {
-            cameraSensor.toBlob((blob) => {
-                const file = new File([blob], 'foto.jpg');
-                const filesArray = [file];
-                filesArray.forEach(Object.freeze);
-
-                if (navigator.canShare && navigator.canShare({ files: filesArray })) {
-                    navigator.share({
-                        files: filesArray,
-                        title: 'Foto',
-                        text: 'Campeão da copa do Brasil!',
-                    })
-                        .then(() => console.log('Share was successful.'))
-                        .catch((error) => console.log('Sharing failed', error));
-                } else {
-                    console.log(`Your system doesn't support sharing files.`);
-                }
-            }, "image/jpeg", 1);
-        }, 1000);
     };
+}
+
+function shareImg() {
+    let dataUrl = cameraOutput.src.split(',');
+    let base64 = dataUrl[1];
+    let mime = dataUrl[0].match(/:(.*?);/)[1];
+    let bin = atob(base64);
+    let length = bin.length;
+    // From http://stackoverflow.com/questions/14967647/ (continues on next line)
+    // encode-decode-image-with-base64-breaks-image (2013-04-21)
+    let buf = new ArrayBuffer(length);
+    let arr = new Uint8Array(buf);
+    bin.split('').forEach((e, i) => arr[i] = e.charCodeAt(0));
+
+    const file = new File([buf], 'foto.jpg', { type: mime });
+    const filesArray = [file];
+
+    if (navigator.canShare && navigator.canShare({ files: filesArray })) {
+        navigator.share({
+            files: filesArray,
+            title: 'Foto',
+            text: 'Campeão da copa do Brasil!',
+        })
+            .then(() => alert('Share was successful.'))
+            .catch((error) => alert('Sharing failed', error));
+    } else {
+        alert(`Your system doesn't support sharing files.`);
+    }
 }
