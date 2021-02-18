@@ -132,6 +132,7 @@ main.camera, #camera--view, #camera--sensor, #camera--output {
     position: fixed;
     bottom: 30px;
     left: calc(50% - 100px);
+    z-index: 300;
 }
 
 .taken {

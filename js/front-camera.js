@@ -46,5 +46,3 @@ cameraTrigger.onclick = function () {
         }, "image/jpeg", 1);
     }, 1000);
 };
-// Start the video stream when the window loads
-window.addEventListener("load", cameraStart, false);
