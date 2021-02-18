@@ -1,13 +1,13 @@
 const constraints = { video: { facingMode: "user" }, audio: false };
 // Define constants
-let cameraView, cameraOutput, cameraSensor, cameraTrigger;
+let cameraView, cameraOutput, cameraCanvas, cameraTrigger;
 let canvas;
 // Access the device camera and stream to cameraView
 function cameraStart() {
     cameraView = document.querySelector("video");
     cameraOutput = document.querySelector("#camera--output");
     canvas = document.querySelector("canvas");
-    cameraSensor = document.querySelector("#camera--sensor");
+    cameraCanvas = document.querySelector("#camera--sensor");
     cameraTrigger = document.querySelector("#camera--trigger");
 
     navigator.mediaDevices
@@ -24,14 +24,13 @@ function cameraStart() {
 
     // Take a picture when cameraTrigger is tapped
     cameraTrigger.onclick = function () {
-        const context = canvas.getContext('2d');
-        context.clearRect(0, 0, canvas.width, canvas.height);
+        cameraCanvas.width = cameraView.videoWidth;
+        cameraCanvas.height = cameraView.videoHeight;
 
-        cameraSensor.width = cameraView.videoWidth;
-        cameraSensor.height = cameraView.videoHeight;
-        cameraSensor.getContext("2d").drawImage(cameraView, 0, 0);
-        cameraSensor.getContext("2d").drawImage(canvas, 0, 0);
-        cameraOutput.src = cameraSensor.toDataURL("image/jpeg");
+        cameraCanvas.getContext('2d').clearRect(0, 0, cameraCanvas.width, cameraCanvas.height);
+        cameraCanvas.getContext("2d").drawImage(cameraView, 0, 0);
+        cameraCanvas.getContext("2d").drawImage(canvas, 0, 0);
+        cameraOutput.src = cameraCanvas.toDataURL("image/jpeg");
         cameraOutput.classList.add("taken");
     };
 }
