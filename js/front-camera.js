@@ -2,10 +2,12 @@ const constraints = { video: { facingMode: "user" }, audio: false };
 // Define constants
 let cameraView, cameraOutput, cameraCanvas, cameraTrigger;
 let canvas;
+let scene;
 // Access the device camera and stream to cameraView
 function cameraStart() {
     cameraView = document.querySelector("video");
     cameraOutput = document.querySelector("#camera--output");
+    scene = document.querySelector("#arScene");
     canvas = document.querySelector("canvas");
     cameraCanvas = document.querySelector("#camera--sensor");
     cameraTrigger = document.querySelector("#camera--trigger");
@@ -28,8 +30,7 @@ function cameraStart() {
         cameraCanvas.height = cameraView.videoHeight;
 
         cameraCanvas.getContext('2d').clearRect(0, 0, cameraCanvas.width, cameraCanvas.height);
-        cameraCanvas.getContext("2d").drawImage(cameraView, 0, 0);
-        cameraCanvas.getContext("2d").drawImage(canvas, 0, 0);
+        cameraCanvas.getContext("2d").drawImage(scene, 0, 0);
         cameraOutput.src = cameraCanvas.toDataURL("image/jpeg");
         cameraOutput.classList.add("taken");
     };
@@ -50,11 +51,9 @@ function shareImg() {
     const file = new File([buf], 'foto.jpg', { type: mime });
     const filesArray = [file];
 
-    if (navigator.canShare && navigator.canShare({ files: filesArray })) {
+    if (navigator.share) { // || navigator.canShare && navigator.canShare({ files: filesArray })) {
         navigator.share({
             files: filesArray,
-            title: 'Foto',
-            text: 'Campeão da copa do Brasil!',
         })
             .then(() => alert('Share was successful.'))
             .catch((error) => alert('Sharing failed', error));
