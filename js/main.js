@@ -58,11 +58,11 @@ AFRAME.registerComponent('ar-scene', {
             return;
         }
 
-        cameraStart();
-
         const clickToStart = document.getElementById('clickToStart');
 
         clickToStart.addEventListener('click', () => {
+            cameraStart();
+
             getLocation(showPosition);
             clickToStart.remove();
 

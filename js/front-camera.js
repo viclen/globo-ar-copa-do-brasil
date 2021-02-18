@@ -1,11 +1,13 @@
 const constraints = { video: { facingMode: "user" }, audio: false };
 // Define constants
-const cameraView = document.querySelector("video"),
-    cameraOutput = document.querySelector("#camera--output"),
-    cameraSensor = document.querySelector("#camera--sensor"),
-    cameraTrigger = document.querySelector("#camera--trigger")
+let cameraView, cameraOutput, cameraSensor, cameraTrigger;
 // Access the device camera and stream to cameraView
 function cameraStart() {
+    cameraView = document.querySelector("video");
+    cameraOutput = document.querySelector("#camera--output");
+    cameraSensor = document.querySelector("#camera--sensor");
+    cameraTrigger = document.querySelector("#camera--trigger");
+
     navigator.mediaDevices
         .getUserMedia(constraints)
         .then(function (stream) {

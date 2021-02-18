@@ -11,7 +11,7 @@
 
     <title>Globo AR - Bradesco</title>
 
-    <link rel="stylesheet" href="style/style.css">
+    <link rel="stylesheet" href="style/style.css?1">
 
     <script>
         // navigator.mediaDevices.getUserMedia({
@@ -46,7 +46,7 @@
     <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
 
     <script src="./js/front-camera.js?1"></script>
-    <script id="scriptVersion" src="./js/main.js?38"></script>
+    <script id="scriptVersion" src="./js/main.js?39"></script>
 </head>
 
 <body style="margin: 0; overflow: hidden;">
@@ -105,7 +105,6 @@
         <!-- Camera trigger -->
         <button id="camera--trigger">Take a picture</button>
     </main>
-
 
     <script>
         const splitted = document.getElementById("scriptVersion").getAttribute("src").split("?");
