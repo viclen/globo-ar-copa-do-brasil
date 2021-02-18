@@ -179,13 +179,13 @@ AFRAME.registerComponent('scene-objects', {
             const deltaTime = (now - lastFrame) / 1000;
             lastFrame = now;
 
-            const newPosition = {
-                x: position.x - velocity.x * deltaTime * 0,
-                y: position.y - velocity.y * deltaTime * 0,
-                z: position.z - velocity.z * deltaTime
-            };
+            // const newPosition = {
+            //     x: position.x - velocity.x * deltaTime * 0,
+            //     y: position.y - velocity.y * deltaTime * 0,
+            //     z: position.z - velocity.z * deltaTime
+            // };
 
-            this.el.object3D.position.set(newPosition.x, newPosition.y, newPosition.z);
+            // this.el.object3D.position.set(newPosition.x, newPosition.y, newPosition.z);
 
             document.getElementById("cameraPosition").innerHTML = `
                 ${velocity.x},

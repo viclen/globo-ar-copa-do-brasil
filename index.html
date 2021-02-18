@@ -96,13 +96,22 @@
         <a-light type="ambient" color="#FFF" intensity="1"></a-light>
     </a-scene>
 
+    <main class="camera">
+        <!-- Camera sensor -->
+        <canvas id="camera--sensor"></canvas>
+        <!-- Camera output -->
+        <img src="//:0" alt="" id="camera--output">
+        <!-- Camera trigger -->
+        <button id="camera--trigger">Take a picture</button>
+    </main>
+
+    <script src="./js/front-camera.js?1"></script>
+
     <script>
         const splitted = document.getElementById("scriptVersion").getAttribute("src").split("?");
         const version = splitted.length > 1 ? splitted[1] : 1;
         alert("Versão " + version);
     </script>
-
-    <!-- <script id="scriptVersion" src="./js/front-camera.js?2"></script> -->
 </body>
 
 </html>
