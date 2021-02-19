@@ -34,6 +34,11 @@ function cameraStart() {
 
         cameraCanvas.getContext('2d').clearRect(0, 0, cameraCanvas.width, cameraCanvas.height);
 
+        let oldZIndex = cameraView.style.zIndex;
+        cameraView.style.zIndex = -1;
+        cameraCanvas.getContext("2d").drawImage(cameraView, 0, 0, cameraCanvas.width, cameraCanvas.height);
+        cameraView.style.zIndex = oldZIndex;
+
         renderer.render(scene.object3D, scene.camera);
         let img = new Image();
         img.src = renderer.domElement.toDataURL();
@@ -41,12 +46,12 @@ function cameraStart() {
         img.style.width = canvas.width;
         img.style.height = canvas.height;
         img.style.zIndex = 1000;
-        cameraCanvas.getContext("2d").drawImage(img, 0, 0, cameraCanvas.width, cameraCanvas.height);
+        img.onload = () => {
+            cameraCanvas.getContext("2d").drawImage(img, 0, 0, cameraCanvas.width, cameraCanvas.height);
 
-        cameraCanvas.getContext("2d").drawImage(cameraView, 0, 0, cameraCanvas.width, cameraCanvas.height);
-
-        cameraOutput.src = cameraCanvas.toDataURL("image/jpg");
-        cameraOutput.classList.add("taken");
+            cameraOutput.src = cameraCanvas.toDataURL("image/jpg");
+            cameraOutput.classList.add("taken");
+        };
     };
 }
 
