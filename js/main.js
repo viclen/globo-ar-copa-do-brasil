@@ -67,6 +67,8 @@ AFRAME.registerComponent('ar-scene', {
 
             clickToStart.remove();
 
+            window.addEventListener("devicemotion", onMoveDevice);
+
             document.addEventListener("click", (event) => {
                 if (event.target.classList.contains("fixed-front")) {
                     createParticles();
@@ -75,7 +77,7 @@ AFRAME.registerComponent('ar-scene', {
 
             document.getElementById("carregando").style.display = "";
 
-            window.addEventListener("devicemotion", onMoveDevice);
+            document.querySelector(".fixed-front").remove();
         });
     }
 });

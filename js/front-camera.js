@@ -47,7 +47,7 @@ function cameraStart() {
         img.style.height = canvas.height;
         img.style.zIndex = 1000;
         img.onload = () => {
-            cameraCanvas.getContext("2d").drawImage(img, 0, 0, cameraCanvas.width, cameraCanvas.height);
+            cameraCanvas.getContext("2d").drawImage(img, -((canvas.width - cameraCanvas.width) / 2), 0, canvas.width, cameraCanvas.height);
 
             cameraOutput.src = cameraCanvas.toDataURL("image/jpg");
             cameraOutput.classList.add("taken");
