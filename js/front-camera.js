@@ -66,8 +66,8 @@ function cover({ width: imageWidth, height: imageHeight }, { width: areaWidth, h
     var coverRatio = Math.max(originalRatios.width, originalRatios.height);
 
     // result:
-    var newImageWidth = imageNaturalWidth * coverRatio;
-    var newImageHeight = imageNaturalHeight * coverRatio;
+    var newImageWidth = imageWidth * coverRatio;
+    var newImageHeight = imageHeight * coverRatio;
 
     // longest edge is vertical
     return { width: newImageWidth, height: newImageHeight };
