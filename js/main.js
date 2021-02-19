@@ -206,3 +206,21 @@ AFRAME.registerComponent('scene-objects', {
         };
     })()
 });
+
+AFRAME.registerComponent('rotation-reader', {
+    tick: (function () {
+        const position = new THREE.Vector3();
+        const quaternion = new THREE.Quaternion();
+
+        return function () {
+            this.el.object3D.getWorldPosition(position);
+            this.el.object3D.getWorldQuaternion(quaternion);
+
+            document.getElementById("cameraRotation").innerHTML = `
+                ${Math.round(quaternion.x * 180)},
+                ${Math.round(quaternion.y * 180)},
+                ${Math.round(quaternion.z * 180)}
+            `;
+        };
+    })()
+});
