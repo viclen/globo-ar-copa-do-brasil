@@ -67,8 +67,10 @@ AFRAME.registerComponent('ar-scene', {
 
             clickToStart.remove();
 
-            document.addEventListener("click", () => {
-                createParticles();
+            document.addEventListener("click", (event) => {
+                if (event.target.classList.contains("fixed-front")) {
+                    createParticles();
+                }
             });
 
             document.getElementById("carregando").style.display = "";

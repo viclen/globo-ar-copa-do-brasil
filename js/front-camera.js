@@ -3,11 +3,14 @@ const constraints = { video: { facingMode: "user" }, audio: false };
 let cameraView, cameraOutput, cameraCanvas, cameraTrigger;
 let canvas;
 let scene;
+let renderer;
+let arController;
 // Access the device camera and stream to cameraView
 function cameraStart() {
     cameraView = document.querySelector("video");
     cameraOutput = document.querySelector("#camera--output");
     scene = document.querySelector("#arScene");
+    renderer = scene.renderer;
     canvas = document.querySelector(".a-canvas");
     cameraCanvas = document.querySelector("#camera--sensor");
     cameraTrigger = document.querySelector("#camera--trigger");
@@ -19,28 +22,23 @@ function cameraStart() {
             cameraView.srcObject = stream;
         })
         .catch(function (error) {
-            console.error("Oops. Something is broken.", error);
+            alert("Oops. Something is broken." + JSON.stringify(error));
         });
 
     cameraOutput.onclick = () => shareImg();
 
     // Take a picture when cameraTrigger is tapped
     cameraTrigger.onclick = function () {
-        // html2canvas(scene, {
-        //     allowTaint: true,
-        //     logging: true
-        // }).then(canvas => {
-        //     cameraOutput.src = canvas.toDataURL("image/jpeg");
-        //     cameraOutput.classList.add("taken");
-        // });
+        cameraCanvas.width = canvas.width;
+        cameraCanvas.height = canvas.height;
+        cameraCanvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
+        renderer.render(scene.object3D, scene.camera);
 
-        cameraCanvas.width = cameraView.videoWidth;
-        cameraCanvas.height = cameraView.videoHeight;
-
-        cameraCanvas.getContext('2d').clearRect(0, 0, cameraCanvas.width, cameraCanvas.height);
         cameraCanvas.getContext("2d").drawImage(cameraView, 0, 0);
-        cameraCanvas.getContext("2d").drawImage(canvas, 0, 0);
-        cameraOutput.src = cameraCanvas.toDataURL("image/jpeg");
+        cameraCanvas.getContext("2d").drawImage(renderer.domElement, 0, 0);
+
+        cameraOutput.src = cameraCanvas.toDataURL("image/jpg");
+        cameraOutput.classList.add("taken");
     };
 }
 
@@ -50,8 +48,6 @@ function shareImg() {
     let mime = dataUrl[0].match(/:(.*?);/)[1];
     let bin = atob(base64);
     let length = bin.length;
-    // From http://stackoverflow.com/questions/14967647/ (continues on next line)
-    // encode-decode-image-with-base64-breaks-image (2013-04-21)
     let buf = new ArrayBuffer(length);
     let arr = new Uint8Array(buf);
     bin.split('').forEach((e, i) => arr[i] = e.charCodeAt(0));
