@@ -33,13 +33,14 @@ function cameraStart() {
         cameraCanvas.height = cameraView.videoHeight;
 
         cameraCanvas.getContext('2d').clearRect(0, 0, cameraCanvas.width, cameraCanvas.height);
-
         cameraCanvas.getContext("2d").drawImage(cameraView, 0, 0);
 
-        cameraCanvas.width = canvas.width;
-        cameraCanvas.height = canvas.height;
         renderer.render(scene.object3D, scene.camera);
-        cameraCanvas.getContext("2d").drawImage(renderer.domElement, 0, 0);
+        const img = new Image();
+        img.src = renderer.domElement.toDataURL();
+        img.width = cameraView.videoWidth;
+        img.height = cameraView.videoHeight;
+        cameraCanvas.getContext("2d").drawImage(img, 0, 0);
 
         cameraOutput.src = cameraCanvas.toDataURL("image/jpg");
         cameraOutput.classList.add("taken");
@@ -64,7 +65,7 @@ function shareImg() {
             files: filesArray,
         })
             .then(() => alert('Share was successful.'))
-            .catch((error) => alert('Sharing failed', error));
+            .catch((error) => alert('Sharing failed' + JSON.stringify(error)));
     } else {
         alert(`Your system doesn't support sharing files.`);
     }
