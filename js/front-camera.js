@@ -29,8 +29,8 @@ function cameraStart() {
 
     // Take a picture when cameraTrigger is tapped
     cameraTrigger.onclick = function () {
-        cameraCanvas.width = canvas.width;
-        cameraCanvas.height = canvas.height;
+        cameraCanvas.width = canvas.videoWidth;
+        cameraCanvas.height = canvas.videoHeight;
         cameraCanvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
         renderer.render(scene.object3D, scene.camera);
 
