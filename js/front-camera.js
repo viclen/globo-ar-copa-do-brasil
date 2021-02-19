@@ -1,14 +1,12 @@
 const constraints = { video: { facingMode: "user" }, audio: false };
 // Define constants
 let cameraView, cameraOutput, cameraCanvas, cameraTrigger;
-let canvas;
 let scene;
 // Access the device camera and stream to cameraView
 function cameraStart() {
     cameraView = document.querySelector("video");
     cameraOutput = document.querySelector("#camera--output");
     scene = document.querySelector("#arScene");
-    canvas = document.querySelector("canvas");
     // cameraCanvas = document.querySelector("#camera--sensor");
     cameraTrigger = document.querySelector("#camera--trigger");
 
