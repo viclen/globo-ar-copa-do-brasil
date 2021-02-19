@@ -47,12 +47,43 @@ function cameraStart() {
         img.style.height = canvas.height;
         img.style.zIndex = 1000;
         img.onload = () => {
-            cameraCanvas.getContext("2d").drawImage(img, -((canvas.width - cameraCanvas.width) / 2), 0, canvas.width, cameraCanvas.height);
+            let { width, height } = cover({ width: canvas.width, height: canvas.height }, { width: cameraCanvas.width, height: cameraCanvas.height });
 
+            cameraCanvas.getContext("2d").drawImage(img, -(width - cameraCanvas.width) / 2, 0, width, height);
             cameraOutput.src = cameraCanvas.toDataURL("image/jpg");
             cameraOutput.classList.add("taken");
         };
     };
+}
+
+function cover({ width: imageWidth, height: imageHeight }, { width: areaWidth, height: areaHeight }) {
+    var originalRatios = {
+        width: areaWidth / imageWidth,
+        height: areaHeight / imageHeight
+    };
+
+    // formula for cover:
+    var coverRatio = Math.max(originalRatios.width, originalRatios.height);
+
+    // result:
+    var newImageWidth = imageNaturalWidth * coverRatio;
+    var newImageHeight = imageNaturalHeight * coverRatio;
+
+    // longest edge is vertical
+    return { width: newImageWidth, height: newImageHeight };
+}
+
+function contain({ width: imageWidth, height: imageHeight }, { width: areaWidth, height: areaHeight }) {
+    const imageRatio = imageWidth / imageHeight;
+    const areaRatio = areaWidth / areaHeight;
+
+    if (imageRatio >= areaRatio) {
+        // longest edge is horizontal
+        return { width: areaWidth, height: areaWidth / imageRatio };
+    } else {
+        // longest edge is vertical
+        return { width: areaHeight * imageRatio, height: areaHeight };
+    }
 }
 
 function shareImg() {
