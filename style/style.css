@@ -115,13 +115,12 @@ main.camera, #camera--view, #camera--sensor, #camera--output {
     z-index: 300;
 }
 
-#camera--view, video, #camera--sensor, #camera--output, canvas.a-canvas {
+#camera--view, video, canvas.a-canvas {
     transform: scaleX(-1);
     filter: FlipH;
 }
 
 #camera--trigger {
-    width: 200px;
     background-color: black;
     color: white;
     font-size: 16px;
@@ -132,7 +131,8 @@ main.camera, #camera--view, #camera--sensor, #camera--output {
     box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.2);
     position: fixed;
     bottom: 50px;
-    left: calc(50% - 100px);
+    left: 50%;
+    transform: translateX(-50%);
     z-index: 1;
 }
 
