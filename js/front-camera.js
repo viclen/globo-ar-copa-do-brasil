@@ -46,8 +46,6 @@ function cameraStart() {
         img.style.width = canvas.width;
         img.style.height = canvas.height;
         img.style.zIndex = 1000;
-        img.style.transform = "scaleX(-1)";
-        img.style.filter = "FlipH";
         img.onload = () => {
             let { width, height } = cover({ width: canvas.width, height: canvas.height }, { width: cameraCanvas.width, height: cameraCanvas.height });
 

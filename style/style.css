@@ -115,7 +115,7 @@ main.camera, #camera--view, #camera--sensor, #camera--output {
     z-index: 300;
 }
 
-#camera--view, video, #camera--sensor, #camera--output {
+#camera--view, video, #camera--sensor, #camera--output, canvas.a-canvas {
     transform: scaleX(-1);
     filter: FlipH;
 }
