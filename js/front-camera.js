@@ -33,15 +33,17 @@ function cameraStart() {
         cameraCanvas.height = cameraView.videoHeight;
 
         cameraCanvas.getContext('2d').clearRect(0, 0, cameraCanvas.width, cameraCanvas.height);
-        cameraCanvas.getContext("2d").drawImage(cameraView, 0, 0);
 
         renderer.render(scene.object3D, scene.camera);
-        const img = new Image();
+        let img = new Image();
         img.src = renderer.domElement.toDataURL();
         img.width = cameraView.videoWidth;
         img.height = cameraView.videoHeight;
+        img.style.zIndex = 1000;
         cameraCanvas.getContext("2d").drawImage(img, 0, 0);
 
+        cameraCanvas.getContext("2d").drawImage(cameraView, 0, 0);
+        
         cameraOutput.src = cameraCanvas.toDataURL("image/jpg");
         cameraOutput.classList.add("taken");
     };
