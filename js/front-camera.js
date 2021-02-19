@@ -9,7 +9,7 @@ function cameraStart() {
     cameraOutput = document.querySelector("#camera--output");
     scene = document.querySelector("#arScene");
     canvas = document.querySelector("canvas");
-    cameraCanvas = document.querySelector("#camera--sensor");
+    // cameraCanvas = document.querySelector("#camera--sensor");
     cameraTrigger = document.querySelector("#camera--trigger");
 
     navigator.mediaDevices
@@ -26,13 +26,10 @@ function cameraStart() {
 
     // Take a picture when cameraTrigger is tapped
     cameraTrigger.onclick = function () {
-        cameraCanvas.width = cameraView.videoWidth;
-        cameraCanvas.height = cameraView.videoHeight;
-
-        cameraCanvas.getContext('2d').clearRect(0, 0, cameraCanvas.width, cameraCanvas.height);
-        cameraCanvas.getContext("2d").drawImage(scene, 0, 0);
-        cameraOutput.src = cameraCanvas.toDataURL("image/jpeg");
-        cameraOutput.classList.add("taken");
+        html2canvas(scene).then(canvas => {
+            cameraOutput.src = canvas.toDataURL("image/jpeg");
+            cameraOutput.classList.add("taken");
+        });
     };
 }
 
