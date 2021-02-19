@@ -37,13 +37,14 @@ function cameraStart() {
         renderer.render(scene.object3D, scene.camera);
         let img = new Image();
         img.src = renderer.domElement.toDataURL();
-        img.width = cameraView.videoWidth;
-        img.height = cameraView.videoHeight;
+        img.style.objectFit = "contain";
+        img.style.width = canvas.width;
+        img.style.height = canvas.height;
         img.style.zIndex = 1000;
-        cameraCanvas.getContext("2d").drawImage(img, 0, 0);
+        cameraCanvas.getContext("2d").drawImage(img, 0, 0, cameraCanvas.width, cameraCanvas.height);
 
-        cameraCanvas.getContext("2d").drawImage(cameraView, 0, 0);
-        
+        cameraCanvas.getContext("2d").drawImage(cameraView, 0, 0, cameraCanvas.width, cameraCanvas.height);
+
         cameraOutput.src = cameraCanvas.toDataURL("image/jpg");
         cameraOutput.classList.add("taken");
     };
@@ -62,13 +63,17 @@ function shareImg() {
     const file = new File([buf], 'foto.jpg', { type: mime });
     const filesArray = [file];
 
-    if (navigator.share) { // || navigator.canShare && navigator.canShare({ files: filesArray })) {
+    if (navigator.share && navigator.canShare && navigator.canShare({ files: filesArray })) {
         navigator.share({
             files: filesArray,
         })
             .then(() => alert('Share was successful.'))
             .catch((error) => alert('Sharing failed' + JSON.stringify(error)));
     } else {
-        alert(`Your system doesn't support sharing files.`);
+        const a = document.createElement("a");
+        a.href = cameraOutput.src;
+        a.target = '_blank';
+        a.download = "foto.jpg";
+        a.click();
     }
 }
