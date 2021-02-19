@@ -1,13 +1,15 @@
 const constraints = { video: { facingMode: "user" }, audio: false };
 // Define constants
 let cameraView, cameraOutput, cameraCanvas, cameraTrigger;
+let canvas;
 let scene;
 // Access the device camera and stream to cameraView
 function cameraStart() {
     cameraView = document.querySelector("video");
     cameraOutput = document.querySelector("#camera--output");
     scene = document.querySelector("#arScene");
-    // cameraCanvas = document.querySelector("#camera--sensor");
+    canvas = document.querySelector(".a-canvas");
+    cameraCanvas = document.querySelector("#camera--sensor");
     cameraTrigger = document.querySelector("#camera--trigger");
 
     navigator.mediaDevices
@@ -24,10 +26,21 @@ function cameraStart() {
 
     // Take a picture when cameraTrigger is tapped
     cameraTrigger.onclick = function () {
-        html2canvas(scene).then(canvas => {
-            cameraOutput.src = canvas.toDataURL("image/jpeg");
-            cameraOutput.classList.add("taken");
-        });
+        // html2canvas(scene, {
+        //     allowTaint: true,
+        //     logging: true
+        // }).then(canvas => {
+        //     cameraOutput.src = canvas.toDataURL("image/jpeg");
+        //     cameraOutput.classList.add("taken");
+        // });
+
+        cameraCanvas.width = cameraView.videoWidth;
+        cameraCanvas.height = cameraView.videoHeight;
+
+        cameraCanvas.getContext('2d').clearRect(0, 0, cameraCanvas.width, cameraCanvas.height);
+        cameraCanvas.getContext("2d").drawImage(cameraView, 0, 0);
+        cameraCanvas.getContext("2d").drawImage(canvas, 0, 0);
+        cameraOutput.src = cameraCanvas.toDataURL("image/jpeg");
     };
 }
 
