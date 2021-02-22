@@ -214,7 +214,7 @@ AFRAME.registerComponent('rotation-reader', {
 
         return function () {
             this.el.object3D.getWorldPosition(position);
-            this.el.object3D.getWorldQuaternion(quaternion);
+            this.el.object3D.getLocalQuaternion(quaternion);
 
             document.getElementById("cameraRotation").innerHTML = `
                 ${Math.round(quaternion.x * 180)},
@@ -222,11 +222,13 @@ AFRAME.registerComponent('rotation-reader', {
                 ${Math.round(quaternion.z * 180)}
             `;
 
-            document.getElementById("camera-rig").setAttribute("rotation", `
-                ${Math.round(- quaternion.x * 180 * 2)},
-                0,
-                0
-            `);
+            if (window.faceMode == "user") {
+                document.getElementById("camera-rig").setAttribute("rotation", `
+                    ${Math.round(- quaternion.x * 180 * 2)},
+                    0,
+                    0
+                `);
+            }
         };
     })()
 });
