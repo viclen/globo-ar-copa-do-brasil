@@ -153,6 +153,40 @@ main.camera, #camera--view, #camera--sensor, #camera--output {
     line-height: 0;
 }
 
+#zoom-in {
+    background-color: black;
+    color: white;
+    font-size: 16px;
+    border-radius: 50%;
+    border: none;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.2);
+    position: fixed;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+    z-index: 1;
+    line-height: 0;
+}
+
+#zoom-out {
+    background-color: black;
+    color: white;
+    font-size: 16px;
+    border-radius: 50%;
+    border: none;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.2);
+    position: fixed;
+    top: 50%;
+    left: 20px;
+    transform: translateY(-50%);
+    z-index: 1;
+    line-height: 0;
+}
+
 .taken {
     height: 100px !important;
     width: 100px !important;

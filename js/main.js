@@ -198,11 +198,11 @@ AFRAME.registerComponent('scene-objects', {
 
             // this.el.object3D.position.set(newPosition.x, newPosition.y, newPosition.z);
 
-            document.getElementById("cameraPosition").innerHTML = `
-                ${velocity.x},
-                ${velocity.y},
-                ${velocity.z}
-            `;
+            // document.getElementById("cameraPosition").innerHTML = `
+            //     ${velocity.x},
+            //     ${velocity.y},
+            //     ${velocity.z}
+            // `;
 
             // document.getElementById("cameraRotation").innerHTML = `
             //     ${Math.round(quaternion.x * 180)},
@@ -219,7 +219,6 @@ AFRAME.registerComponent('rotation-reader', {
         cameraRig = document.getElementById("camera-rig");
     },
     tick: (function () {
-        const newRotation = new THREE.Vector3(1, 0, 0);
         const quaternion = new THREE.Quaternion();
 
         return function () {
@@ -227,6 +226,7 @@ AFRAME.registerComponent('rotation-reader', {
             this.el.object3D.getWorldQuaternion(quaternion);
 
             if (window.facingMode == "user") {
+                const newRotation = new THREE.Vector3(1, 0, 0);
                 newRotation.applyQuaternion(quaternion);
 
                 cameraRig.setAttribute("rotation", `-${newRotation.x} 180 0`);
@@ -247,3 +247,36 @@ AFRAME.registerComponent('rotation-reader', {
         };
     })()
 });
+
+let object3d;
+
+function zoomIn() {
+    object3d = document.querySelector("[3dmodel]");
+
+    let newScale;
+    const currentScale = object3d.getAttribute("scale").split(" ");
+    if (currentScale.length > 1 && currentScale[0].length && currentScale[0] < 8) {
+        newScale = currentScale[0] + 1;
+    } else {
+        newScale = 8;
+    }
+
+    object3d.setAttribute("animation", `property: scale; to: ${newScale} ${newScale} ${newScale}; dur: 500; easing: linear; loop: false`);
+}
+
+function zoomOut() {
+    object3d = document.querySelector("[3dmodel]");
+
+    let newScale;
+    const currentScale = object3d.getAttribute("scale").split(" ");
+    if (currentScale.length > 1 && currentScale[0].length && currentScale[0] > 1) {
+        newScale = currentScale[0] - 1;
+    } else {
+        newScale = 1;
+    }
+
+    object3d.setAttribute("animation", `property: scale; to: ${newScale} ${newScale} ${newScale}; dur: 500; easing: linear; loop: false`);
+}
+
+document.getElementById("#zoom-in").onclick = () => zoomIn();
+document.getElementById("#zoom-out").onclick = () => zoomOut();
