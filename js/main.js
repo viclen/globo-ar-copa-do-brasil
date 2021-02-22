@@ -214,7 +214,7 @@ AFRAME.registerComponent('rotation-reader', {
 
         return function () {
             this.el.object3D.getWorldPosition(position);
-            this.el.object3D.getLocalQuaternion(quaternion);
+            this.el.object3D.getWorldQuaternion(quaternion);
 
             document.getElementById("cameraRotation").innerHTML = `
                 ${Math.round(quaternion.x * 180)},
@@ -224,7 +224,7 @@ AFRAME.registerComponent('rotation-reader', {
 
             if (window.faceMode == "user") {
                 document.getElementById("camera-rig").setAttribute("rotation", `
-                    ${Math.round(- quaternion.x * 180 * 2)},
+                    ${Math.round(- quaternion.x * 180)},
                     0,
                     0
                 `);
