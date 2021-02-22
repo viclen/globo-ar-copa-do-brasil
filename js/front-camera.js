@@ -43,7 +43,9 @@ function cameraStart() {
 
         let oldZIndex = cameraView.style.zIndex;
         cameraView.style.zIndex = -1;
+        cameraCanvas.classList.add("reversed");
         cameraCanvas.getContext("2d").drawImage(cameraView, 0, 0, cameraCanvas.width, cameraCanvas.height);
+        cameraCanvas.classList.remove("reversed");
         cameraView.style.zIndex = oldZIndex;
 
         renderer.render(scene.object3D, scene.camera);
@@ -131,7 +133,7 @@ function changeCamera() {
         document.querySelector("#objects").setAttribute("rotation", "0 0 0");
     } else {
         facingMode = "user";
-        
+
         document.querySelector("video").classList.remove("back");
         document.querySelector("#camera-rig").setAttribute("rotation", "0 180 0");
         document.querySelector("[scene-objects]").setAttribute("position", "0 0 10");
