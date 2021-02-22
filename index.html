@@ -11,7 +11,22 @@
 
     <title>Globo AR - Bradesco</title>
 
-    <link rel="stylesheet" href="style/style.css?8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+
+    <!-- Google Tag Manager -->
+    <script>
+        (function (w, d, s, l, i) {
+            w[l] = w[l] || []; w[l].push({
+                'gtm.start':
+                    new Date().getTime(), event: 'gtm.js'
+            }); var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-MXHGNMV');
+    </script>
+    <!-- End Google Tag Manager -->
+
+    <link rel="stylesheet" href="style/style.css?9">
 
     <script>
         // navigator.mediaDevices.getUserMedia({
@@ -46,11 +61,16 @@
 
     <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
 
-    <script src="./js/front-camera.js?23"></script>
-    <script id="scriptVersion" src="./js/main.js?50"></script>
+    <script src="./js/front-camera.js?24"></script>
+    <script id="scriptVersion" src="./js/main.js?51"></script>
 </head>
 
 <body style="margin: 0; overflow: hidden;">
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MXHGNMV" height="0" width="0"
+            style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
     <div class="fixed-front">
         <div class="text" id="carregando" style="display: none;">
             Carregando...<br>
@@ -78,10 +98,9 @@
             <a-entity scene-objects position="0 0 10" rotation="0 0 0">
                 <a-entity id="particles" position="0 0 0"></a-entity>
 
-                <a-obj-model 3dmodel position="0 0 1" rotation="0 0 0" scale="5 5 5" src="models/trophy.obj"
-                    mtl="models/trophy.mtl">
-                    <a-animation attribute="rotation" easing="linear" dur="20000" to="0 360 0" repeat="indefinite">
-                    </a-animation>
+                <a-obj-model 3dmodel position="0 0 0" rotation="0 0 0" scale="5 5 5" src="models/trophy.obj"
+                    mtl="models/trophy.mtl"
+                    animation="property: rotation; to: 0 360 0; dur: 10000; easing: linear; loop: true">
                 </a-obj-model>
             </a-entity>
         </a-entity>
@@ -103,7 +122,10 @@
         <img src="//:0" alt="" id="camera--output">
         <!-- Camera trigger -->
         <button id="camera--trigger">
-            o
+            <i class="fas fa-camera"></i>
+        </button>
+        <button id="camera--change">
+            <i class="fas fa-exchange-alt"></i>
         </button>
     </main>
 
@@ -112,6 +134,8 @@
         const version = splitted.length > 1 ? splitted[1] : 1;
         alert("Versão " + version);
     </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/js/all.min.js"></script>
 </body>
 
 </html>

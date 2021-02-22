@@ -1,6 +1,10 @@
-const constraints = { video: { facingMode: "user" }, audio: false };
+let facingMode = "user";
+
+window.facingMode = facingMode;
+
+const constraints = { audio: false };
 // Define constants
-let cameraView, cameraOutput, cameraCanvas, cameraTrigger;
+let cameraView, cameraOutput, cameraCanvas, cameraTrigger, cameraChange;
 let canvas;
 let scene;
 let renderer;
@@ -14,9 +18,12 @@ function cameraStart() {
     canvas = document.querySelector(".a-canvas");
     cameraCanvas = document.querySelector("#camera--sensor");
     cameraTrigger = document.querySelector("#camera--trigger");
+    cameraChange = document.querySelector("#camera--change");
+
+    cameraChange.onclick = changeCamera();
 
     navigator.mediaDevices
-        .getUserMedia(constraints)
+        .getUserMedia({ ...constraints, video: { facingMode } })
         .then(function (stream) {
             track = stream.getTracks()[0];
             cameraView.srcObject = stream;
@@ -112,4 +119,22 @@ function shareImg() {
         a.download = "foto.jpg";
         a.click();
     }
+}
+
+function changeCamera() {
+    if (facingMode == "user") {
+        facingMode = { exact: "environment" };
+
+        document.querySelector("#camera-rig").setAttribute("rotation", "0 0 0");
+        document.querySelector("[scene-objects]").setAttribute("position", "0 0 -10");
+    } else {
+        facingMode = "user";
+
+        document.querySelector("#camera-rig").setAttribute("rotation", "0 180 0");
+        document.querySelector("[scene-objects]").setAttribute("position", "0 0 10");
+    }
+
+    window.facingMode = facingMode;
+
+    cameraStart();
 }

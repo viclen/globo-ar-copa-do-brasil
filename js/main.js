@@ -221,6 +221,12 @@ AFRAME.registerComponent('rotation-reader', {
                 ${Math.round(quaternion.y * 180)},
                 ${Math.round(quaternion.z * 180)}
             `;
+
+            document.getElementById("camera-rig").setAttribute("rotation", `
+                ${Math.round(- quaternion.x * 180 * 2)},
+                0,
+                0
+            `);
         };
     })()
 });
