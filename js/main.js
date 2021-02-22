@@ -19,6 +19,7 @@ Number.prototype.withTolerance = function (tolerance = 0) {
 
 
 let sceneObjects;
+let cameraRig;
 let isOpening = false;
 
 const motionThreshold = 5;
@@ -212,25 +213,29 @@ AFRAME.registerComponent('scene-objects', {
     })()
 });
 
+const newRotation = new THREE.Vector3();
+
 AFRAME.registerComponent('rotation-reader', {
+    init: function () {
+        cameraRig = document.getElementById("camera-rig");
+    },
     tick: (function () {
         // const position = new THREE.Vector3();
         const quaternion = new THREE.Quaternion();
-        const rotation = new THREE.Vector3(0, 0, 1);
 
         return function () {
             // this.el.object3D.getWorldPosition(position);
             this.el.object3D.getWorldQuaternion(quaternion);
 
             document.getElementById("cameraRotation").innerHTML = `
-                ${rotation.x},
-                ${rotation.y},
-                ${rotation.z}
+                ${newRotation.x},
+                ${newRotation.y},
+                ${newRotation.z}
             `;
 
             if (window.facingMode == "user") {
-                rotation.applyQuaternion(quaternion);
-                sceneObjects.setAttribute("rotation", `${rotation.x} ${rotation.y} ${rotation.z}`);
+                newRotation.applyQuaternion(quaternion);
+                cameraRig.setAttribute("rotation", `-${newRotation.x} ${newRotation.y} ${newRotation.z}`);
             }
         };
     })()

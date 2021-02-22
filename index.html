@@ -65,8 +65,8 @@
 
     <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
 
-    <script src="./js/front-camera.js?27"></script>
-    <script id="scriptVersion" src="./js/main.js?57"></script>
+    <script src="./js/front-camera.js?28"></script>
+    <script id="scriptVersion" src="./js/main.js?58"></script>
 </head>
 
 <body style="margin: 0; overflow: hidden;">
@@ -98,7 +98,7 @@
     <a-scene id="arScene" ar-scene vr-mode-ui="enabled: false;" renderer="logarithmicDepthBuffer: true;" embedded
         arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;" light="defaultLightsEnabled: false">
         <!--  look-at="[gps-camera]" -->
-        <a-entity visible="false" id="objects" smooth="true" smoothCount="10" smoothTolerance=".1" smoothThreshold="5">
+        <a-entity objects visible="false" id="objects" smooth="true" smoothCount="10" smoothTolerance=".1" smoothThreshold="5">
             <a-entity scene-objects position="0 0 10" rotation="0 0 0">
                 <a-entity id="particles" position="0 0 0"></a-entity>
 

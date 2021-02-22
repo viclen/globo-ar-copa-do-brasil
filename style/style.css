@@ -115,7 +115,7 @@ main.camera, #camera--view, #camera--sensor, #camera--output {
     z-index: 300;
 }
 
-#camera--view, video.reversed {
+#camera--view, video:not(.back) {
     transform: scaleX(-1);
     filter: FlipH;
 }
@@ -135,7 +135,6 @@ main.camera, #camera--view, #camera--sensor, #camera--output {
     transform: translateX(-50%);
     z-index: 1;
     line-height: 0;
-
 }
 
 #camera--change {
