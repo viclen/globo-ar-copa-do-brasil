@@ -219,22 +219,29 @@ AFRAME.registerComponent('rotation-reader', {
         cameraRig = document.getElementById("camera-rig");
     },
     tick: (function () {
-        const newRotation = new THREE.Vector3();
+        const newRotation = new THREE.Vector3(1, 0, 0);
         const quaternion = new THREE.Quaternion();
 
         return function () {
-            this.el.object3D.getWorldPosition(newRotation);
+            // this.el.object3D.getWorldPosition(newRotation);
             this.el.object3D.getWorldQuaternion(quaternion);
 
             if (window.facingMode == "user") {
                 newRotation.applyQuaternion(quaternion);
 
-                cameraRig.setAttribute("rotation", `-${newRotation.x} 180 ${newRotation.z}`);
+                cameraRig.setAttribute("rotation", `-${newRotation.x} 180 0`);
+
+                document.getElementById("cameraPosition").innerHTML = `
+                    ${quaternion.x},
+                    ${quaternion.y},
+                    ${quaternion.z},
+                    ${quaternion.w}
+                `;
 
                 document.getElementById("cameraRotation").innerHTML = `
-                    ${newRotation.x},
-                    ${newRotation.y},
-                    ${newRotation.z}
+                    ${Math.round(newRotation.x)},
+                    ${Math.round(newRotation.y)},
+                    ${Math.round(newRotation.z)}
                 `;
             }
         };

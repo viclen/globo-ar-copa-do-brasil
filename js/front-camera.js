@@ -43,9 +43,7 @@ function cameraStart() {
 
         let oldZIndex = cameraView.style.zIndex;
         cameraView.style.zIndex = -1;
-        cameraCanvas.classList.add("reversed");
         cameraCanvas.getContext("2d").drawImage(cameraView, 0, 0, cameraCanvas.width, cameraCanvas.height);
-        cameraCanvas.classList.remove("reversed");
         cameraView.style.zIndex = oldZIndex;
 
         renderer.render(scene.object3D, scene.camera);
@@ -55,6 +53,8 @@ function cameraStart() {
         img.style.width = canvas.width;
         img.style.height = canvas.height;
         img.style.zIndex = 1000;
+        img.style.transform = "scaleX(-1)";
+        img.style.filter = "FlipH";
         img.onload = () => {
             let { width, height } = cover({ width: canvas.width, height: canvas.height }, { width: cameraCanvas.width, height: cameraCanvas.height });
 
