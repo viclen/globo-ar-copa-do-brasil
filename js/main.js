@@ -213,7 +213,6 @@ AFRAME.registerComponent('scene-objects', {
     })()
 });
 
-
 AFRAME.registerComponent('rotation-reader', {
     init: function () {
         cameraRig = document.getElementById("camera-rig");
