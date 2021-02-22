@@ -125,9 +125,9 @@ function changeCamera() {
     if (facingMode == "user") {
         facingMode = { exact: "environment" };
 
+        document.querySelector("video").classList.add("back");
         document.querySelector("#camera-rig").setAttribute("rotation", "0 0 0");
         document.querySelector("[scene-objects]").setAttribute("position", "0 0 -10");
-        document.querySelector("video").classList.add("back");
         document.querySelector("#objects").setAttribute("rotation", "0 0 0");
     } else {
         facingMode = "user";

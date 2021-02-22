@@ -213,18 +213,17 @@ AFRAME.registerComponent('scene-objects', {
     })()
 });
 
-const newRotation = new THREE.Vector3();
 
 AFRAME.registerComponent('rotation-reader', {
     init: function () {
         cameraRig = document.getElementById("camera-rig");
     },
     tick: (function () {
-        // const position = new THREE.Vector3();
+        const newRotation = new THREE.Vector3();
         const quaternion = new THREE.Quaternion();
 
         return function () {
-            // this.el.object3D.getWorldPosition(position);
+            this.el.object3D.getWorldPosition(newRotation);
             this.el.object3D.getWorldQuaternion(quaternion);
 
             document.getElementById("cameraRotation").innerHTML = `
@@ -235,7 +234,7 @@ AFRAME.registerComponent('rotation-reader', {
 
             if (window.facingMode == "user") {
                 newRotation.applyQuaternion(quaternion);
-                cameraRig.setAttribute("rotation", `-${newRotation.x} ${newRotation.y} ${newRotation.z}`);
+                cameraRig.setAttribute("rotation", `-${newRotation.x} 180 ${newRotation.z}`);
             }
         };
     })()
