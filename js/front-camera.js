@@ -20,7 +20,7 @@ function cameraStart() {
     cameraTrigger = document.querySelector("#camera--trigger");
     cameraChange = document.querySelector("#camera--change");
 
-    cameraChange.onclick = changeCamera();
+    cameraChange.onclick = () => changeCamera();
 
     navigator.mediaDevices
         .getUserMedia({ ...constraints, video: { facingMode } })
