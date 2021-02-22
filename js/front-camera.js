@@ -1,7 +1,5 @@
 let facingMode = "user";
 
-window.facingMode = facingMode;
-
 const constraints = { audio: false };
 // Define constants
 let cameraView, cameraOutput, cameraCanvas, cameraTrigger, cameraChange;
@@ -11,6 +9,8 @@ let renderer;
 let arController;
 // Access the device camera and stream to cameraView
 function cameraStart() {
+    window.facingMode = facingMode;
+
     cameraView = document.querySelector("video");
     cameraOutput = document.querySelector("#camera--output");
     scene = document.querySelector("#arScene");
@@ -135,8 +135,6 @@ function changeCamera() {
         document.querySelector("[scene-objects]").setAttribute("position", "0 0 10");
         document.querySelector("video").classList.add("reversed");
     }
-
-    window.facingMode = facingMode;
 
     cameraStart();
 }

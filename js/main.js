@@ -47,6 +47,8 @@ function showScreen(name) {
     screen.setAttribute('visible', 'true');
 }
 
+let sceneObjects;
+
 AFRAME.registerComponent('ar-scene', {
     init: function () {
         if (!window.mobileCheck()) {
@@ -76,7 +78,7 @@ AFRAME.registerComponent('ar-scene', {
             });
 
             document.getElementById("carregando").style.display = "";
-            document.querySelector(".fixed-front").remove();
+            // document.querySelector(".fixed-front").remove();
         });
     }
 });
@@ -169,6 +171,9 @@ function createParticles() {
 let lastFrame = 0;
 
 AFRAME.registerComponent('scene-objects', {
+    init: function () {
+        sceneObjects = this.el;
+    },
     tick: (function () {
         const position = new THREE.Vector3();
         // const quaternion = new THREE.Quaternion();
@@ -210,11 +215,11 @@ AFRAME.registerComponent('scene-objects', {
 
 AFRAME.registerComponent('rotation-reader', {
     tick: (function () {
-        const position = new THREE.Vector3();
+        // const position = new THREE.Vector3();
         const quaternion = new THREE.Quaternion();
 
         return function () {
-            this.el.object3D.getWorldPosition(position);
+            // this.el.object3D.getWorldPosition(position);
             this.el.object3D.getWorldQuaternion(quaternion);
 
             document.getElementById("cameraRotation").innerHTML = `
@@ -224,11 +229,7 @@ AFRAME.registerComponent('rotation-reader', {
             `;
 
             if (window.facingMode == "user") {
-                document.getElementById("camera-rig").setAttribute("rotation", `
-                    ${Math.round(- (quaternion.x * 180 + 1))},
-                    0,
-                    0
-                `);
+                sceneObjects.setAttribute("rotation", `${Math.round(- (quaternion.x * 180))} 0 0`);
             }
         };
     })()
