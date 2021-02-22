@@ -76,6 +76,7 @@ AFRAME.registerComponent('ar-scene', {
             });
 
             document.getElementById("carregando").style.display = "";
+            document.querySelector(".fixed-front").remove();
         });
     }
 });
@@ -222,9 +223,9 @@ AFRAME.registerComponent('rotation-reader', {
                 ${Math.round(quaternion.z * 180)}
             `;
 
-            if (window.faceMode == "user") {
+            if (window.facingMode == "user") {
                 document.getElementById("camera-rig").setAttribute("rotation", `
-                    ${Math.round(- quaternion.x * 180)},
+                    ${Math.round(- (quaternion.x * 180 + 1))},
                     0,
                     0
                 `);
