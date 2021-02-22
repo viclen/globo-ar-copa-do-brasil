@@ -223,13 +223,14 @@ AFRAME.registerComponent('rotation-reader', {
             this.el.object3D.getWorldQuaternion(quaternion);
 
             document.getElementById("cameraRotation").innerHTML = `
-                ${Math.round(quaternion.x * 180)},
-                ${Math.round(quaternion.y * 180)},
-                ${Math.round(quaternion.z * 180)}
+                ${quaternion.x},
+                ${quaternion.y},
+                ${quaternion.z},
+                ${quaternion.w}
             `;
 
             if (window.facingMode == "user") {
-                sceneObjects.setAttribute("rotation", `${Math.round(- (quaternion.x * 180))} 0 0`);
+                // sceneObjects.setAttribute("rotation", `${Math.round(quaternion.x * 180)} 0 0`);
             }
         };
     })()
