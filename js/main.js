@@ -17,6 +17,23 @@ Number.prototype.withTolerance = function (tolerance = 0) {
     return 0;
 };
 
+
+let sceneObjects;
+let isOpening = false;
+
+const motionThreshold = 5;
+let acceleration = { x: 0, y: 0, z: 0, time: new Date().getTime() };
+let velocity = { x: 0, y: 0, z: 0 };
+let motions = {
+    x: [],
+    y: [],
+    z: []
+};
+
+let canAdd = true;
+
+let lastFrame = 0;
+
 function getLocation(cb = () => { }) {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(cb);
@@ -27,12 +44,12 @@ function getLocation(cb = () => { }) {
 
 function showPosition(position) {
     const objects = document.getElementById("objects");
+    sceneObjects = objects;
 
     objects.setAttribute("gps-entity-place", "latitude: " + position.coords.latitude + "; longitude: " + position.coords.longitude);
     objects.setAttribute("visible", "true");
 }
 
-let isOpening = false;
 function openurl(url) {
     if (!isOpening) {
         window.open(url);
@@ -46,8 +63,6 @@ function showScreen(name) {
     const screen = document.getElementById('screen' + name);
     screen.setAttribute('visible', 'true');
 }
-
-let sceneObjects;
 
 AFRAME.registerComponent('ar-scene', {
     init: function () {
@@ -91,15 +106,6 @@ AFRAME.registerComponent('3dmodel', {
     }
 });
 
-const motionThreshold = 5;
-let acceleration = { x: 0, y: 0, z: 0, time: new Date().getTime() };
-let velocity = { x: 0, y: 0, z: 0 };
-let motions = {
-    x: [],
-    y: [],
-    z: []
-};
-
 function onMoveDevice(event) {
     let acl = event.acceleration;
 
@@ -141,8 +147,6 @@ function movementThreshold(acl) {
     }
 }
 
-let canAdd = true;
-
 function createParticles() {
     if (!canAdd) return;
 
@@ -168,12 +172,7 @@ function createParticles() {
     }, 2000);
 }
 
-let lastFrame = 0;
-
 AFRAME.registerComponent('scene-objects', {
-    init: function () {
-        sceneObjects = this.el;
-    },
     tick: (function () {
         const position = new THREE.Vector3();
         // const quaternion = new THREE.Quaternion();
@@ -217,20 +216,21 @@ AFRAME.registerComponent('rotation-reader', {
     tick: (function () {
         // const position = new THREE.Vector3();
         const quaternion = new THREE.Quaternion();
+        const rotation = new THREE.Vector3(0, 0, 1);
 
         return function () {
             // this.el.object3D.getWorldPosition(position);
             this.el.object3D.getWorldQuaternion(quaternion);
 
             document.getElementById("cameraRotation").innerHTML = `
-                ${quaternion.x},
-                ${quaternion.y},
-                ${quaternion.z},
-                ${quaternion.w}
+                ${rotation.x},
+                ${rotation.y},
+                ${rotation.z}
             `;
 
             if (window.facingMode == "user") {
-                // sceneObjects.setAttribute("rotation", `${Math.round(quaternion.x * 180)} 0 0`);
+                rotation.applyQuaternion(quaternion);
+                sceneObjects.setAttribute("rotation", `${rotation.x} ${rotation.y} ${rotation.z}`);
             }
         };
     })()
