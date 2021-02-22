@@ -226,15 +226,16 @@ AFRAME.registerComponent('rotation-reader', {
             this.el.object3D.getWorldPosition(newRotation);
             this.el.object3D.getWorldQuaternion(quaternion);
 
-            document.getElementById("cameraRotation").innerHTML = `
-                ${newRotation.x},
-                ${newRotation.y},
-                ${newRotation.z}
-            `;
-
             if (window.facingMode == "user") {
                 newRotation.applyQuaternion(quaternion);
+
                 cameraRig.setAttribute("rotation", `-${newRotation.x} 180 ${newRotation.z}`);
+
+                document.getElementById("cameraRotation").innerHTML = `
+                    ${newRotation.x},
+                    ${newRotation.y},
+                    ${newRotation.z}
+                `;
             }
         };
     })()
