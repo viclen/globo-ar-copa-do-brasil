@@ -225,7 +225,7 @@ AFRAME.registerComponent('rotation-reader', {
                 const rotation = this.el.getAttribute("rotation");
                 const rigRotation = cameraRig.getAttribute("rotation");
 
-                rigRotation.x = -rotation.x;
+                rigRotation.x = -rotation.x * 2;
 
                 cameraRig.setAttribute("rotation", rigRotation);
 
