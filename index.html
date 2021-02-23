@@ -61,12 +61,14 @@
     <script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script>
     <script
         src="https://unpkg.com/aframe-sprite-particles-component@^0.5.0/aframe-sprite-particles-component.js"></script>
-    <script>THREEx.ArToolkitContext.baseURL = 'https://rawgit.com/jeromeetienne/ar.js/master/three.js/'</script>
+    <script>
+        THREEx.ArToolkitContext.baseURL = 'https://rawgit.com/jeromeetienne/ar.js/master/three.js/'
+    </script>
 
     <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
 
     <script src="./js/front-camera.js?32"></script>
-    <script id="scriptVersion" src="./js/main.js?63"></script>
+    <script id="scriptVersion" src="./js/main.js?64"></script>
 </head>
 
 <body style="margin: 0; overflow: hidden;">
@@ -104,8 +106,8 @@
                 <a-entity id="particles" position="0 0 0"></a-entity>
 
                 <a-entity animation="property: rotation; to: 0 360 0; dur: 10000; easing: linear; loop: true">
-                    <a-obj-model 3dmodel id="model" position="0 0 0" rotation="0 0 0" scale="5 5 5" src="models/trophy.obj"
-                        mtl="models/trophy.mtl">
+                    <a-obj-model 3dmodel id="model" position="0 0 0" rotation="0 0 0" scale="5 5 5"
+                        src="models/trophy.obj" mtl="models/trophy.mtl">
                     </a-obj-model>
                 </a-entity>
             </a-entity>

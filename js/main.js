@@ -256,8 +256,8 @@ function zoomIn() {
     object3d = document.querySelector("#model");
 
     let newScale;
-    const currentScale = object3d.getAttribute("scale").split(" ");
-    if (currentScale.length > 1 && currentScale[0].length && currentScale[0] < 8) {
+    const currentScale = object3d.getAttribute("scale").x;
+    if (currentScale < 8) {
         newScale = currentScale[0] + 1;
     } else {
         newScale = 8;
@@ -270,8 +270,8 @@ function zoomOut() {
     object3d = document.querySelector("#model");
 
     let newScale;
-    const currentScale = object3d.getAttribute("scale").split(" ");
-    if (currentScale.length > 1 && currentScale[0].length && currentScale[0] > 1) {
+    const currentScale = object3d.getAttribute("scale").x;
+    if (currentScale > 1) {
         newScale = currentScale[0] - 1;
     } else {
         newScale = 1;
@@ -282,3 +282,5 @@ function zoomOut() {
 
 document.getElementById("#zoom-in").onclick = () => zoomIn();
 document.getElementById("#zoom-out").onclick = () => zoomOut();
+
+THREE.BufferGeometry.prototype.addAttribute = THREE.BufferGeometry.prototype.setAttribute;
