@@ -136,8 +136,6 @@ main.camera, #camera--view, #camera--sensor, #camera--output {
     z-index: 1;
     line-height: 0;
     outline: none;
-    width: 46px;
-    height: 46px;
 }
 
 #camera--change {
