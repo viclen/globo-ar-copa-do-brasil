@@ -48,10 +48,10 @@ function cameraStart() {
 
         renderer.render(scene.object3D, scene.camera);
         let img = new Image();
-        img.src = renderer.domElement.toDataURL();
-        img.style.objectFit = "contain";
         img.style.width = canvas.width;
         img.style.height = canvas.height;
+        img.src = renderer.domElement.toDataURL();
+        img.style.objectFit = "contain";
         img.style.zIndex = 1000;
         img.style.transform = "scaleX(-1)";
         img.style.filter = "FlipH";
@@ -131,7 +131,7 @@ function changeCamera() {
         document.querySelector("#camera-rig").setAttribute("rotation", "0 0 0");
         document.querySelector("[scene-objects]").setAttribute("position", "0 0 -10");
         document.querySelector("#objects").setAttribute("rotation", "0 0 0");
-        canvas.classList.remove("reversed");
+        canvas.classList.add("back");
     } else {
         facingMode = "user";
 
@@ -139,7 +139,7 @@ function changeCamera() {
         document.querySelector("#camera-rig").setAttribute("rotation", "0 180 0");
         document.querySelector("[scene-objects]").setAttribute("position", "0 0 10");
         document.querySelector("#objects").setAttribute("rotation", "0 0 0");
-        canvas.classList.add("reversed");
+        canvas.classList.remove("back");
     }
 
     cameraStart();
