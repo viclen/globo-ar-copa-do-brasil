@@ -227,12 +227,12 @@ AFRAME.registerComponent('rotation-reader', {
             this.el.object3D.getWorldQuaternion(quaternion);
 
             if (window.facingMode == "user") {
-                const newRotation = new THREE.Vector3(1, 0, 0);
+                const newRotation = new THREE.Vector3(0, 0, 1);
 
                 if (quaternion.x && !isNaN(quaternion.x)) {
                     newRotation.applyQuaternion(quaternion);
 
-                    cameraRig.setAttribute("rotation", `-${newRotation.x} 180 0`);
+                    // cameraRig.setAttribute("rotation", `-${newRotation.x} 180 0`);
 
                     document.getElementById("cameraPosition").innerHTML = `
                         ${quaternion.x},
@@ -259,7 +259,7 @@ function zoomIn() {
 
     let newScale;
     const currentScale = object3d.getAttribute("scale").x;
-    if (currentScale < 8) {
+    if (currentScale < 7) {
         newScale = currentScale + 1;
     } else {
         newScale = 8;
@@ -273,7 +273,7 @@ function zoomOut() {
 
     let newScale;
     const currentScale = object3d.getAttribute("scale").x;
-    if (currentScale > 2) {
+    if (currentScale > 3) {
         newScale = currentScale - 1;
     } else {
         newScale = 2;
@@ -281,10 +281,5 @@ function zoomOut() {
 
     object3d.setAttribute("animation", `property: scale; to: ${newScale} ${newScale} ${newScale}; dur: 500; easing: linear; loop: false`);
 }
-
-document.addEventListener("load", () => {
-    document.getElementById("zoom-in").onclick = () => zoomIn();
-    document.getElementById("zoom-out").onclick = () => zoomOut();
-});
 
 THREE.BufferGeometry.prototype.addAttribute = THREE.BufferGeometry.prototype.setAttribute;
