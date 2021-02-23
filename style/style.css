@@ -136,6 +136,8 @@ main.camera, #camera--view, #camera--sensor, #camera--output {
     z-index: 1;
     line-height: 0;
     outline: none;
+    width: 46px;
+    height: 46px;
 }
 
 #camera--change {
@@ -153,6 +155,8 @@ main.camera, #camera--view, #camera--sensor, #camera--output {
     z-index: 1;
     line-height: 0;
     outline: none;
+    width: 46px;
+    height: 46px;
 }
 
 #zoom-in {
@@ -171,6 +175,8 @@ main.camera, #camera--view, #camera--sensor, #camera--output {
     z-index: 1;
     line-height: 0;
     outline: none;
+    width: 46px;
+    height: 46px;
 }
 
 #zoom-out {
@@ -189,6 +195,32 @@ main.camera, #camera--view, #camera--sensor, #camera--output {
     z-index: 1;
     line-height: 0;
     outline: none;
+    width: 46px;
+    height: 46px;
+}
+
+#enable-particles {
+    background-color: rgb(189, 189, 189);
+    color: black;
+    font-size: 16px;
+    border-radius: 50%;
+    border: none;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.2);
+    position: fixed;
+    top: 20px;
+    left: 86px;
+    z-index: 1;
+    line-height: 0;
+    outline: none;
+    width: 46px;
+    height: 46px;
+}
+
+#enable-particles.active {
+    background-color: black;
+    color: white;
 }
 
 .taken {
