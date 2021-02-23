@@ -110,19 +110,21 @@ AFRAME.registerComponent('3dmodel', {
 function onMoveDevice(event) {
     let acl = event.acceleration;
 
-    const now = new Date().getTime();
-    const deltaTime = (now - acceleration.time) / 1000;
+    if (acl.x !== null) {
+        const now = new Date().getTime();
+        const deltaTime = (now - acceleration.time) / 1000;
 
-    acceleration = {
-        x: Math.round(acl.x.withTolerance(0)) * deltaTime,
-        y: Math.round(acl.y.withTolerance(0.2) - 9.81) * deltaTime,
-        z: Math.round(acl.z.withTolerance(0)) * deltaTime,
-        time: now
+        acceleration = {
+            x: Math.round(acl.x.withTolerance(0)) * deltaTime,
+            y: Math.round(acl.y.withTolerance(0.2) - 9.81) * deltaTime,
+            z: Math.round(acl.z.withTolerance(0)) * deltaTime,
+            time: now
+        }
+
+        velocity.x += acceleration.x;
+        velocity.y += acceleration.y;
+        velocity.z += acceleration.z;
     }
-
-    velocity.x += acceleration.x;
-    velocity.y += acceleration.y;
-    velocity.z += acceleration.z;
 }
 
 function movementThreshold(acl) {

@@ -135,6 +135,7 @@ main.camera, #camera--view, #camera--sensor, #camera--output {
     transform: translateX(-50%);
     z-index: 1;
     line-height: 0;
+    outline: none;
 }
 
 #camera--change {
@@ -151,6 +152,7 @@ main.camera, #camera--view, #camera--sensor, #camera--output {
     left: 20px;
     z-index: 1;
     line-height: 0;
+    outline: none;
 }
 
 #zoom-in {
@@ -168,6 +170,7 @@ main.camera, #camera--view, #camera--sensor, #camera--output {
     transform: translateY(-50%);
     z-index: 1;
     line-height: 0;
+    outline: none;
 }
 
 #zoom-out {
@@ -185,6 +188,7 @@ main.camera, #camera--view, #camera--sensor, #camera--output {
     transform: translateY(-50%);
     z-index: 1;
     line-height: 0;
+    outline: none;
 }
 
 .taken {
