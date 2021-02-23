@@ -234,17 +234,19 @@ AFRAME.registerComponent('rotation-reader', {
 
                     // cameraRig.setAttribute("rotation", `-${newRotation.x} 180 0`);
 
+                    const rotation = this.el.getAttribute("rotation");
+                    const rigRotation = cameraRig.getAttribute("rotation");
+
                     document.getElementById("cameraPosition").innerHTML = `
-                        ${quaternion.x},
-                        ${quaternion.y},
-                        ${quaternion.z},
-                        ${quaternion.w}
+                        ${Math.round(rigRotation.x)},
+                        ${Math.round(rigRotation.y)},
+                        ${Math.round(rigRotation.z)}
                     `;
 
                     document.getElementById("cameraRotation").innerHTML = `
-                        ${Math.round(newRotation.x)},
-                        ${Math.round(newRotation.y)},
-                        ${Math.round(newRotation.z)}
+                        ${Math.round(rotation.x)},
+                        ${Math.round(rotation.y)},
+                        ${Math.round(rotation.z)}
                     `;
                 }
             }
