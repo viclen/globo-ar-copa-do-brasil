@@ -94,7 +94,7 @@ AFRAME.registerComponent('ar-scene', {
             });
 
             document.getElementById("carregando").style.display = "";
-            // document.querySelector(".fixed-front").remove();
+            document.querySelector(".fixed-front").remove();
         });
     }
 });
