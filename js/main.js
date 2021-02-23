@@ -220,35 +220,26 @@ AFRAME.registerComponent('rotation-reader', {
         cameraRig = document.getElementById("camera-rig");
     },
     tick: (function () {
-        const quaternion = new THREE.Quaternion();
-
         return function () {
-            // this.el.object3D.getWorldPosition(newRotation);
-            this.el.object3D.getWorldQuaternion(quaternion);
-
             if (window.facingMode == "user") {
-                const newRotation = new THREE.Vector3(1, 0, 0);
+                const rotation = this.el.getAttribute("rotation");
+                const rigRotation = cameraRig.getAttribute("rotation");
 
-                if (quaternion.x && !isNaN(quaternion.x)) {
-                    newRotation.applyQuaternion(quaternion);
+                rigRotation.x = -rotation;
 
-                    // cameraRig.setAttribute("rotation", `-${newRotation.x} 180 0`);
+                cameraRig.setAttribute("rotation", rigRotation);
 
-                    const rotation = this.el.getAttribute("rotation");
-                    const rigRotation = cameraRig.getAttribute("rotation");
+                document.getElementById("cameraPosition").innerHTML = `
+                    ${Math.round(rigRotation.x)},
+                    ${Math.round(rigRotation.y)},
+                    ${Math.round(rigRotation.z)}
+                `;
 
-                    document.getElementById("cameraPosition").innerHTML = `
-                        ${Math.round(rigRotation.x)},
-                        ${Math.round(rigRotation.y)},
-                        ${Math.round(rigRotation.z)}
-                    `;
-
-                    document.getElementById("cameraRotation").innerHTML = `
-                        ${Math.round(rotation.x)},
-                        ${Math.round(rotation.y)},
-                        ${Math.round(rotation.z)}
-                    `;
-                }
+                document.getElementById("cameraRotation").innerHTML = `
+                    ${Math.round(rotation.x)},
+                    ${Math.round(rotation.y)},
+                    ${Math.round(rotation.z)}
+                `;
             }
         };
     })()
