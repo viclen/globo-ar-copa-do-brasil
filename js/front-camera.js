@@ -131,6 +131,7 @@ function changeCamera() {
         document.querySelector("#camera-rig").setAttribute("rotation", "0 0 0");
         document.querySelector("[scene-objects]").setAttribute("position", "0 0 -10");
         document.querySelector("#objects").setAttribute("rotation", "0 0 0");
+        canvas.classList.remove("reversed");
     } else {
         facingMode = "user";
 
@@ -138,6 +139,7 @@ function changeCamera() {
         document.querySelector("#camera-rig").setAttribute("rotation", "0 180 0");
         document.querySelector("[scene-objects]").setAttribute("position", "0 0 10");
         document.querySelector("#objects").setAttribute("rotation", "0 0 0");
+        canvas.classList.add("reversed");
     }
 
     cameraStart();
