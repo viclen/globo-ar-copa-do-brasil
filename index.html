@@ -66,7 +66,7 @@
     </script>
 
     <script src="./js/front-camera.js?32"></script>
-    <script id="scriptVersion" src="./js/main.js?70"></script>
+    <script id="scriptVersion" src="./js/main.js?71"></script>
 </head>
 
 <body style="margin: 0; overflow: hidden;">
@@ -101,6 +101,11 @@
         <a-entity objects visible="false" id="objects" smooth="true" smoothCount="10" smoothTolerance=".1"
             smoothThreshold="5">
             <a-entity scene-objects position="0 0 10" rotation="0 0 0">
+                <a-entity
+                    sprite-particles="texture: url(img/star2.png); spawnRate: 50; color: #fdff81; velocity: -1 8 -1..1 8 1; acceleration: 0 -20 0"
+                    position="0 5 0">
+                </a-entity>
+
                 <a-entity id="particles" position="0 0 0"></a-entity>
 
                 <a-entity animation="property: rotation; to: 0 360 0; dur: 10000; easing: linear; loop: true">
@@ -116,10 +121,6 @@
                 camera-data raycaster="objects: .clickable; interval: 1000; near: 2; far: 20; direction: 0 0 -1"
                 cursor="fuse: true; rayOrigin: mouse;">
             </a-entity>
-        </a-entity>
-
-        <a-entity
-            sprite-particles="texture: url(img/star2.png); spawnRate: 50; color: #fdff81; velocity: -1 8 -1..1 8 1; acceleration: 0 -20 0" position="0 5 0">
         </a-entity>
 
         <a-light type="point" color="#FFF" intensity="2" position="5 6 0"></a-light>

@@ -155,19 +155,19 @@ function createParticles() {
 
     canAdd = false;
 
-    document.getElementById("particles").innerHTML = `
-        <a-entity sprite-particles="
-            spawnRate: 30;
-            texture: url(img/star.png);
-            lifeTime: 1..5;
-            radialVelocity: 2..6;
-            radialAcceleration: -1;
-            opacity: 1,0;
-            color: white;
-            scale: 4;
-            spawnType: burst;
-        "></a-entity>
-    `;
+    // document.getElementById("particles").innerHTML = `
+    //     <a-entity sprite-particles="
+    //         spawnRate: 30;
+    //         texture: url(img/star.png);
+    //         lifeTime: 1..5;
+    //         radialVelocity: 2..6;
+    //         radialAcceleration: -1;
+    //         opacity: 1,0;
+    //         color: white;
+    //         scale: 4;
+    //         spawnType: burst;
+    //     "></a-entity>
+    // `;
 
     setTimeout(() => {
         document.getElementById("particles").innerHTML = "";
@@ -227,7 +227,7 @@ AFRAME.registerComponent('rotation-reader', {
             this.el.object3D.getWorldQuaternion(quaternion);
 
             if (window.facingMode == "user") {
-                const newRotation = new THREE.Vector3(0, 0, 1);
+                const newRotation = new THREE.Vector3(1, 0, 0);
 
                 if (quaternion.x && !isNaN(quaternion.x)) {
                     newRotation.applyQuaternion(quaternion);
