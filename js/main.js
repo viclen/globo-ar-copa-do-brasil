@@ -226,22 +226,25 @@ AFRAME.registerComponent('rotation-reader', {
 
             if (window.facingMode == "user") {
                 const newRotation = new THREE.Vector3(1, 0, 0);
-                newRotation.applyQuaternion(quaternion);
 
-                cameraRig.setAttribute("rotation", `-${newRotation.x} 180 0`);
+                if (quaternion.x && !isNaN(quaternion.x)) {
+                    newRotation.applyQuaternion(quaternion);
 
-                document.getElementById("cameraPosition").innerHTML = `
-                    ${quaternion.x},
-                    ${quaternion.y},
-                    ${quaternion.z},
-                    ${quaternion.w}
-                `;
+                    cameraRig.setAttribute("rotation", `-${newRotation.x} 180 0`);
 
-                document.getElementById("cameraRotation").innerHTML = `
-                    ${Math.round(newRotation.x)},
-                    ${Math.round(newRotation.y)},
-                    ${Math.round(newRotation.z)}
-                `;
+                    document.getElementById("cameraPosition").innerHTML = `
+                        ${quaternion.x},
+                        ${quaternion.y},
+                        ${quaternion.z},
+                        ${quaternion.w}
+                    `;
+
+                    document.getElementById("cameraRotation").innerHTML = `
+                        ${Math.round(newRotation.x)},
+                        ${Math.round(newRotation.y)},
+                        ${Math.round(newRotation.z)}
+                    `;
+                }
             }
         };
     })()
@@ -250,7 +253,7 @@ AFRAME.registerComponent('rotation-reader', {
 let object3d;
 
 function zoomIn() {
-    object3d = document.querySelector("[3dmodel]");
+    object3d = document.querySelector("#model");
 
     let newScale;
     const currentScale = object3d.getAttribute("scale").split(" ");
@@ -264,7 +267,7 @@ function zoomIn() {
 }
 
 function zoomOut() {
-    object3d = document.querySelector("[3dmodel]");
+    object3d = document.querySelector("#model");
 
     let newScale;
     const currentScale = object3d.getAttribute("scale").split(" ");

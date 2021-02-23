@@ -66,7 +66,7 @@
     <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
 
     <script src="./js/front-camera.js?32"></script>
-    <script id="scriptVersion" src="./js/main.js?62"></script>
+    <script id="scriptVersion" src="./js/main.js?63"></script>
 </head>
 
 <body style="margin: 0; overflow: hidden;">
@@ -104,7 +104,7 @@
                 <a-entity id="particles" position="0 0 0"></a-entity>
 
                 <a-entity animation="property: rotation; to: 0 360 0; dur: 10000; easing: linear; loop: true">
-                    <a-obj-model 3dmodel position="0 0 0" rotation="0 0 0" scale="5 5 5" src="models/trophy.obj"
+                    <a-obj-model 3dmodel id="model" position="0 0 0" rotation="0 0 0" scale="5 5 5" src="models/trophy.obj"
                         mtl="models/trophy.mtl">
                     </a-obj-model>
                 </a-entity>
@@ -118,7 +118,7 @@
             </a-entity>
         </a-entity>
 
-        <a-light type="point" color="#FFF" intensity="1" position="0 5 0"></a-light>
+        <a-light type="point" color="#FFF" intensity="2" position="0 6 0"></a-light>
     </a-scene>
 
     <main class="camera">
