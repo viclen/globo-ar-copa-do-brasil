@@ -273,18 +273,18 @@ function zoomOut() {
 
     let newScale;
     const currentScale = object3d.getAttribute("scale").x;
-    if (currentScale > 1) {
+    if (currentScale > 2) {
         newScale = currentScale - 1;
     } else {
-        newScale = 1;
+        newScale = 2;
     }
 
     object3d.setAttribute("animation", `property: scale; to: ${newScale} ${newScale} ${newScale}; dur: 500; easing: linear; loop: false`);
 }
 
 document.addEventListener("load", () => {
-    document.getElementById("#zoom-in").onclick = () => zoomIn();
-    document.getElementById("#zoom-out").onclick = () => zoomOut();
+    document.getElementById("zoom-in").onclick = () => zoomIn();
+    document.getElementById("zoom-out").onclick = () => zoomOut();
 });
 
 THREE.BufferGeometry.prototype.addAttribute = THREE.BufferGeometry.prototype.setAttribute;
