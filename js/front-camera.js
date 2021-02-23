@@ -22,15 +22,26 @@ function cameraStart() {
 
     cameraChange.onclick = () => changeCamera();
 
-    navigator.mediaDevices
-        .getUserMedia({ ...constraints, video: { facingMode } })
-        .then(function (stream) {
-            track = stream.getTracks()[0];
-            cameraView.srcObject = stream;
-        })
-        .catch(function (error) {
-            alert("Oops. Something is broken." + JSON.stringify(error));
-        });
+    const callback = (stream) => {
+        track = stream.getTracks()[0];
+        cameraView.srcObject = stream;
+    };
+
+    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        navigator.mediaDevices
+            .getUserMedia({ ...constraints, video: { facingMode } }).then(callback).catch(function (error) {
+                alert("Não foi possível executar por falta de permissões.");
+            });
+    } else {
+        if (!navigator.getUserMedia) {
+            navigator.getUserMedia = navigator.webkitGetUserMedia;
+        }
+
+        navigator
+            .getUserMedia({ ...constraints, video: { facingMode } }, callback, function (error) {
+                alert("Não foi possível executar por falta de permissões.");
+            });
+    }
 
     cameraOutput.onclick = () => shareImg();
 
@@ -112,8 +123,13 @@ function shareImg() {
         navigator.share({
             files: filesArray,
         })
-            .then(() => alert('Share was successful.'))
-            .catch((error) => alert('Sharing failed' + JSON.stringify(error)));
+            .catch((error) => {
+                const a = document.createElement("a");
+                a.href = cameraOutput.src;
+                a.target = '_blank';
+                a.download = "foto.jpg";
+                a.click();
+            });
     } else {
         const a = document.createElement("a");
         a.href = cameraOutput.src;
