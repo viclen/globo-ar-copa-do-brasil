@@ -5,6 +5,14 @@ document.addEventListener("load", function () {
         }
     });
 
+    navigator.permissions.query({ name: 'deviceorientation' }).then(function (result) {
+        if (result.state == "denied") {
+            alert("Sem permissão de movimento.");
+        } else {
+            window.addEventListener("deviceorientation", handleOrientation, true);
+        }
+    });
+
     (function requestDeviceMotion(callback) {
         if (window.DeviceMotionEvent == null) {
             alert("Sem permissão de movimento.");
@@ -18,6 +26,24 @@ document.addEventListener("load", function () {
             });
         }
     })();
+
+    (function requestDeviceMotion(callback) {
+        if (window.DeviceOrientationEvent == null) {
+            alert("Sem permissão de movimento.");
+        } else if (DeviceMotionEvent.requestPermission) {
+            DeviceOrientationEvent.requestPermission().then(function (state) {
+                if (state == "denied") {
+                    alert("Sem permissão de movimento.");
+                } else {
+                    window.addEventListener("deviceorientation", handleOrientation, true);
+                }
+            }, function (err) {
+                alert("Sem permissão de movimento.");
+            });
+        }
+    })();
+
+    cameraStart();
 });
 
 window.mobileCheck = function () {
@@ -138,6 +164,18 @@ function onMoveDevice(event) {
     }
 }
 
+// function handleOrientation(event) {
+//     var alpha = event.alpha;
+//     var beta = event.beta;
+//     var gamma = event.gamma;
+
+//     document.getElementById("cameraRotation").innerHTML = `
+//         ${beta}<br />
+//         ${gamma}<br />
+//         ${alpha}<br />
+//     `;
+// }
+
 function movementThreshold(acl) {
     if (acl && acl.x && acl.y && acl.z) {
         if (motions.x.length >= motionThreshold) {
@@ -192,16 +230,16 @@ function movementThreshold(acl) {
 //                 ${move.z}<br />
 //             `;
 
-//             document.getElementById("cameraRotation").innerHTML = `
-//                 ${newPosition.x}<br />
-//                 ${newPosition.y}<br />
-//                 ${newPosition.z}<br />
-//             `;
+//          document.getElementById("cameraRotation").innerHTML = `
+//              ${newPosition.x}<br />
+//              ${newPosition.y}<br />
+//              ${newPosition.z}<br />
+//          `;
 //         };
 //     })()
 // });
 
-AFRAME.registerComponent('rotation-reader', {
+AFRAME.registerComponent('camera-data', {
     init: function () {
         cameraRig = document.getElementById("camera-rig");
     },
@@ -212,7 +250,7 @@ AFRAME.registerComponent('rotation-reader', {
                 const rigRotation = cameraRig.getAttribute("rotation");
 
                 rigRotation.x = -rotation.x * 2;
-                // rigRotation.y = 180 + rotation.y;
+                rigRotation.z = -rotation.z * 2;
 
                 cameraRig.setAttribute("rotation", rigRotation);
             }
@@ -234,7 +272,7 @@ function zoomIn() {
     }
 
     object3d.setAttribute("animation", `property: scale; to: ${newScale} ${newScale} ${newScale}; dur: 500; easing: linear; loop: false`);
-    document.getElementById("particles").setAttribute("sprite-particles", { scale: (newScale * 0.4) + "" });
+    // document.getElementById("particles").setAttribute("particle-system", { scale: (newScale * 0.6) + "" });
 }
 
 function zoomOut() {
@@ -249,16 +287,16 @@ function zoomOut() {
     }
 
     object3d.setAttribute("animation", `property: scale; to: ${newScale} ${newScale} ${newScale}; dur: 500; easing: linear; loop: false`);
-    document.getElementById("particles").setAttribute("sprite-particles", { scale: (newScale * 0.4) + "" });
+    // document.getElementById("particles").setAttribute("particle-system", { scale: (newScale * 0.6) + "" });
 }
 
 function enableParticles() {
     const el = document.getElementById("enable-particles");
     if (el.classList.contains("active")) {
         el.classList.remove("active");
-        document.getElementById("particles").setAttribute("sprite-particles", { enable: false });
+        document.getElementById("particles").setAttribute("particle-system", { enabled: false });
     } else {
-        document.getElementById("particles").setAttribute("sprite-particles", { enable: true });
+        document.getElementById("particles").setAttribute("particle-system", { enabled: true });
         el.classList.add("active");
     }
 }

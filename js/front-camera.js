@@ -127,14 +127,14 @@ function shareImg() {
                 const a = document.createElement("a");
                 a.href = cameraOutput.src;
                 a.target = '_blank';
-                a.download = "foto.jpg";
+                a.download = "foto";
                 a.click();
             });
     } else {
         const a = document.createElement("a");
         a.href = cameraOutput.src;
         a.target = '_blank';
-        a.download = "foto.jpg";
+        a.download = "foto";
         a.click();
     }
 }
