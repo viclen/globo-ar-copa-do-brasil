@@ -20,6 +20,8 @@ function cameraStart() {
     cameraTrigger = document.querySelector("#camera--trigger");
     cameraChange = document.querySelector("#camera--change");
 
+    cameraTrigger.setAttribute("data-camera", facingMode === "user" ? "frontal" : "traseira");
+
     cameraChange.onclick = () => changeCamera();
 
     const callback = (stream) => {
