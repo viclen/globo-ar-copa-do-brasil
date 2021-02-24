@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html manifest="./manifest.mf">
+<html>
 
 <head>
     <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -11,7 +11,6 @@
 
         gtag('config', 'UA-190372442-1');
     </script>
-
 
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -66,8 +65,8 @@
         THREEx.ArToolkitContext.baseURL = 'https://rawgit.com/jeromeetienne/ar.js/master/three.js/';
     </script>
 
-    <script src="./js/front-camera.js?40"></script>
-    <script id="scriptVersion" src="./js/main.js?101"></script>
+    <script src="./js/front-camera.js?45"></script>
+    <script id="scriptVersion" src="./js/main.js?105"></script>
 </head>
 
 <body style="margin: 0; overflow: hidden;">
@@ -107,16 +106,17 @@
                     </a-obj-model>
                 </a-entity>
 
-                <!-- <a-entity id="particles"
-                    sprite-particles=""texture": url(img/star2.png); scale: 3; spawnRate: 50; color: #fdff81; velocity: -2 0 -2..2 8 2; acceleration: 0 -10 0"
-                    position="0 2 0">
-                </a-entity> -->
-
-                <a-entity id="particles" position="0 0 0" particle-system="preset: dust; texture: ./img/star2.png; color: #fdff81; "></a-entity>
-
-                <!-- <a-entity position="0 0 0"
-                    sprite-particles="texture: url(); scale: 4; radialType: circleXZ; spawnRate: 10; radialPosition: 1; velocity: 0.1 0.5 0.1; radialVelocity: -0.1; angularVelocity: 0 450 0; lifeTime: 5; color: #fdff81">
-                </a-entity> -->
+                <a-entity id="particles" position="0 0 0" particle-system="
+                    color:  #fdff81;
+                    preset: rain;
+                    texture: ./img/star2.png;
+                    particleCount: 4000;
+                    size: 1.5;
+                    velocityValue: 0 -5 0;
+                    velocitySpread: 0 0 0;
+                    accelerationValue: 0 -2 0;
+                    accelerationSpread: 0 0 0;
+                "></a-entity>
             </a-entity>
         </a-entity>
 
@@ -155,7 +155,7 @@
     <script>
         const splitted = document.getElementById("scriptVersion").getAttribute("src").split("?");
         const version = splitted.length > 1 ? splitted[1] : 1;
-        alert("Versão " + version);
+        // alert("Versão " + version);
     </script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/js/all.min.js"></script>
