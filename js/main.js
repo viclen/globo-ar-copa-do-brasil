@@ -1,13 +1,13 @@
 document.addEventListener("load", function () {
     navigator.permissions.query({ name: 'gyroscope' }).then(function (result) {
         if (result.state == "denied") {
-            alert("Sem permissão de movimento.");
+            // alert("Sem permissão de movimento.");
         }
     });
 
     navigator.permissions.query({ name: 'deviceorientation' }).then(function (result) {
         if (result.state == "denied") {
-            alert("Sem permissão de movimento.");
+            // alert("Sem permissão de movimento.");
         } else {
             window.addEventListener("deviceorientation", handleOrientation, true);
         }
@@ -15,30 +15,30 @@ document.addEventListener("load", function () {
 
     (function requestDeviceMotion(callback) {
         if (window.DeviceMotionEvent == null) {
-            alert("Sem permissão de movimento.");
+            // alert("Sem permissão de movimento.");
         } else if (DeviceMotionEvent.requestPermission) {
             DeviceMotionEvent.requestPermission().then(function (state) {
                 if (state == "denied") {
-                    alert("Sem permissão de movimento.");
+                    // alert("Sem permissão de movimento.");
                 }
             }, function (err) {
-                alert("Sem permissão de movimento.");
+                // alert("Sem permissão de movimento.");
             });
         }
     })();
 
     (function requestDeviceMotion(callback) {
         if (window.DeviceOrientationEvent == null) {
-            alert("Sem permissão de movimento.");
+            // alert("Sem permissão de movimento.");
         } else if (DeviceMotionEvent.requestPermission) {
             DeviceOrientationEvent.requestPermission().then(function (state) {
                 if (state == "denied") {
-                    alert("Sem permissão de movimento.");
+                    // alert("Sem permissão de movimento.");
                 } else {
                     window.addEventListener("deviceorientation", handleOrientation, true);
                 }
             }, function (err) {
-                alert("Sem permissão de movimento.");
+                // alert("Sem permissão de movimento.");
             });
         }
     })();
@@ -88,7 +88,7 @@ function getLocation(cb = () => { }) {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(cb);
     } else {
-        alert("Geolocation is not supported by this browser.");
+        // alert("Geolocation is not supported by this browser.");
     }
 }
 

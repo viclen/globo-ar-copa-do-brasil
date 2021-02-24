@@ -32,7 +32,7 @@ function cameraStart() {
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
         navigator.mediaDevices
             .getUserMedia({ ...constraints, video: { facingMode } }).then(callback).catch(function (error) {
-                alert("Não foi possível executar por falta de permissões.");
+                // alert("Não foi possível executar por falta de permissões.");
             });
     } else {
         if (!navigator.getUserMedia) {
@@ -41,7 +41,7 @@ function cameraStart() {
 
         navigator
             .getUserMedia({ ...constraints, video: { facingMode } }, callback, function (error) {
-                alert("Não foi possível executar por falta de permissões.");
+                // alert("Não foi possível executar por falta de permissões.");
             });
     }
 
