@@ -20,32 +20,68 @@ function cameraStart() {
     cameraTrigger = document.querySelector("#camera--trigger");
     cameraChange = document.querySelector("#camera--change");
 
-    cameraTrigger.setAttribute("data-camera", facingMode === "user" ? "frontal" : "traseira");
+    if (facingMode == "user") {
+        document.querySelector("video").classList.remove("back");
+        document.querySelector("#camera-rig").setAttribute("rotation", "0 180 0");
+        document.querySelector("[scene-objects]").setAttribute("position", "0 0 10");
+        document.querySelector("#objects").setAttribute("rotation", "0 0 0");
+        cameraTrigger.setAttribute("data-camera", "frontal");
+        canvas.classList.remove("back");
+        cameraChange.onclick = () => changeCamera();
+        cameraOutput.onclick = () => shareImg();
 
-    cameraChange.onclick = () => changeCamera();
+        const callback = (stream) => {
+            track = stream.getTracks()[0];
+            cameraView.srcObject = stream;
+        };
 
-    const callback = (stream) => {
-        track = stream.getTracks()[0];
-        cameraView.srcObject = stream;
-    };
+        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+            navigator.mediaDevices
+                .getUserMedia({ ...constraints, video: { facingMode } }).then(callback).catch(function (error) {
+                    // alert("Não foi possível executar por falta de permissões.");
+                    if (!window.tryReload()) {
+                        changeCamera();
+                    }
+                });
+        } else {
+            if (!navigator.getUserMedia) {
+                navigator.getUserMedia = navigator.webkitGetUserMedia;
+            }
 
-    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-        navigator.mediaDevices
-            .getUserMedia({ ...constraints, video: { facingMode } }).then(callback).catch(function (error) {
-                // alert("Não foi possível executar por falta de permissões.");
-            });
-    } else {
-        if (!navigator.getUserMedia) {
-            navigator.getUserMedia = navigator.webkitGetUserMedia;
+            navigator
+                .getUserMedia({ ...constraints, video: { facingMode } }, callback, function (error) {
+                    // alert("Não foi possível executar por falta de permissões.");
+                    if (!window.tryReload()) {
+                        changeCamera();
+                    }
+                });
         }
+    } else {
+        document.querySelector("video").classList.add("back");
+        document.querySelector("#camera-rig").setAttribute("rotation", "0 0 0");
+        document.querySelector("[scene-objects]").setAttribute("position", "0 0 -10");
+        document.querySelector("#objects").setAttribute("rotation", "0 0 0");
+        cameraTrigger.setAttribute("data-camera", "traseira");
+        canvas.classList.add("back");
 
-        navigator
-            .getUserMedia({ ...constraints, video: { facingMode } }, callback, function (error) {
-                // alert("Não foi possível executar por falta de permissões.");
-            });
+        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+            navigator.mediaDevices
+                .getUserMedia({ ...constraints, video: { facingMode } }).then(callback).catch(function (error) {
+                    // alert("Não foi possível executar por falta de permissões.");
+                    window.tryReload();
+                });
+        } else {
+            if (!navigator.getUserMedia) {
+                navigator.getUserMedia = navigator.webkitGetUserMedia;
+            }
+
+            navigator
+                .getUserMedia({ ...constraints, video: { facingMode } }, callback, function (error) {
+                    // alert("Não foi possível executar por falta de permissões.");
+                    window.tryReload();
+                });
+        }
     }
-
-    cameraOutput.onclick = () => shareImg();
 
     // Take a picture when cameraTrigger is tapped
     cameraTrigger.onclick = function () {
@@ -144,20 +180,8 @@ function shareImg() {
 function changeCamera() {
     if (facingMode == "user") {
         facingMode = { exact: "environment" };
-
-        document.querySelector("video").classList.add("back");
-        document.querySelector("#camera-rig").setAttribute("rotation", "0 0 0");
-        document.querySelector("[scene-objects]").setAttribute("position", "0 0 -10");
-        document.querySelector("#objects").setAttribute("rotation", "0 0 0");
-        canvas.classList.add("back");
     } else {
         facingMode = "user";
-
-        document.querySelector("video").classList.remove("back");
-        document.querySelector("#camera-rig").setAttribute("rotation", "0 180 0");
-        document.querySelector("[scene-objects]").setAttribute("position", "0 0 10");
-        document.querySelector("#objects").setAttribute("rotation", "0 0 0");
-        canvas.classList.remove("back");
     }
 
     cameraStart();

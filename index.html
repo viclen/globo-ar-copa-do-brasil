@@ -12,6 +12,16 @@
         gtag('config', 'UA-190372442-1');
     </script>
 
+    <script>
+        window.tryReload = () => {
+            if (!window.location.search.includes("reloaded")) {
+                window.location = window.location.href + (window.location.search ? window.location.search + "&reloaded" : "?reloaded");
+                return true;
+            }
+            return false;
+        }
+    </script>
+
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
@@ -36,7 +46,7 @@
     </script>
     <!-- End Google Tag Manager -->
 
-    <link rel="stylesheet" href="style/style.css?14">
+    <link rel="stylesheet" href="style/style.css?15">
 
     <script>
         navigator.xr.requestDevice = navigator.xr.requestDevice || function () {
@@ -65,8 +75,8 @@
         THREEx.ArToolkitContext.baseURL = 'https://rawgit.com/jeromeetienne/ar.js/master/three.js/';
     </script>
 
-    <script src="./js/front-camera.js?45"></script>
-    <script id="scriptVersion" src="./js/main.js?105"></script>
+    <script src="./js/front-camera.js?46"></script>
+    <script id="scriptVersion" src="./js/main.js?106"></script>
 </head>
 
 <body style="margin: 0; overflow: hidden;">
