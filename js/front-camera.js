@@ -20,6 +20,11 @@ function cameraStart() {
     cameraTrigger = document.querySelector("#camera--trigger");
     cameraChange = document.querySelector("#camera--change");
 
+    const callback = (stream) => {
+        track = stream.getTracks()[0];
+        cameraView.srcObject = stream;
+    };
+
     if (facingMode == "user") {
         document.querySelector("video").classList.remove("back");
         document.querySelector("#camera-rig").setAttribute("rotation", "0 180 0");
@@ -29,11 +34,6 @@ function cameraStart() {
         canvas.classList.remove("back");
         cameraChange.onclick = () => changeCamera();
         cameraOutput.onclick = () => shareImg();
-
-        const callback = (stream) => {
-            track = stream.getTracks()[0];
-            cameraView.srcObject = stream;
-        };
 
         if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
             navigator.mediaDevices
@@ -85,8 +85,8 @@ function cameraStart() {
 
     // Take a picture when cameraTrigger is tapped
     cameraTrigger.onclick = function () {
-        cameraCanvas.width = cameraView.videoWidth;
-        cameraCanvas.height = cameraView.videoHeight;
+        cameraCanvas.width = cameraView.videoWidth * 2;
+        cameraCanvas.height = cameraView.videoHeight * 2;
 
         cameraCanvas.getContext('2d').clearRect(0, 0, cameraCanvas.width, cameraCanvas.height);
 
