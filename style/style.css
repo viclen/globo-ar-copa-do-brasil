@@ -22,7 +22,7 @@ body * {
     right: 0;
     z-index: 100;
     text-align: center;
-    background: rgba(0, 0, 0, 0.048);
+    background: none;
 }
 
 #clickToStart {
@@ -107,7 +107,7 @@ body * {
     text-align: center;
 }
 
-main.camera, #camera--view, #camera--sensor, #camera--output {
+main.camera, #camera--view, #camera--sensor, #camera--output, #sky--canvas {
     position: fixed;
     height: 100%;
     width: 100%;

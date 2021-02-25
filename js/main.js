@@ -106,7 +106,7 @@ function showPosition(position) {
     sceneObjects = objects;
 
     objects.setAttribute("gps-entity-place", "latitude: " + position.coords.latitude + "; longitude: " + position.coords.longitude);
-    objects.setAttribute("visible", "true");
+    objects.setAttribute("visible", true);
 }
 
 function openurl(url) {
@@ -139,25 +139,44 @@ AFRAME.registerComponent('ar-scene', {
         clickToStart.addEventListener('click', () => {
             cameraStart();
 
+            document.getElementById("carregando").style.display = "";
+
             getLocation(showPosition);
 
             clickToStart.remove();
 
             // window.addEventListener("devicemotion", onMoveDevice);
-
-            document.getElementById("carregando").style.display = "";
-            document.querySelector(".fixed-front").remove();
         });
     }
 });
 
-AFRAME.registerComponent('3dmodel', {
+AFRAME.registerComponent('model3dtaca', {
     init: function () {
         this.el.addEventListener('model-loaded', e => {
-            document.getElementById("carregando").innerHTML = "";
+            onLoadModels();
         })
     }
 });
+
+AFRAME.registerComponent('model3dfitas', {
+    init: function () {
+        this.el.addEventListener('model-loaded', e => {
+            onLoadModels();
+        })
+    }
+});
+
+let modelsLoaded = 0;
+function onLoadModels() {
+    modelsLoaded++;
+    if (modelsLoaded >= 2) {
+        document.getElementById("carregando").innerHTML = "";
+        document.getElementById("carregando").parentElement.style.background = "";
+        document.getElementById("particles").setAttribute("visible", true);
+        document.getElementById("model").querySelector("[model3dtaca]").setAttribute("visible", true);
+        document.getElementById("model").querySelector("[model3dfitas]").setAttribute("visible", true);
+    }
+}
 
 function onMoveDevice(event) {
     let acl = event.acceleration;
@@ -260,6 +279,7 @@ AFRAME.registerComponent('camera-data', {
 
                 rigRotation.x = -rotation.x * 2;
                 rigRotation.z = -rotation.z * 2;
+                // rigRotation.y = - 180 + rotation.y * 0.5;
 
                 cameraRig.setAttribute("rotation", rigRotation);
             }

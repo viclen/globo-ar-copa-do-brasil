@@ -7,11 +7,14 @@ let canvas;
 let scene;
 let renderer;
 let arController;
+let skyCanvas;
+let imagesEntity;
+let skyInterval;
 // Access the device camera and stream to cameraView
 function cameraStart() {
     window.facingMode = facingMode;
 
-    cameraView = document.querySelector("video");
+    cameraView = document.querySelector("#arjs-video");
     cameraOutput = document.querySelector("#camera--output");
     scene = document.querySelector("#arScene");
     renderer = scene.renderer;
@@ -20,16 +23,25 @@ function cameraStart() {
     cameraTrigger = document.querySelector("#camera--trigger");
     cameraChange = document.querySelector("#camera--change");
 
+    skyCanvas = document.querySelector("#sky--canvas");
+    imagesEntity = document.querySelector("#images");
+
     const callback = (stream) => {
         track = stream.getTracks()[0];
         cameraView.srcObject = stream;
+
+
     };
 
     if (facingMode == "user") {
-        document.querySelector("video").classList.remove("back");
+        if (cameraView) cameraView.classList.remove("back");
         document.querySelector("#camera-rig").setAttribute("rotation", "0 180 0");
         document.querySelector("[scene-objects]").setAttribute("position", "0 0 10");
         document.querySelector("#objects").setAttribute("rotation", "0 0 0");
+        document.querySelector("#model").setAttribute("rotation", "0 180 0");
+        let scale = document.querySelector("#model").getAttribute("scale");
+        scale.x = scale.x > 0 ? -scale.x : scale.x;
+        document.querySelector("#model").setAttribute("scale", scale);
         cameraTrigger.setAttribute("data-camera", "frontal");
         canvas.classList.remove("back");
         cameraChange.onclick = () => changeCamera();
@@ -57,10 +69,14 @@ function cameraStart() {
                 });
         }
     } else {
-        document.querySelector("video").classList.add("back");
+        if (cameraView) cameraView.classList.add("back");
         document.querySelector("#camera-rig").setAttribute("rotation", "0 0 0");
         document.querySelector("[scene-objects]").setAttribute("position", "0 0 -10");
         document.querySelector("#objects").setAttribute("rotation", "0 0 0");
+        document.querySelector("#model").setAttribute("rotation", "0 0 0");
+        let scale = document.querySelector("#model").getAttribute("scale");
+        scale.x = scale.x < 0 ? -scale.x : scale.x;
+        document.querySelector("#model").setAttribute("scale", scale);
         cameraTrigger.setAttribute("data-camera", "traseira");
         canvas.classList.add("back");
 
@@ -102,13 +118,31 @@ function cameraStart() {
         img.src = renderer.domElement.toDataURL();
         img.style.objectFit = "contain";
         img.style.zIndex = 1000;
-        img.style.transform = "scaleX(-1)";
-        img.style.filter = "FlipH";
+        // img.style.transform = "scaleX(-1)";
+        // img.style.filter = "FlipH";
+        
         img.onload = () => {
             let { width, height } = cover({ width: canvas.width, height: canvas.height }, { width: cameraCanvas.width, height: cameraCanvas.height });
 
             cameraCanvas.getContext("2d").drawImage(img, -(width - cameraCanvas.width) / 2, 0, width, height);
-            cameraOutput.src = cameraCanvas.toDataURL("image/jpg");
+
+            let saveCanvas = document.createElement("canvas");
+            saveCanvas.width = cameraCanvas.width;
+            saveCanvas.height = cameraCanvas.height;
+
+            let context = saveCanvas.getContext('2d');
+            context.clearRect(0, 0, saveCanvas.width, saveCanvas.height);
+
+            if (facingMode == "user") {
+                context.save();
+                context.scale(-1, 1);
+                context.drawImage(cameraCanvas, 0, 0, saveCanvas.width * -1, saveCanvas.height);
+                context.restore();
+            } else {
+                context.drawImage(cameraCanvas, 0, 0, saveCanvas.width, saveCanvas.height);
+            }
+
+            cameraOutput.src = saveCanvas.toDataURL();
             cameraOutput.classList.add("taken");
         };
     };
@@ -186,3 +220,43 @@ function changeCamera() {
 
     cameraStart();
 }
+
+function loadSky() {
+    try {
+        skyCanvas.width = cameraView.videoWidth * 2;
+        skyCanvas.height = cameraView.videoHeight * 2;
+
+        skyCanvas.getContext('2d').clearRect(0, 0, skyCanvas.width, skyCanvas.height);
+
+        let oldZIndex = cameraView.style.zIndex;
+        cameraView.style.zIndex = -1;
+        skyCanvas.getContext("2d").drawImage(cameraView, 0, 0, skyCanvas.width, skyCanvas.height);
+        cameraView.style.zIndex = oldZIndex;
+
+        let aImage = document.createElement("a-image");
+        aImage.setAttribute("position", "0 0 0");
+        aImage.setAttribute("src", `url(${skyCanvas.toDataURL()})`);
+        aImage.setAttribute("width", "16");
+        aImage.setAttribute("height", "9");
+        aImage.setAttribute("material", "shader: standard")
+
+        let front = document.querySelector("a-image");
+
+        imagesEntity.appendChild(aImage);
+
+        setTimeout(() => {
+            if (front) {
+                try {
+                    document.querySelector("a-image").remove();
+                } catch (error) {
+                }
+            }
+
+            document.querySelector("a-image").setAttribute("position", "0 0 -1");
+        }, 2000);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+setInterval(() => loadSky(), 5000);

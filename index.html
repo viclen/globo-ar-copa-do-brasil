@@ -29,7 +29,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta aframe-injected="" name="mobile-web-app-capable" content="yes" />
 
-    <title>Globo AR - Bradesco</title>
+    <title>Globo AR - Copa do Brasil</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
 
@@ -45,8 +45,6 @@
         })(window, document, 'script', 'dataLayer', 'GTM-MXHGNMV');
     </script>
     <!-- End Google Tag Manager -->
-
-    <link rel="stylesheet" href="style/style.css?15">
 
     <script>
         navigator.xr.requestDevice = navigator.xr.requestDevice || function () {
@@ -67,7 +65,6 @@
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
     <script src="https://rawgit.com/donmccurdy/aframe-extras/master/dist/aframe-extras.loaders.min.js"></script>
     <script src="https://unpkg.com/aframe-look-at-component@1.0.0/dist/aframe-look-at-component.min.js"></script>
-    <!-- <script src="./js/aframe-sprite-particles-component.js"></script> -->
     <script
         src="https://unpkg.com/aframe-particle-system-component@1.0.11/dist/aframe-particle-system-component.min.js"></script>
     <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
@@ -75,8 +72,11 @@
         THREEx.ArToolkitContext.baseURL = 'https://rawgit.com/jeromeetienne/ar.js/master/three.js/';
     </script>
 
-    <script src="./js/front-camera.js?47"></script>
-    <script id="scriptVersion" src="./js/main.js?107"></script>
+    <link rel="stylesheet" href="style/loading.css?1">
+
+    <link rel="stylesheet" href="style/style.css?129">
+    <script src="./js/front-camera.js?129"></script>
+    <script id="scriptVersion" src="./js/main.js?129"></script>
 </head>
 
 <body style="margin: 0; overflow: hidden;">
@@ -85,10 +85,24 @@
             style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
 
-    <div class="fixed-front">
+    <div class="fixed-front" style="background: rgba(0, 0, 0, 0.5)">
         <div class="text" id="carregando" style="display: none;">
-            Carregando...<br>
+            Carregando...
+            <br>
             Por favor espere
+            <br>
+            <br>
+
+            <div class="lds-roller">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
         </div>
     </div>
 
@@ -110,13 +124,19 @@
         <a-entity objects visible="false" id="objects" smooth="true" smoothCount="10" smoothTolerance=".1"
             smoothThreshold="5" look-at="[gps-camera]">
             <a-entity scene-objects position="0 0 10" rotation="0 0 0">
-                <a-entity animation="property: rotation; to: 0 360 0; dur: 10000; easing: linear; loop: true">
-                    <a-obj-model 3dmodel id="model" position="0 0 0" rotation="0 0 0" scale="5 5 5"
-                        src="models/trophy.obj" mtl="models/trophy.mtl">
-                    </a-obj-model>
+                <!--  animation="property: rotation; to: 0 360 0; dur: 10000; easing: linear; loop: true" -->
+                <a-entity>
+                    <a-entity id="model" position="0 0 0" rotation="0 0 0" scale="5 5 5">
+                        <a-entity model3dtaca id="model" gltf-model="url(models/taca-sem-fitas.glb)">
+                        </a-entity>
+
+                        <a-entity model3dfitas gltf-model="url(models/fitas.glb)"
+                            animation-mixer="clip: KeyAction.001;">
+                        </a-entity>
+                    </a-entity>
                 </a-entity>
 
-                <a-entity id="particles" position="0 0 0" particle-system="
+                <a-entity id="particles" visible="false" position="0 1 0" particle-system="
                     color:  #fdff81;
                 "></a-entity>
             </a-entity>
@@ -125,15 +145,21 @@
         <a-entity id="camera-rig" rotation="0 180 0">
             <a-entity camera id="camera" wasd-controls-enabled="false" gps-camera look-controls rotation-reader
                 camera-data alert="false">
+                <a-entity id="images" rotation="0 180 0" position="0 0 1">
+                </a-entity>
             </a-entity>
         </a-entity>
 
-        <a-light type="point" color="#FFF" intensity="2" position="5 6 0"></a-light>
+        <a-light type="point" color="#FFF" intensity="1.5" position="-6 5 0" rotation="0 0 0"></a-light>
+        <a-light type="point" color="#FFF" intensity="1.5" position="6 5 0" rotation="0 0 0"></a-light>
+        <a-light type="point" color="#FFF" intensity="1.5" position="-6 0 0" rotation="0 0 0"></a-light>
+        <a-light type="point" color="#FFF" intensity="1.5" position="6 0 0" rotation="0 0 0"></a-light>
     </a-scene>
 
     <main class="camera">
         <!-- Camera sensor -->
         <canvas id="camera--sensor"></canvas>
+        <canvas id="sky--canvas"></canvas>
         <!-- Camera output -->
         <img src="//:0" alt="" id="camera--output">
         <!-- Camera trigger -->
@@ -157,7 +183,7 @@
     <script>
         const splitted = document.getElementById("scriptVersion").getAttribute("src").split("?");
         const version = splitted.length > 1 ? splitted[1] : 1;
-        // alert("Versão " + version);
+        // alert("Versão de teste " + version);
     </script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/js/all.min.js"></script>
