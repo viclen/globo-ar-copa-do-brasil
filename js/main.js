@@ -73,11 +73,16 @@ Number.prototype.withTolerance = function (tolerance = 0) {
     return 0;
 };
 
-
+const moveSensitivity = {
+    y: 0.02,
+    x: 0.02
+};
 let sceneObjects;
 let cameraRig;
 let isOpening = false;
-
+let moveObjects;
+let movingObjects = false;
+let sceneObjectsMove;
 const motionThreshold = 5;
 let acceleration = { x: 0, y: 0, z: 0, time: new Date().getTime() };
 let velocity = { x: 0, y: 0, z: 0 };
@@ -146,6 +151,26 @@ AFRAME.registerComponent('ar-scene', {
             clickToStart.remove();
 
             // window.addEventListener("devicemotion", onMoveDevice);
+
+            moveObjects = document.getElementById("moveObjects");
+
+            moveObjects.addEventListener("touchstart", (event) => {
+                if (event.touches.length && sceneObjectsMove) {
+                    const position = sceneObjectsMove.getAttribute("position");
+                    movingObjects = {
+                        startX: event.touches[0].clientX,
+                        startY: event.touches[0].clientY,
+                        startPositionX: position.x,
+                        startPositionY: position.y,
+                    };
+                }
+            });
+            moveObjects.addEventListener("touchend", () => {
+                movingObjects = false;
+            });
+            moveObjects.addEventListener("touchmove", (event) => handleMoveObjects(event));
+
+            sceneObjectsMove = document.querySelector("[scene-objects]");
         });
     }
 });
@@ -172,7 +197,7 @@ function onLoadModels() {
     if (modelsLoaded >= 2) {
         document.getElementById("carregando").innerHTML = "";
         document.getElementById("carregando").parentElement.style.background = "";
-        document.getElementById("particles").setAttribute("visible", true);
+        // document.getElementById("particles").setAttribute("visible", true);
         document.getElementById("model").querySelector("[model3dtaca]").setAttribute("visible", true);
         document.getElementById("model").querySelector("[model3dfitas]").setAttribute("visible", true);
     }
@@ -191,18 +216,6 @@ function onMoveDevice(event) {
         motions.time = now;
     }
 }
-
-// function handleOrientation(event) {
-//     var alpha = event.alpha;
-//     var beta = event.beta;
-//     var gamma = event.gamma;
-
-//     document.getElementById("cameraRotation").innerHTML = `
-//         ${beta}<br />
-//         ${gamma}<br />
-//         ${alpha}<br />
-//     `;
-// }
 
 function movementThreshold(acl) {
     if (acl && acl.x && acl.y && acl.z) {
@@ -293,30 +306,48 @@ function zoomIn() {
     object3d = document.querySelector("#model");
 
     let newScale;
-    const currentScale = object3d.getAttribute("scale").x;
+    const currentScale = object3d.getAttribute("scale").y;
+    const front = window.facingMode == "user";
+
     if (currentScale < 7) {
         newScale = currentScale + 1;
     } else {
         newScale = 8;
     }
 
-    object3d.setAttribute("animation", `property: scale; to: ${newScale} ${newScale} ${newScale}; dur: 500; easing: linear; loop: false`);
-    // document.getElementById("particles").setAttribute("particle-system", { scale: (newScale * 0.6) + "" });
+    if (front) {
+        object3d.setAttribute("scale", {
+            x: -newScale,
+            y: newScale,
+            z: newScale
+        });
+    } else {
+        object3d.setAttribute("animation", `property: scale; to: ${newScale} ${newScale} ${newScale}; dur: 500; easing: linear; loop: false`);
+    }
 }
 
 function zoomOut() {
     object3d = document.querySelector("#model");
 
     let newScale;
-    const currentScale = object3d.getAttribute("scale").x;
+    const currentScale = object3d.getAttribute("scale").y;
+    const front = window.facingMode == "user";
+
     if (currentScale > 3) {
         newScale = currentScale - 1;
     } else {
         newScale = 2;
     }
 
-    object3d.setAttribute("animation", `property: scale; to: ${newScale} ${newScale} ${newScale}; dur: 500; easing: linear; loop: false`);
-    // document.getElementById("particles").setAttribute("particle-system", { scale: (newScale * 0.6) + "" });
+    if (front) {
+        object3d.setAttribute("scale", {
+            x: -newScale,
+            y: newScale,
+            z: newScale
+        });
+    } else {
+        object3d.setAttribute("animation", `property: scale; to: ${newScale} ${newScale} ${newScale}; dur: 500; easing: linear; loop: false`);
+    }
 }
 
 function enableParticles() {
@@ -327,5 +358,35 @@ function enableParticles() {
     } else {
         document.getElementById("particles").setAttribute("particle-system", { enabled: true });
         el.classList.add("active");
+    }
+}
+
+function handleMoveObjects(event) {
+    if (movingObjects && event.touches.length && sceneObjectsMove) {
+        const { startX, startY, startPositionX, startPositionY } = movingObjects;
+        const { clientX, clientY } = event.touches[0];
+
+        const movement = {
+            x: (clientX - startX) * moveSensitivity.x,
+            y: (clientY - startY) * moveSensitivity.y,
+        }
+
+        const position = sceneObjectsMove.getAttribute("position");
+
+        position.x = startPositionX + movement.x;
+        position.y = startPositionY - movement.y;
+
+        sceneObjectsMove.setAttribute("position", position);
+
+        // document.getElementById("cameraPosition").innerHTML = `
+        //     ${movement.x}<br />
+        //     ${movement.y}<br />
+        // `;
+
+        // document.getElementById("cameraRotation").innerHTML = `
+        //     ${position.x}<br />
+        //     ${position.y}<br />
+        //     ${position.z}<br />
+        // `;
     }
 }

@@ -74,9 +74,9 @@
 
     <link rel="stylesheet" href="style/loading.css?1">
 
-    <link rel="stylesheet" href="style/style.css?129">
-    <script src="./js/front-camera.js?129"></script>
-    <script id="scriptVersion" src="./js/main.js?129"></script>
+    <link rel="stylesheet" href="style/style.css?139">
+    <script src="./js/front-camera.js?139"></script>
+    <script id="scriptVersion" src="./js/main.js?139"></script>
 </head>
 
 <body style="margin: 0; overflow: hidden;">
@@ -85,7 +85,7 @@
             style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
 
-    <div class="fixed-front" style="background: rgba(0, 0, 0, 0.5)">
+    <div class="fixed-front" style="background: rgba(0, 0, 0, 0.5)" id="moveObjects">
         <div class="text" id="carregando" style="display: none;">
             Carregando...
             <br>
@@ -123,7 +123,7 @@
         arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;" light="defaultLightsEnabled: false">
         <a-entity objects visible="false" id="objects" smooth="true" smoothCount="10" smoothTolerance=".1"
             smoothThreshold="5" look-at="[gps-camera]">
-            <a-entity scene-objects position="0 0 10" rotation="0 0 0">
+            <a-entity scene-objects position="0 -1 10" rotation="0 0 0">
                 <!--  animation="property: rotation; to: 0 360 0; dur: 10000; easing: linear; loop: true" -->
                 <a-entity>
                     <a-entity id="model" position="0 0 0" rotation="0 0 0" scale="5 5 5">
@@ -136,17 +136,15 @@
                     </a-entity>
                 </a-entity>
 
-                <a-entity id="particles" visible="false" position="0 1 0" particle-system="
+                <!-- <a-entity id="particles" visible="false" position="0 1 0" particle-system="
                     color:  #fdff81;
-                "></a-entity>
+                "></a-entity> -->
             </a-entity>
         </a-entity>
 
         <a-entity id="camera-rig" rotation="0 180 0">
             <a-entity camera id="camera" wasd-controls-enabled="false" gps-camera look-controls rotation-reader
                 camera-data alert="false">
-                <a-entity id="images" rotation="0 180 0" position="0 0 1">
-                </a-entity>
             </a-entity>
         </a-entity>
 
@@ -163,21 +161,27 @@
         <!-- Camera output -->
         <img src="//:0" alt="" id="camera--output">
         <!-- Camera trigger -->
-        <button id="camera--trigger">
+        <button class="btn" id="camera--trigger">
             <i class="fas fa-camera"></i>
         </button>
-        <button id="camera--change">
+        <button class="btn" id="camera--change">
             <i class="fas fa-exchange-alt"></i>
         </button>
-        <button id="zoom-in" onclick="zoomIn()">
+        <button class="btn" id="zoom-in" onclick="zoomIn()">
             <i class="fas fa-search-plus"></i>
         </button>
-        <button id="zoom-out" onclick="zoomOut()">
+        <button class="btn" id="zoom-out" onclick="zoomOut()">
             <i class="fas fa-search-minus"></i>
         </button>
-        <button id="enable-particles" class="active" onclick="enableParticles()">
-            <i class="fas fa-fire"></i>
+        <button class="btn hidden" id="download--button">
+            <i class="fas fa-download"></i>
         </button>
+        <button class="btn hidden" id="share--button">
+            <i class="fas fa-share-alt"></i>
+        </button>
+        <!-- <button class="btn" id="enable-particles" class="active" onclick="enableParticles()">
+            <i class="fas fa-fire"></i>
+        </button> -->
     </main>
 
     <script>
