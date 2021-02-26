@@ -36,6 +36,7 @@ function cameraStart() {
     cameraChange.onclick = () => changeCamera();
     shareButton.onclick = () => shareImg();
     downloadButton.onclick = () => downloadImg();
+    cameraOutput.onclick = () => showImageFullscreen();
 
     if (facingMode == "user") {
         if (cameraView) cameraView.classList.add("reverse");
@@ -154,13 +155,17 @@ function cameraStart() {
                 context.drawImage(cameraCanvas, 0, 0, saveCanvas.width, saveCanvas.height);
             }
 
-            cameraOutput.src = saveCanvas.toDataURL();
-            cameraOutput.classList.add("taken");
+            cameraOutput.style.display = "block";
 
-            if (!isIos()) {
-                shareButton.classList.remove("hidden");
-            }
-            downloadButton.classList.remove("hidden");
+            setTimeout(() => {
+                cameraOutput.src = saveCanvas.toDataURL();
+                cameraOutput.classList.add("taken");
+
+                if (!isIos()) {
+                    shareButton.classList.remove("hidden");
+                }
+                downloadButton.classList.remove("hidden");
+            }, 100);
         };
     };
 }
@@ -247,4 +252,12 @@ function isIos() {
     ].includes(navigator.platform)
         // iPad on iOS 13 detection
         || (navigator.userAgent.includes("Mac") && "ontouchend" in document)
+}
+
+function showImageFullscreen() {
+    if (cameraOutput.classList.contains("show-fullscreen")) {
+        cameraOutput.classList.remove("show-fullscreen");
+    } else {
+        cameraOutput.classList.add("show-fullscreen");
+    }
 }

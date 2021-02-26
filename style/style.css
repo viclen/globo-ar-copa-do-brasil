@@ -120,6 +120,40 @@ main.camera, #camera--view, #camera--sensor, #camera--output, #sky--canvas {
     filter: FlipH;
 }
 
+#camera--output {
+    left: 0px;
+    bottom: 0px;
+    z-index: -1;
+    display: none;
+}
+
+#camera--output.taken:not(.show-fullscreen) {
+    height: 100px !important;
+    width: 100px !important;
+    transition: all 200ms ease-in;
+    border: solid 3px white;
+    box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.2);
+    top: 20px;
+    right: 20px;
+    left: calc(100% - 120px);
+    bottom: calc(100% - 120px);
+    z-index: 1;
+}
+
+#camera--output.show-fullscreen {
+    transition: all 200ms ease-in;
+    border: none;
+    box-shadow: 0 0 50px 50px rgba(0, 0, 0, 0.652);
+    top: 20px;
+    right: 20px;
+    left: 20px;
+    bottom: 20px;
+    z-index: 10;
+    /* object-fit: contain !important; */
+    height: calc(100% - 40px) !important;
+    width: calc(100% - 40px) !important;
+}
+
 .btn {
     background-color: black;
     color: white;
@@ -180,15 +214,4 @@ main.camera, #camera--view, #camera--sensor, #camera--output, #sky--canvas {
 #enable-particles.active {
     background-color: black;
     color: white;
-}
-
-.taken {
-    height: 100px !important;
-    width: 100px !important;
-    transition: all 0.5s ease-in;
-    border: solid 3px white;
-    box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.2);
-    top: 20px;
-    right: 20px;
-    z-index: 1;
 }
