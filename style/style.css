@@ -115,105 +115,66 @@ main.camera, #camera--view, #camera--sensor, #camera--output, #sky--canvas {
     z-index: 300;
 }
 
-#camera--view, video:not(.back), .a-canvas:not(.back) {
+#camera--view, video.reverse, .a-canvas.reverse {
     transform: scaleX(-1);
     filter: FlipH;
 }
 
-#camera--trigger {
+.btn {
     background-color: black;
     color: white;
-    font-size: 25px;
+    font-size: 16px;
     border-radius: 50%;
     border: none;
     padding: 15px;
     text-align: center;
     box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.2);
     position: fixed;
+    z-index: 1;
+    line-height: 0;
+    outline: none;
+    width: 46px;
+    height: 46px;
+}
+
+#camera--trigger {
     bottom: 40px;
     left: 50%;
     transform: translateX(-50%);
-    z-index: 1;
-    line-height: 0;
-    outline: none;
 }
 
 #camera--change {
-    background-color: black;
-    color: white;
-    font-size: 16px;
-    border-radius: 50%;
-    border: none;
-    padding: 15px;
-    text-align: center;
-    box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.2);
-    position: fixed;
     top: 20px;
     left: 20px;
-    z-index: 1;
-    line-height: 0;
-    outline: none;
-    width: 46px;
-    height: 46px;
 }
 
 #zoom-in {
-    background-color: black;
-    color: white;
-    font-size: 16px;
-    border-radius: 50%;
-    border: none;
-    padding: 15px;
-    text-align: center;
-    box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.2);
-    position: fixed;
     top: 50%;
     right: 20px;
     transform: translateY(-50%);
-    z-index: 1;
-    line-height: 0;
-    outline: none;
-    width: 46px;
-    height: 46px;
 }
 
 #zoom-out {
-    background-color: black;
-    color: white;
-    font-size: 16px;
-    border-radius: 50%;
-    border: none;
-    padding: 15px;
-    text-align: center;
-    box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.2);
-    position: fixed;
     top: 50%;
     left: 20px;
     transform: translateY(-50%);
-    z-index: 1;
-    line-height: 0;
-    outline: none;
-    width: 46px;
-    height: 46px;
+}
+
+#download--button {
+    top: 140px;
+    right: 20px;
+}
+
+#share--button {
+    top: 206px;
+    right: 20px;
 }
 
 #enable-particles {
     background-color: rgb(189, 189, 189);
     color: black;
-    font-size: 16px;
-    border-radius: 50%;
-    border: none;
-    padding: 15px;
-    text-align: center;
-    box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.2);
-    position: fixed;
     top: 20px;
     left: 86px;
-    z-index: 1;
-    line-height: 0;
-    outline: none;
-    width: 46px;
-    height: 46px;
 }
 
 #enable-particles.active {
