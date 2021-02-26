@@ -1,8 +1,8 @@
-let facingMode = "user";
+let facingMode = { exact: "environment" };
 
 const constraints = { audio: false };
 // Define constants
-let cameraView, cameraOutput, cameraCanvas, cameraTrigger, cameraChange;
+let cameraView, cameraOutput, cameraCanvas, cameraTrigger, cameraChange, shareButton, downloadButton;
 let canvas;
 let scene;
 let renderer;
@@ -22,6 +22,8 @@ function cameraStart() {
     cameraCanvas = document.querySelector("#camera--sensor");
     cameraTrigger = document.querySelector("#camera--trigger");
     cameraChange = document.querySelector("#camera--change");
+    shareButton = document.querySelector("#share--button");
+    downloadButton = document.querySelector("#download--button");
 
     skyCanvas = document.querySelector("#sky--canvas");
     imagesEntity = document.querySelector("#images");
@@ -29,12 +31,14 @@ function cameraStart() {
     const callback = (stream) => {
         track = stream.getTracks()[0];
         cameraView.srcObject = stream;
-
-
     };
 
+    cameraChange.onclick = () => changeCamera();
+    shareButton.onclick = () => shareImg();
+    downloadButton.onclick = () => downloadImg();
+
     if (facingMode == "user") {
-        if (cameraView) cameraView.classList.remove("back");
+        if (cameraView) cameraView.classList.add("reverse");
         document.querySelector("#camera-rig").setAttribute("rotation", "0 180 0");
         document.querySelector("[scene-objects]").setAttribute("position", "0 0 10");
         document.querySelector("#objects").setAttribute("rotation", "0 0 0");
@@ -43,33 +47,41 @@ function cameraStart() {
         scale.x = scale.x > 0 ? -scale.x : scale.x;
         document.querySelector("#model").setAttribute("scale", scale);
         cameraTrigger.setAttribute("data-camera", "frontal");
-        canvas.classList.remove("back");
-        cameraChange.onclick = () => changeCamera();
-        cameraOutput.onclick = () => shareImg();
+        canvas.classList.add("reverse");
 
         if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-            navigator.mediaDevices
-                .getUserMedia({ ...constraints, video: { facingMode } }).then(callback).catch(function (error) {
-                    // alert("Não foi possível executar por falta de permissões.");
-                    if (!window.tryReload()) {
-                        changeCamera();
-                    }
-                });
+            (async () => {
+                try {
+                    const stream = await navigator.mediaDevices
+                        .getUserMedia({ ...constraints, video: { facingMode } });
+                    callback(stream);
+                } catch (error) {
+                    cameraTrigger.classList.add("hidden");
+                    facingMode = { exact: "environment" };
+                    cameraStart();
+                }
+            })();
         } else {
-            if (!navigator.getUserMedia) {
-                navigator.getUserMedia = navigator.webkitGetUserMedia;
-            }
+            try {
+                if (!navigator.getUserMedia) {
+                    navigator.getUserMedia = navigator.webkitGetUserMedia;
+                }
 
-            navigator
-                .getUserMedia({ ...constraints, video: { facingMode } }, callback, function (error) {
-                    // alert("Não foi possível executar por falta de permissões.");
-                    if (!window.tryReload()) {
-                        changeCamera();
-                    }
-                });
+                navigator
+                    .getUserMedia({ ...constraints, video: { facingMode } }, callback, function (error) {
+                        // alert("Não foi possível executar por falta de permissões.");
+                        cameraTrigger.classList.add("hidden");
+                        facingMode = { exact: "environment" };
+                        cameraStart();
+                    });
+            } catch (error) {
+                cameraTrigger.classList.add("hidden");
+                facingMode = { exact: "environment" };
+                cameraStart();
+            }
         }
     } else {
-        if (cameraView) cameraView.classList.add("back");
+        if (cameraView) cameraView.classList.remove("reverse");
         document.querySelector("#camera-rig").setAttribute("rotation", "0 0 0");
         document.querySelector("[scene-objects]").setAttribute("position", "0 0 -10");
         document.querySelector("#objects").setAttribute("rotation", "0 0 0");
@@ -78,7 +90,7 @@ function cameraStart() {
         scale.x = scale.x < 0 ? -scale.x : scale.x;
         document.querySelector("#model").setAttribute("scale", scale);
         cameraTrigger.setAttribute("data-camera", "traseira");
-        canvas.classList.add("back");
+        canvas.classList.remove("reverse");
 
         if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
             navigator.mediaDevices
@@ -120,7 +132,7 @@ function cameraStart() {
         img.style.zIndex = 1000;
         // img.style.transform = "scaleX(-1)";
         // img.style.filter = "FlipH";
-        
+
         img.onload = () => {
             let { width, height } = cover({ width: canvas.width, height: canvas.height }, { width: cameraCanvas.width, height: cameraCanvas.height });
 
@@ -144,6 +156,11 @@ function cameraStart() {
 
             cameraOutput.src = saveCanvas.toDataURL();
             cameraOutput.classList.add("taken");
+
+            if (!isIos()) {
+                shareButton.classList.remove("hidden");
+            }
+            downloadButton.classList.remove("hidden");
         };
     };
 }
@@ -196,19 +213,17 @@ function shareImg() {
             files: filesArray,
         })
             .catch((error) => {
-                const a = document.createElement("a");
-                a.href = cameraOutput.src;
-                a.target = '_blank';
-                a.download = "foto";
-                a.click();
+
             });
-    } else {
-        const a = document.createElement("a");
-        a.href = cameraOutput.src;
-        a.target = '_blank';
-        a.download = "foto";
-        a.click();
     }
+}
+
+function downloadImg() {
+    const a = document.createElement("a");
+    a.href = cameraOutput.src;
+    a.target = '_blank';
+    a.download = "foto";
+    a.click();
 }
 
 function changeCamera() {
@@ -221,42 +236,15 @@ function changeCamera() {
     cameraStart();
 }
 
-function loadSky() {
-    try {
-        skyCanvas.width = cameraView.videoWidth * 2;
-        skyCanvas.height = cameraView.videoHeight * 2;
-
-        skyCanvas.getContext('2d').clearRect(0, 0, skyCanvas.width, skyCanvas.height);
-
-        let oldZIndex = cameraView.style.zIndex;
-        cameraView.style.zIndex = -1;
-        skyCanvas.getContext("2d").drawImage(cameraView, 0, 0, skyCanvas.width, skyCanvas.height);
-        cameraView.style.zIndex = oldZIndex;
-
-        let aImage = document.createElement("a-image");
-        aImage.setAttribute("position", "0 0 0");
-        aImage.setAttribute("src", `url(${skyCanvas.toDataURL()})`);
-        aImage.setAttribute("width", "16");
-        aImage.setAttribute("height", "9");
-        aImage.setAttribute("material", "shader: standard")
-
-        let front = document.querySelector("a-image");
-
-        imagesEntity.appendChild(aImage);
-
-        setTimeout(() => {
-            if (front) {
-                try {
-                    document.querySelector("a-image").remove();
-                } catch (error) {
-                }
-            }
-
-            document.querySelector("a-image").setAttribute("position", "0 0 -1");
-        }, 2000);
-    } catch (error) {
-        console.log(error);
-    }
+function isIos() {
+    return [
+        'iPad Simulator',
+        'iPhone Simulator',
+        'iPod Simulator',
+        'iPad',
+        'iPhone',
+        'iPod'
+    ].includes(navigator.platform)
+        // iPad on iOS 13 detection
+        || (navigator.userAgent.includes("Mac") && "ontouchend" in document)
 }
-
-setInterval(() => loadSky(), 5000);
