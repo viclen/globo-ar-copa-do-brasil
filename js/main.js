@@ -1,55 +1,11 @@
-document.addEventListener("load", function () {
-    navigator.permissions.query({ name: 'gyroscope' }).then(function (result) {
-        if (result.state == "denied") {
-            // alert("Sem permissão de movimento.");
-            window.tryReload();
-        }
-    });
+document.addEventListener("readystatechange", function () {
+    setTimeout(() => {
+        const el = document.querySelector("#first-loading");
 
-    navigator.permissions.query({ name: 'deviceorientation' }).then(function (result) {
-        if (result.state == "denied") {
-            // alert("Sem permissão de movimento.");
-            window.tryReload();
-        } else {
-            window.addEventListener("deviceorientation", handleOrientation, true);
+        if (el) {
+            el.remove();
         }
-    });
-
-    (function requestDeviceMotion(callback) {
-        if (window.DeviceMotionEvent == null) {
-            // alert("Sem permissão de movimento.");
-            window.tryReload();
-        } else if (DeviceMotionEvent.requestPermission) {
-            DeviceMotionEvent.requestPermission().then(function (state) {
-                if (state == "denied") {
-                    // alert("Sem permissão de movimento.");
-                    window.tryReload();
-                }
-            }, function (err) {
-                // alert("Sem permissão de movimento.");
-                window.tryReload();
-            });
-        }
-    })();
-
-    (function requestDeviceMotion(callback) {
-        if (window.DeviceOrientationEvent == null) {
-            // alert("Sem permissão de movimento.");
-            window.tryReload();
-        } else if (DeviceMotionEvent.requestPermission) {
-            DeviceOrientationEvent.requestPermission().then(function (state) {
-                if (state == "denied") {
-                    // alert("Sem permissão de movimento.");
-                    window.tryReload();
-                } else {
-                    window.addEventListener("deviceorientation", handleOrientation, true);
-                }
-            }, function (err) {
-                // alert("Sem permissão de movimento.");
-                window.tryReload();
-            });
-        }
-    })();
+    }, 10000);
 });
 
 window.mobileCheck = function () {
