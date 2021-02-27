@@ -50,8 +50,6 @@ document.addEventListener("load", function () {
             });
         }
     })();
-
-    cameraStart();
 });
 
 window.mobileCheck = function () {
@@ -142,35 +140,43 @@ AFRAME.registerComponent('ar-scene', {
         const clickToStart = document.getElementById('clickToStart');
 
         clickToStart.addEventListener('click', () => {
-            cameraStart();
+            const callback = () => {
+                cameraStart();
 
-            document.getElementById("carregando").style.display = "";
+                document.getElementById("carregando").style.display = "";
 
-            getLocation(showPosition);
+                getLocation(showPosition);
+
+                // window.addEventListener("devicemotion", onMoveDevice);
+
+                moveObjects = document.getElementById("moveObjects");
+
+                moveObjects.addEventListener("touchstart", (event) => {
+                    if (event.touches.length && sceneObjectsMove) {
+                        const position = sceneObjectsMove.getAttribute("position");
+                        movingObjects = {
+                            startX: event.touches[0].clientX,
+                            startY: event.touches[0].clientY,
+                            startPositionX: position.x,
+                            startPositionY: position.y,
+                        };
+                    }
+                });
+                moveObjects.addEventListener("touchend", () => {
+                    movingObjects = false;
+                });
+                moveObjects.addEventListener("touchmove", (event) => handleMoveObjects(event));
+
+                sceneObjectsMove = document.querySelector("[scene-objects]");
+            }
+
+            if (window.startTutorial) {
+                window.startTutorial(callback);
+            } else {
+                callback();
+            }
 
             clickToStart.remove();
-
-            // window.addEventListener("devicemotion", onMoveDevice);
-
-            moveObjects = document.getElementById("moveObjects");
-
-            moveObjects.addEventListener("touchstart", (event) => {
-                if (event.touches.length && sceneObjectsMove) {
-                    const position = sceneObjectsMove.getAttribute("position");
-                    movingObjects = {
-                        startX: event.touches[0].clientX,
-                        startY: event.touches[0].clientY,
-                        startPositionX: position.x,
-                        startPositionY: position.y,
-                    };
-                }
-            });
-            moveObjects.addEventListener("touchend", () => {
-                movingObjects = false;
-            });
-            moveObjects.addEventListener("touchmove", (event) => handleMoveObjects(event));
-
-            sceneObjectsMove = document.querySelector("[scene-objects]");
         });
     }
 });

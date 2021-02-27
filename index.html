@@ -74,9 +74,11 @@
 
     <link rel="stylesheet" href="style/loading.css?1">
 
-    <link rel="stylesheet" href="style/style.css?144">
-    <script src="./js/front-camera.js?144"></script>
-    <script id="scriptVersion" src="./js/main.js?144"></script>
+    <link rel="stylesheet" href="style/tutorial.css?152">
+    <link rel="stylesheet" href="style/style.css?152">
+    <script src="./js/front-camera.js?152"></script>
+    <script id="scriptVersion" src="./js/main.js?152"></script>
+    <script src="./js/tutorial.js?152"></script>
 </head>
 
 <body style="margin: 0; overflow: hidden;">
@@ -88,10 +90,10 @@
     <div class="fixed-front" style="background: rgba(0, 0, 0, 0.5)" id="moveObjects">
         <div class="text" id="carregando" style="display: none;">
             Carregando...
-            <br>
+            <br />
             Por favor espere
-            <br>
-            <br>
+            <br />
+            <br />
 
             <div class="lds-roller">
                 <div></div>
@@ -103,6 +105,49 @@
                 <div></div>
                 <div></div>
             </div>
+        </div>
+    </div>
+
+    <div class="tutorial">
+        <div class="tutorial--move">
+            <div class="up">
+                <i class="fas fa-3x fa-long-arrow-alt-up blink"></i>
+            </div>
+            <div class="down">
+                <i class="fas fa-3x fa-long-arrow-alt-down blink"></i>
+            </div>
+            <div class="left">
+                <i class="fas fa-3x fa-long-arrow-alt-left blink"></i>
+            </div>
+            <div class="right">
+                <i class="fas fa-3x fa-long-arrow-alt-right blink"></i>
+            </div>
+        </div>
+        <div class="tutorial--change-camera">
+            <div class="arrow">
+                <i class="fas fa-3x fa-long-arrow-alt-left blink"></i>
+            </div>
+        </div>
+        <div class="tutorial--zoom">
+            <div class="left">
+                <i class="fas fa-3x fa-long-arrow-alt-down blink"></i>
+            </div>
+            <div class="right">
+                <i class="fas fa-3x fa-long-arrow-alt-down blink"></i>
+            </div>
+        </div>
+        <div class="tutorial--picture">
+            <div class="arrow">
+                <i class="fas fa-3x fa-long-arrow-alt-down blink"></i>
+            </div>
+        </div>
+
+        <div class="tutorial--standard">
+            <div class="tutorial--text">
+            </div>
+            <button class="tutorial--confirm">
+                Avançar
+            </button>
         </div>
     </div>
 
@@ -157,7 +202,6 @@
     <main class="camera">
         <!-- Camera sensor -->
         <canvas id="camera--sensor"></canvas>
-        <canvas id="sky--canvas"></canvas>
         <!-- Camera output -->
         <img src="//:0" alt="" id="camera--output">
         <!-- Camera trigger -->

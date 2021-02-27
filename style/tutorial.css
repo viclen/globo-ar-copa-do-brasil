@@ -1,0 +1,178 @@
+.blink {
+    animation: blink-animation 1s steps(5, start) infinite;
+    -webkit-animation: blink-animation 1s steps(5, start) infinite;
+}
+
+@keyframes blink-animation {
+    to {
+        color: yellow;
+        fill: yellow;
+        stroke: yellow;
+    }
+}
+
+@-webkit-keyframes blink-animation {
+    to {
+        color: yellow;
+        fill: yellow;
+        stroke: yellow;
+    }
+}
+
+.tutorial {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    z-index: 200;
+    transition: 500ms;
+    display: none;
+}
+
+.tutorial.start {
+    display: block;
+}
+
+.tutorial * {
+    transition: 500ms;
+}
+
+.tutorial.start>* {
+    display: block;
+    opacity: 0;
+}
+
+.tutorial.start .show {
+    opacity: 1;
+}
+
+.tutorial i, svg {
+    color: white;
+    fill: white;
+    stroke: white;
+}
+
+.tutorial--standard {
+    z-index: 100;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    height: 60%;
+    width: 80%;
+    transform: translate(-50%, -50%);
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.tutorial--text {
+    text-align: center;
+    color: white;
+    text-transform: uppercase;
+    font-size: 20px;
+}
+
+.tutorial--confirm {
+    margin: 10px;
+    background-color: rgb(22, 69, 187);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    text-transform: uppercase;
+    font-size: 20px;
+}
+
+.tutorial--move {
+    background-color: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+}
+
+.tutorial--move .up {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -100px);
+}
+
+.tutorial--move .left {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-80px, -50%);
+}
+
+.tutorial--move .down {
+    position: fixed;
+    bottom: 50%;
+    left: 50%;
+    transform: translate(-50%, 100px);
+}
+
+.tutorial--move .right {
+    position: fixed;
+    right: 50%;
+    top: 50%;
+    transform: translate(80px, -50%);
+}
+
+.tutorial--change-camera {
+    background-color: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+}
+
+.tutorial--change-camera .arrow {
+    position: fixed;
+    left: 80px;
+    top: 20px;
+}
+
+.tutorial--zoom {
+    background-color: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+}
+
+.tutorial--zoom .left {
+    position: fixed;
+    left: 30px;
+    top: 50%;
+    transform: translate(0, -80px);
+}
+
+.tutorial--zoom .right {
+    position: fixed;
+    right: 30px;
+    top: 50%;
+    transform: translate(0, -80px);
+}
+
+.tutorial--picture {
+    background-color: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+}
+
+.tutorial--picture .arrow {
+    position: fixed;
+    bottom: 100px;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
