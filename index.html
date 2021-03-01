@@ -65,8 +65,7 @@
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
     <script src="https://rawgit.com/donmccurdy/aframe-extras/master/dist/aframe-extras.loaders.min.js"></script>
     <script src="https://unpkg.com/aframe-look-at-component@1.0.0/dist/aframe-look-at-component.min.js"></script>
-    <script
-        src="https://unpkg.com/aframe-particle-system-component@1.0.11/dist/aframe-particle-system-component.min.js"></script>
+    <script src="./js/aframe-particle-system-component.js"></script>
     <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
     <script>
         THREEx.ArToolkitContext.baseURL = 'https://rawgit.com/jeromeetienne/ar.js/master/three.js/';
@@ -146,15 +145,28 @@
         </div>
         <div class="tutorial--change-camera">
             <div class="arrow">
-                <i class="fas fa-3x fa-long-arrow-alt-left blink"></i>
+                <i class="fas fa-3x fa-long-arrow-alt-up blink"></i>
             </div>
         </div>
-        <div class="tutorial--zoom">
+        <div class="tutorial--particles">
+            <div class="arrow">
+                <i class="fas fa-3x fa-long-arrow-alt-up blink"></i>
+            </div>
+        </div>
+        <div class="tutorial--rotate">
             <div class="left">
                 <i class="fas fa-3x fa-long-arrow-alt-down blink"></i>
             </div>
             <div class="right">
                 <i class="fas fa-3x fa-long-arrow-alt-down blink"></i>
+            </div>
+        </div>
+        <div class="tutorial--zoom">
+            <div class="left">
+                <i class="fas fa-3x fa-long-arrow-alt-up blink"></i>
+            </div>
+            <div class="right">
+                <i class="fas fa-3x fa-long-arrow-alt-up blink"></i>
             </div>
         </div>
         <div class="tutorial--picture">
@@ -170,6 +182,10 @@
                 Avançar
             </button>
         </div>
+
+        <button class="tutorial--close">
+            <i class="fas fa-times"></i>
+        </button>
     </div>
 
     <div class="camera-info">
@@ -202,9 +218,34 @@
                     </a-entity>
                 </a-entity>
 
-                <!-- <a-entity id="particles" visible="false" position="0 1 0" particle-system="
-                    color:  #fdff81;
-                "></a-entity> -->
+                <!-- <a-entity id="particles"
+                    sprite-particles="spawnRate: 500; lifeTime: .1 .. .2; radialType: sphere; radialVelocity: 2..10; trailLifeTime: .1; trailInterval: .1; trailType: ribbon; ribbonWidth: .5; ribbonShape: taper; blending: additive">
+                </a-entity> -->
+
+                <!-- <a-entity id="particles"
+                    sprite-particles="texture: url(img/star2.png); spawnRate: 100; lifeTime: 3; radialType: sphere; radialPosition: 1; color: black..white; scale: 0,2,0">
+                </a-entity> -->
+
+                <a-entity position="0 1 0" id="particles" visible="false">
+                    <a-entity particles-start particle-system="
+                        color:  yellow;
+                        randomise: true;
+                        texture: url(./img/square.png);
+                        particleCount: 100;
+                    "></a-entity>
+                    <a-entity particles-start particle-system="
+                        color:  blue;
+                        randomise: true;
+                        texture: url(./img/square.png);
+                        particleCount: 100;
+                    "></a-entity>
+                    <a-entity particles-start particle-system="
+                        color:  green;
+                        randomise: true;
+                        texture: url(./img/square.png);
+                        particleCount: 100;
+                    "></a-entity>
+                </a-entity>
             </a-entity>
         </a-entity>
 
@@ -232,10 +273,16 @@
         <button class="btn" id="camera--change">
             <i class="fas fa-exchange-alt"></i>
         </button>
-        <button class="btn" id="zoom-in" onclick="zoomIn()">
+        <button class="btn" id="rotate-left">
+            <i class="fas fa-redo-alt"></i>
+        </button>
+        <button class="btn" id="rotate-right">
+            <i class="fas fa-undo-alt"></i>
+        </button>
+        <button class="btn" id="zoom-in">
             <i class="fas fa-search-plus"></i>
         </button>
-        <button class="btn" id="zoom-out" onclick="zoomOut()">
+        <button class="btn" id="zoom-out">
             <i class="fas fa-search-minus"></i>
         </button>
         <button class="btn hidden" id="download--button">
@@ -244,9 +291,9 @@
         <button class="btn hidden" id="share--button">
             <i class="fas fa-share-alt"></i>
         </button>
-        <!-- <button class="btn" id="enable-particles" class="active" onclick="enableParticles()">
+        <button class="btn active" id="enable-particles">
             <i class="fas fa-fire"></i>
-        </button> -->
+        </button>
     </main>
 
     <script>
