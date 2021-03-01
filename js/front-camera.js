@@ -114,6 +114,9 @@ function cameraStart() {
 
     // Take a picture when cameraTrigger is tapped
     cameraTrigger.onclick = function () {
+        const tutorial = document.querySelector(".tutorial");
+        if (tutorial && tutorial.classList.contains("start")) return;
+
         cameraCanvas.width = cameraView.videoWidth * 2;
         cameraCanvas.height = cameraView.videoHeight * 2;
 
