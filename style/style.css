@@ -127,7 +127,7 @@ body * {
     text-align: center;
 }
 
-main.camera, #camera--view, #camera--sensor, #camera--output, #sky--canvas {
+main.camera, #camera--view, #camera--sensor, #camera--output {
     position: fixed;
     height: 100%;
     width: 100%;
@@ -202,16 +202,28 @@ main.camera, #camera--view, #camera--sensor, #camera--output, #sky--canvas {
     left: 20px;
 }
 
+#rotate-left {
+    top: 50%;
+    left: 20px;
+    transform: translateY(calc(-40px - 50%));
+}
+
+#rotate-right {
+    top: 50%;
+    right: 20px;
+    transform: translateY(calc(-40px - 50%));
+}
+
 #zoom-in {
     top: 50%;
     right: 20px;
-    transform: translateY(-50%);
+    transform: translateY(calc(40px - 50%));
 }
 
 #zoom-out {
     top: 50%;
     left: 20px;
-    transform: translateY(-50%);
+    transform: translateY(calc(40px - 50%));
 }
 
 #download--button {
