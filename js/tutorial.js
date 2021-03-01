@@ -1,17 +1,23 @@
-let tutorialConfirm, tutorialText, tutorialMain, tutorialStandard;
+let tutorialConfirm, tutorialText, tutorialMain, tutorialStandard, tutorialClose;
 
 let tutorials = [{
     el: ".tutorial--move",
     text: "Você pode mover a taça passando o dedo na tela."
 }, {
     el: ".tutorial--change-camera",
-    text: "Toquem no botão na parte superior esquerda para mudar a camera."
+    text: "Toque no botão na parte superior esquerda para mudar a camera."
+}, {
+    el: ".tutorial--particles",
+    text: "Toque no botão com fogo para mostrar ou não as partículas."
+}, {
+    el: ".tutorial--rotate",
+    text: "Toque nos botões com seta para rodar a taça."
 }, {
     el: ".tutorial--zoom",
-    text: "Toquem nos botões da esquerda e direita para dar zoom na taça."
+    text: "Toque nos botões com lupa para dar zoom na taça."
 }, {
     el: ".tutorial--picture",
-    text: "Toquem no botão na parte inferior para tirar uma foto."
+    text: "Toque no botão na parte inferior para tirar uma foto."
 }, {
     el: "",
     text: "Beleza, vamos começar!"
@@ -33,6 +39,8 @@ function startTutorial(cb) {
         tutorialText = document.querySelector(".tutorial--text");
         tutorialConfirm = document.querySelector(".tutorial--confirm");
         tutorialConfirm.onclick = () => nextTutorial();
+        tutorialClose = document.querySelector(".tutorial--close");
+        tutorialClose.onclick = () => finishTutorial();
 
         tutorialStandard = document.querySelector(".tutorial--standard");
 

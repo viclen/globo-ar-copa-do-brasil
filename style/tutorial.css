@@ -20,6 +20,7 @@
 }
 
 .tutorial {
+    background-color: rgba(0, 0, 0, 0.5);
     position: fixed;
     left: 0;
     right: 0;
@@ -32,6 +33,21 @@
 
 .tutorial.start {
     display: block;
+}
+
+.tutorial .tutorial--close {
+    background: none;
+    outline: none;
+    border: 1px solid white;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    border-radius: 50%;
+    line-height: 0px;
+    opacity: 1 !important;
+    width: 46px;
+    height: 46px;
+    font-size: 20px;
 }
 
 .tutorial * {
@@ -47,7 +63,7 @@
     opacity: 1;
 }
 
-.tutorial i, svg {
+.tutorial i, .tutorial svg {
     color: white;
     fill: white;
     stroke: white;
@@ -87,7 +103,6 @@
 }
 
 .tutorial--move {
-    background-color: rgba(0, 0, 0, 0.5);
     position: fixed;
     left: 0;
     right: 0;
@@ -124,7 +139,6 @@
 }
 
 .tutorial--change-camera {
-    background-color: rgba(0, 0, 0, 0.5);
     position: fixed;
     left: 0;
     right: 0;
@@ -134,12 +148,25 @@
 
 .tutorial--change-camera .arrow {
     position: fixed;
-    left: 80px;
-    top: 20px;
+    left: 30px;
+    top: 80px;
+}
+
+.tutorial--particles {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+}
+
+.tutorial--particles .arrow {
+    position: fixed;
+    left: 97px;
+    top: 80px;
 }
 
 .tutorial--zoom {
-    background-color: rgba(0, 0, 0, 0.5);
     position: fixed;
     left: 0;
     right: 0;
@@ -151,18 +178,17 @@
     position: fixed;
     left: 30px;
     top: 50%;
-    transform: translate(0, -80px);
+    transform: translate(0, 75px);
 }
 
 .tutorial--zoom .right {
     position: fixed;
     right: 30px;
     top: 50%;
-    transform: translate(0, -80px);
+    transform: translate(0, 75px);
 }
 
 .tutorial--picture {
-    background-color: rgba(0, 0, 0, 0.5);
     position: fixed;
     left: 0;
     right: 0;
@@ -175,4 +201,26 @@
     bottom: 100px;
     left: 50%;
     transform: translate(-50%, 0);
+}
+
+.tutorial--rotate {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+}
+
+.tutorial--rotate .left {
+    position: fixed;
+    left: 30px;
+    top: 50%;
+    transform: translate(0, -115px);
+}
+
+.tutorial--rotate .right {
+    position: fixed;
+    right: 30px;
+    top: 50%;
+    transform: translate(0, -115px);
 }
