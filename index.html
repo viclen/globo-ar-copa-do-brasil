@@ -63,6 +63,7 @@
 
     <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="//cdn.rawgit.com/donmccurdy/aframe-extras/v3.13.1/dist/aframe-extras.min.js"></script>
     <script src="https://rawgit.com/donmccurdy/aframe-extras/master/dist/aframe-extras.loaders.min.js"></script>
     <script src="https://unpkg.com/aframe-look-at-component@1.0.0/dist/aframe-look-at-component.min.js"></script>
     <script src="./js/aframe-particle-system-component.js?1"></script>
@@ -209,7 +210,11 @@
                 <!--  animation="property: rotation; to: 0 360 0; dur: 10000; easing: linear; loop: true" -->
                 <a-entity>
                     <a-entity id="model" position="0 0 0" rotation="0 0 0" scale="5 5 5">
-                        <a-entity model3dtaca id="model" gltf-model="url(models/taca-sem-fitas.glb)">
+                        <a-entity model3dtaca id="model" gltf-model="url(models/taca-sem-fitas.glb)" cube-env-map="
+                            path: ./img/cubemap/;
+                            extension: jpg;
+                            reflectivity: 5;
+                        ">
                         </a-entity>
 
                         <a-entity model3dfitas gltf-model="url(models/fitas.glb)"
@@ -258,10 +263,10 @@
             </a-entity>
         </a-entity>
 
-        <a-light type="point" color="#FFF" intensity="1.5" position="-6 5 0" rotation="0 0 0"></a-light>
-        <a-light type="point" color="#FFF" intensity="1.5" position="6 5 0" rotation="0 0 0"></a-light>
-        <a-light type="point" color="#FFF" intensity="1.5" position="-6 0 0" rotation="0 0 0"></a-light>
-        <a-light type="point" color="#FFF" intensity="1.5" position="6 0 0" rotation="0 0 0"></a-light>
+        <a-light type="point" color="#FFF" intensity="2" position="-6 3 0" rotation="0 0 0"></a-light>
+        <a-light type="point" color="#FFF" intensity="2" position="6 3 0" rotation="0 0 0"></a-light>
+        <a-light type="point" color="#FFF" intensity="2" position="-6 -2 0" rotation="0 0 0"></a-light>
+        <a-light type="point" color="#FFF" intensity="2" position="6 -2 0" rotation="0 0 0"></a-light>
     </a-scene>
 
     <main class="camera">

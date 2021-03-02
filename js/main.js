@@ -115,7 +115,7 @@ AFRAME.registerComponent('ar-scene', {
                 document.getElementById("zoom-out").onclick = () => zoomOut();
                 document.getElementById("enable-particles").onclick = () => enableParticles();
             }
-            
+
             if (window.startTutorial) {
                 enableParticles();
                 getLocation((position) => {
@@ -149,7 +149,7 @@ AFRAME.registerComponent('model3dtaca', {
     init: function () {
         this.el.addEventListener('model-loaded', e => {
             onLoadModels();
-        })
+        });
     }
 });
 
@@ -157,7 +157,7 @@ AFRAME.registerComponent('model3dfitas', {
     init: function () {
         this.el.addEventListener('model-loaded', e => {
             onLoadModels();
-        })
+        });
     }
 });
 
