@@ -402,5 +402,5 @@ document.addEventListener("readystatechange", function () {
         if (el) {
             el.remove();
         }
-    }, 6000);
+    }, 5000);
 });
