@@ -119,13 +119,17 @@ AFRAME.registerComponent('ar-scene', {
             }
 
             if (window.startTutorial) {
-                getLocation(showPosition);
-                cameraStart();
-                window.startTutorial(callback);
+                getLocation((position) => {
+                    showPosition(position);
+                    cameraStart();
+                    window.startTutorial(callback);
+                });
             } else {
-                getLocation(showPosition);
-                cameraStart();
-                callback();
+                getLocation((position) => {
+                    showPosition(position);
+                    cameraStart();
+                    callback();
+                });
             }
 
             clickToStart.remove();

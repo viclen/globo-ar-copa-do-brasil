@@ -222,30 +222,30 @@
                     sprite-particles="spawnRate: 500; lifeTime: .1 .. .2; radialType: sphere; radialVelocity: 2..10; trailLifeTime: .1; trailInterval: .1; trailType: ribbon; ribbonWidth: .5; ribbonShape: taper; blending: additive">
                 </a-entity> -->
 
-                <!-- <a-entity id="particles"particleCount: 100;
-particleCount: 100;
-particleCount: 100;
+                <!-- <a-entity id="particles"
+                    sprite-particles="texture: url(img/star2.png); spawnRate: 100; lifeTime: 3; radialType: sphere; radialPosition: 1; color: black..white; scale: 0,2,0">
+                </a-entity> -->
 
                 <a-entity position="0 1 0" id="particles" visible="false">
                     <a-entity particles-start particle-system="
                         color:  yellow;
                         randomise: true;
                         texture: url(./img/square.png);
-                        particleCount: 1000;
+                        particleCount: 10000;
                         preset: snow;
                     "></a-entity>
                     <a-entity particles-start particle-system="
                         color:  blue;
                         randomise: true;
                         texture: url(./img/square.png);
-                        particleCount: 1000;
+                        particleCount: 10000;
                         preset: snow;
                     "></a-entity>
                     <a-entity particles-start particle-system="
                         color:  green;
                         randomise: true;
                         texture: url(./img/square.png);
-                        particleCount: 1000;
+                        particleCount: 10000;
                         preset: snow;
                     "></a-entity>
                 </a-entity>
@@ -266,46 +266,46 @@ particleCount: 100;
 
     <main class="camera">
         <!-- Camera sensor -->
-                <canvas id="camera--sensor"></canvas>
-                <!-- Camera output -->
-                <img src="//:0" alt="" id="camera--output">
-                <!-- Camera trigger -->
-                <button class="btn" id="camera--trigger">
-                    <i class="fas fa-camera"></i>
-                </button>
-                <button class="btn" id="camera--change">
-                    <i class="fas fa-exchange-alt"></i>
-                </button>
-                <button class="btn" id="rotate-left">
-                    <i class="fas fa-redo-alt"></i>
-                </button>
-                <button class="btn" id="rotate-right">
-                    <i class="fas fa-undo-alt"></i>
-                </button>
-                <button class="btn" id="zoom-in">
-                    <i class="fas fa-search-plus"></i>
-                </button>
-                <button class="btn" id="zoom-out">
-                    <i class="fas fa-search-minus"></i>
-                </button>
-                <button class="btn hidden" id="download--button">
-                    <i class="fas fa-download"></i>
-                </button>
-                <button class="btn hidden" id="share--button">
-                    <i class="fas fa-share-alt"></i>
-                </button>
-                <button class="btn active" id="enable-particles">
-                    <i class="fas fa-fire"></i>
-                </button>
-                </main>
+        <canvas id="camera--sensor"></canvas>
+        <!-- Camera output -->
+        <img src="//:0" alt="" id="camera--output">
+        <!-- Camera trigger -->
+        <button class="btn" id="camera--trigger">
+            <i class="fas fa-camera"></i>
+        </button>
+        <button class="btn" id="camera--change">
+            <i class="fas fa-exchange-alt"></i>
+        </button>
+        <button class="btn" id="rotate-left">
+            <i class="fas fa-redo-alt"></i>
+        </button>
+        <button class="btn" id="rotate-right">
+            <i class="fas fa-undo-alt"></i>
+        </button>
+        <button class="btn" id="zoom-in">
+            <i class="fas fa-search-plus"></i>
+        </button>
+        <button class="btn" id="zoom-out">
+            <i class="fas fa-search-minus"></i>
+        </button>
+        <button class="btn hidden" id="download--button">
+            <i class="fas fa-download"></i>
+        </button>
+        <button class="btn hidden" id="share--button">
+            <i class="fas fa-share-alt"></i>
+        </button>
+        <button class="btn active" id="enable-particles">
+            <i class="fas fa-fire"></i>
+        </button>
+    </main>
 
-                <script>
-                    const splitted = document.getElementById("scriptVersion").getAttribute("src").split("?");
-                    const version = splitted.length > 1 ? splitted[1] : 1;
+    <script>
+        const splitted = document.getElementById("scriptVersion").getAttribute("src").split("?");
+        const version = splitted.length > 1 ? splitted[1] : 1;
         // alert("Versão de teste " + version);
-                </script>
+    </script>
 
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/js/all.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/js/all.min.js"></script>
 </body>
 
 </html>
