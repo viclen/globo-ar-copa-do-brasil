@@ -114,17 +114,17 @@ AFRAME.registerComponent('ar-scene', {
                 document.getElementById("zoom-in").onclick = () => zoomIn();
                 document.getElementById("zoom-out").onclick = () => zoomOut();
                 document.getElementById("enable-particles").onclick = () => enableParticles();
-
-                enableParticles();
             }
-
+            
             if (window.startTutorial) {
+                enableParticles();
                 getLocation((position) => {
                     showPosition(position);
                     cameraStart();
                     window.startTutorial(callback);
                 });
             } else {
+                enableParticles();
                 getLocation((position) => {
                     showPosition(position);
                     cameraStart();
@@ -167,7 +167,6 @@ function onLoadModels() {
     if (modelsLoaded >= 2) {
         document.getElementById("carregando").innerHTML = "";
         document.getElementById("carregando").parentElement.style.background = "";
-        // document.getElementById("particles").setAttribute("visible", true);
         document.getElementById("model").querySelector("[model3dtaca]").setAttribute("visible", true);
         document.getElementById("model").querySelector("[model3dfitas]").setAttribute("visible", true);
     }
@@ -209,46 +208,6 @@ function movementThreshold(acl) {
         }
     }
 }
-
-// AFRAME.registerComponent('scene-objects', {
-//     tick: (function () {
-//         const position = new THREE.Vector3();
-
-//         return function () {
-//             if (!position || isNaN(position.x) || isNaN(position.y) || isNaN(position.z)) {
-//                 return;
-//             }
-
-//             const move = {
-//                 x: motions.x.shift(),
-//                 y: motions.y.shift(),
-//                 z: motions.z.shift(),
-//             }
-
-//             const newPosition = {
-//                 x: position.x + move.x,
-//                 y: position.y,
-//                 z: position.z + move.z
-//             };
-
-//             if (cameraRig) {
-//                 cameraRig.setAttribute("position", newPosition);
-//             }
-
-//             document.getElementById("cameraPosition").innerHTML = `
-//                 ${move.x}<br />
-//                 ${move.y}<br />
-//                 ${move.z}<br />
-//             `;
-
-//          document.getElementById("cameraRotation").innerHTML = `
-//              ${newPosition.x}<br />
-//              ${newPosition.y}<br />
-//              ${newPosition.z}<br />
-//          `;
-//         };
-//     })()
-// });
 
 AFRAME.registerComponent('camera-data', {
     init: function () {
@@ -381,17 +340,6 @@ function handleMoveObjects(event) {
         position.y = startPositionY - movement.y;
 
         sceneObjectsMove.setAttribute("position", position);
-
-        // document.getElementById("cameraPosition").innerHTML = `
-        //     ${movement.x}<br />
-        //     ${movement.y}<br />
-        // `;
-
-        // document.getElementById("cameraRotation").innerHTML = `
-        //     ${position.x}<br />
-        //     ${position.y}<br />
-        //     ${position.z}<br />
-        // `;
     }
 }
 

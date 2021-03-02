@@ -159,7 +159,7 @@ AFRAME.registerComponent('particle-system', {
             type: 'number',
             default: 1000
         },
-        texture: {
+        tex: {
             type: 'asset',
             default: 'https://cdn.rawgit.com/IdeaSpaceVR/aframe-particle-system-component/master/dist/images/star2.png'
         },
@@ -203,7 +203,7 @@ AFRAME.registerComponent('particle-system', {
             velocitySpread: {x: 0.5, y: 1, z: 0.5},
             color: ['#FFFFFF'],
             particleCount: 100,
-            texture: 'https://cdn.rawgit.com/IdeaSpaceVR/aframe-particle-system-component/master/dist/images/smokeparticle.png'
+            tex: 'https://cdn.rawgit.com/IdeaSpaceVR/aframe-particle-system-component/master/dist/images/smokeparticle.png'
         };
 
 
@@ -217,7 +217,7 @@ AFRAME.registerComponent('particle-system', {
             velocitySpread: {x: 2, y: 0, z: 2},
             color: ['#FFFFFF'],
             particleCount: 200,
-            texture: 'https://cdn.rawgit.com/IdeaSpaceVR/aframe-particle-system-component/master/dist/images/smokeparticle.png'
+            tex: 'https://cdn.rawgit.com/IdeaSpaceVR/aframe-particle-system-component/master/dist/images/smokeparticle.png'
         };
 
 
@@ -231,7 +231,7 @@ AFRAME.registerComponent('particle-system', {
             velocitySpread: {x: 10, y: 50, z: 10},
             color: ['#FFFFFF'],
             size: 0.4,
-            texture: 'https://cdn.rawgit.com/IdeaSpaceVR/aframe-particle-system-component/master/dist/images/raindrop.png'
+            tex: 'https://cdn.rawgit.com/IdeaSpaceVR/aframe-particle-system-component/master/dist/images/raindrop.png'
         };
 
 
@@ -301,9 +301,9 @@ AFRAME.registerComponent('particle-system', {
 
         var loader = new THREE.TextureLoader();
         var particle_texture = loader.load(
-            settings.texture,
-            function (texture) {
-                return texture;
+            settings.tex,
+            function (tex) {
+                return tex;
             },
             function (xhr) {
               console.log((xhr.loaded / xhr.total * 100) + '% loaded');
@@ -314,7 +314,7 @@ AFRAME.registerComponent('particle-system', {
         );
 
         this.particleGroup = new SPE.Group({
-            texture: {
+            tex: {
                 value: particle_texture
             },
             maxParticleCount: settings.maxParticleCount,
@@ -1039,7 +1039,7 @@ SPE.shaderChunks = {
     uniforms: [
         'uniform float deltaTime;',
         'uniform float runTime;',
-        'uniform sampler2D texture;',
+        'uniform sampler2D tex;',
         'uniform vec4 textureAnimation;',
         'uniform float scale;',
     ].join( '\n' ),
@@ -1280,7 +1280,7 @@ SPE.shaderChunks = {
         '    #endif',
 
         '',
-        '    vec4 rotatedTexture = texture2D( texture, vUv );',
+        '    vec4 rotatedTexture = texture2D( tex, vUv );',
     ].join( '\n' )
 };
 
@@ -1401,8 +1401,8 @@ SPE.shaders = {
         '        vAngle = isAlive * getFloatOverLifetime( positionInTime, angle );',
         '    #endif',
 
-        // If this particle is using a sprite-sheet as a texture, we'll have to figure out
-        // what frame of the texture the particle is using at it's current position in time.
+        // If this particle is using a sprite-sheet as a tex, we'll have to figure out
+        // what frame of the tex the particle is using at it's current position in time.
         '    #ifdef SHOULD_CALCULATE_SPRITE',
         '        float framesX = textureAnimation.x;',
         '        float framesY = textureAnimation.y;',
@@ -2183,20 +2183,20 @@ SPE.utils = {
  * A map of options to configure an SPE.Group instance.
  * @typedef {Object} GroupOptions
  *
- * @property {Object} texture An object describing the texture used by the group.
+ * @property {Object} tex An object describing the tex used by the group.
  *
- * @property {Object} texture.value An instance of THREE.Texture.
+ * @property {Object} tex.value An instance of THREE.Texture.
  *
- * @property {Object=} texture.frames A THREE.Vector2 instance describing the number
- *                                    of frames on the x- and y-axis of the given texture.
- *                                    If not provided, the texture will NOT be treated as
+ * @property {Object=} tex.frames A THREE.Vector2 instance describing the number
+ *                                    of frames on the x- and y-axis of the given tex.
+ *                                    If not provided, the tex will NOT be treated as
  *                                    a sprite-sheet and as such will NOT be animated.
  *
- * @property {Number} [texture.frameCount=texture.frames.x * texture.frames.y] The total number of frames in the sprite-sheet.
+ * @property {Number} [tex.frameCount=tex.frames.x * tex.frames.y] The total number of frames in the sprite-sheet.
  *                                                                   Allows for sprite-sheets that don't fill the entire
- *                                                                   texture.
+ *                                                                   tex.
  *
- * @property {Number} texture.loop The number of loops through the sprite-sheet that should
+ * @property {Number} tex.loop The number of loops through the sprite-sheet that should
  *                                 be performed over the course of a single particle's lifetime.
  *
  * @property {Number} fixedTimeStep If no `dt` (or `deltaTime`) value is passed to this group's
@@ -2207,13 +2207,13 @@ SPE.utils = {
  *                                    the particle's size.
  *
  * @property {Boolean} colorize Whether the particles in this group should be rendered with color, or
- *                              whether the only color of particles will come from the provided texture.
+ *                              whether the only color of particles will come from the provided tex.
  *
  * @property {Number} blending One of Three.js's blending modes to apply to this group's `ShaderMaterial`.
  *
  * @property {Boolean} transparent Whether these particle's should be rendered with transparency.
  *
- * @property {Number} alphaTest Sets the alpha value to be used when running an alpha test on the `texture.value` property. Value between 0 and 1.
+ * @property {Number} alphaTest Sets the alpha value to be used when running an alpha test on the `tex.value` property. Value between 0 and 1.
  *
  * @property {Boolean} depthWrite Whether rendering the group has any effect on the depth buffer.
  *
@@ -2240,7 +2240,7 @@ SPE.Group = function( options ) {
 
     // Ensure we have a map of options to play with
     options = utils.ensureTypedArg( options, types.OBJECT, {} );
-    options.texture = utils.ensureTypedArg( options.texture, types.OBJECT, {} );
+    options.tex = utils.ensureTypedArg( options.tex, types.OBJECT, {} );
 
     // Assign a UUID to this instance
     this.uuid = THREE.Math.generateUUID();
@@ -2250,11 +2250,11 @@ SPE.Group = function( options ) {
     this.fixedTimeStep = utils.ensureTypedArg( options.fixedTimeStep, types.NUMBER, 0.016 );
 
     // Set properties used in the uniforms map, starting with the
-    // texture stuff.
-    this.texture = utils.ensureInstanceOf( options.texture.value, THREE.Texture, null );
-    this.textureFrames = utils.ensureInstanceOf( options.texture.frames, THREE.Vector2, new THREE.Vector2( 1, 1 ) );
-    this.textureFrameCount = utils.ensureTypedArg( options.texture.frameCount, types.NUMBER, this.textureFrames.x * this.textureFrames.y );
-    this.textureLoop = utils.ensureTypedArg( options.texture.loop, types.NUMBER, 1 );
+    // tex stuff.
+    this.tex = utils.ensureInstanceOf( options.tex.value, THREE.Texture, null );
+    this.textureFrames = utils.ensureInstanceOf( options.tex.frames, THREE.Vector2, new THREE.Vector2( 1, 1 ) );
+    this.textureFrameCount = utils.ensureTypedArg( options.tex.frameCount, types.NUMBER, this.textureFrames.x * this.textureFrames.y );
+    this.textureLoop = utils.ensureTypedArg( options.tex.loop, types.NUMBER, 1 );
     this.textureFrames.max( new THREE.Vector2( 1, 1 ) );
 
     this.hasPerspective = utils.ensureTypedArg( options.hasPerspective, types.BOOLEAN, true );
@@ -2294,9 +2294,9 @@ SPE.Group = function( options ) {
 
     // Map of uniforms to be applied to the ShaderMaterial instance.
     this.uniforms = {
-        texture: {
+        tex: {
             type: 't',
-            value: this.texture
+            value: this.tex
         },
         textureAnimation: {
             type: 'v4',
@@ -3052,8 +3052,8 @@ SPE.Group.prototype.dispose = function() {
  * @property {Boolean} [size.randomise=false] When a particle is re-spawned, whether it's size should be re-randomised or not. Can incur a performance hit.
  *
  *
- * @property {Object} [angle={}] An object describing a particle's angle. The angle is a 2d-rotation, measured in radians, applied to the particle's texture.
- *                               NOTE: if a particle's texture is a sprite-sheet, this value IS IGNORED.
+ * @property {Object} [angle={}] An object describing a particle's angle. The angle is a 2d-rotation, measured in radians, applied to the particle's tex.
+ *                               NOTE: if a particle's tex is a sprite-sheet, this value IS IGNORED.
  *                               This property is a "value-over-lifetime" property, meaning an array of values and spreads can be
  *                               given to describe specific value changes over a particle's lifetime.
  *                               Depending on the value of SPE.valueOverLifetimeLength, if arrays of numbers are given, then the array will be interpolated to
