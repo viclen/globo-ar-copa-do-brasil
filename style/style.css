@@ -247,3 +247,11 @@ main.camera, #camera--view, #camera--sensor, #camera--output {
     background-color: black;
     color: white;
 }
+
+.canvas-env-map {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    z-index: 300;
+}

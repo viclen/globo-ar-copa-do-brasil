@@ -63,10 +63,10 @@
 
     <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-    <script src="//cdn.rawgit.com/donmccurdy/aframe-extras/v3.13.1/dist/aframe-extras.min.js"></script>
-    <script src="https://rawgit.com/donmccurdy/aframe-extras/master/dist/aframe-extras.loaders.min.js"></script>
+    <script src="//cdn.rawgit.com/donmccurdy/aframe-extras/v5.1.0/dist/aframe-extras.min.js"></script>
     <script src="https://unpkg.com/aframe-look-at-component@1.0.0/dist/aframe-look-at-component.min.js"></script>
     <script src="./js/aframe-particle-system-component.js?1"></script>
+    <script src="./js/cube-env-map-realtime.js"></script>
     <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
     <script>
         THREEx.ArToolkitContext.baseURL = 'https://rawgit.com/jeromeetienne/ar.js/master/three.js/';
@@ -74,11 +74,11 @@
 
     <link rel="stylesheet" href="style/loading.css?1">
 
-    <link rel="stylesheet" href="style/tutorial.css?155">
-    <link rel="stylesheet" href="style/style.css?155">
-    <script src="./js/front-camera.js?155"></script>
-    <script id="scriptVersion" src="./js/main.js?155"></script>
-    <script src="./js/tutorial.js?155"></script>
+    <link rel="stylesheet" href="style/tutorial.css?156">
+    <link rel="stylesheet" href="style/style.css?156">
+    <script src="./js/front-camera.js?156"></script>
+    <script id="scriptVersion" src="./js/main.js?156"></script>
+    <script src="./js/tutorial.js?156"></script>
 </head>
 
 <body style="margin: 0; overflow: hidden;">
@@ -207,13 +207,12 @@
         <a-entity objects visible="false" id="objects" smooth="true" smoothCount="10" smoothTolerance=".1"
             smoothThreshold="5" look-at="[gps-camera]">
             <a-entity scene-objects position="0 -1 10" rotation="0 0 0">
-                <!--  animation="property: rotation; to: 0 360 0; dur: 10000; easing: linear; loop: true" -->
                 <a-entity>
                     <a-entity id="model" position="0 0 0" rotation="0 0 0" scale="5 5 5">
                         <a-entity model3dtaca id="model" gltf-model="url(models/taca-sem-fitas.glb)" cube-env-map="
                             path: ./img/cubemap/;
-                            extension: jpg;
-                            reflectivity: 5;
+                            extension: png;
+                            reflectivity: 1;
                         ">
                         </a-entity>
 
@@ -222,38 +221,30 @@
                         </a-entity>
                     </a-entity>
                 </a-entity>
+            </a-entity>
 
-                <!-- <a-entity id="particles"
-                    sprite-particles="spawnRate: 500; lifeTime: .1 .. .2; radialType: sphere; radialVelocity: 2..10; trailLifeTime: .1; trailInterval: .1; trailType: ribbon; ribbonWidth: .5; ribbonShape: taper; blending: additive">
-                </a-entity> -->
-
-                <!-- <a-entity id="particles"
-                    sprite-particles="texture: url(img/star2.png); spawnRate: 100; lifeTime: 3; radialType: sphere; radialPosition: 1; color: black..white; scale: 0,2,0">
-                </a-entity> -->
-
-                <a-entity position="0 1 0" id="particles" visible="false">
-                    <a-entity particles-start particle-system="
-                        color:  yellow;
-                        randomise: true;
-                        tex: url(./img/square.png);
-                        particleCount: 2000;
-                        preset: snow;
-                    "></a-entity>
-                    <a-entity particles-start particle-system="
-                        color:  blue;
-                        randomise: true;
-                        tex: url(./img/square.png);
-                        particleCount: 2000;
-                        preset: snow;
-                    "></a-entity>
-                    <a-entity particles-start particle-system="
-                        color:  green;
-                        randomise: true;
-                        tex: url(./img/square.png);
-                        particleCount: 2000;
-                        preset: snow;
-                    "></a-entity>
-                </a-entity>
+            <a-entity id="particles" visible="false">
+                <a-entity particles-start particle-system="
+                    color:  yellow;
+                    randomise: true;
+                    tex: url(./img/square.png);
+                    particleCount: 2000;
+                    preset: snow;
+                "></a-entity>
+                <a-entity particles-start particle-system="
+                    color:  blue;
+                    randomise: true;
+                    tex: url(./img/square.png);
+                    particleCount: 2000;
+                    preset: snow;
+                "></a-entity>
+                <a-entity particles-start particle-system="
+                    color:  green;
+                    randomise: true;
+                    tex: url(./img/square.png);
+                    particleCount: 2000;
+                    preset: snow;
+                "></a-entity>
             </a-entity>
         </a-entity>
 
@@ -263,10 +254,10 @@
             </a-entity>
         </a-entity>
 
-        <a-light type="point" color="#FFF" intensity="2" position="-6 3 0" rotation="0 0 0"></a-light>
-        <a-light type="point" color="#FFF" intensity="2" position="6 3 0" rotation="0 0 0"></a-light>
-        <a-light type="point" color="#FFF" intensity="2" position="-6 -2 0" rotation="0 0 0"></a-light>
-        <a-light type="point" color="#FFF" intensity="2" position="6 -2 0" rotation="0 0 0"></a-light>
+        <a-light type="point" color="#FFF" intensity="3" position="-10 5 0" rotation="0 0 0"></a-light>
+        <a-light type="point" color="#FFF" intensity="3" position="10 5 0" rotation="0 0 0"></a-light>
+        <a-light type="point" color="#FFF" intensity="3" position="-10 -5 0" rotation="0 0 0"></a-light>
+        <a-light type="point" color="#FFF" intensity="3" position="10 -5 0" rotation="0 0 0"></a-light>
     </a-scene>
 
     <main class="camera">
@@ -303,6 +294,9 @@
             <i class="fas fa-fire"></i>
         </button>
     </main>
+
+    <!-- canvas env map -->
+    <canvas class="canvas-env-map"></canvas>
 
     <script>
         const splitted = document.getElementById("scriptVersion").getAttribute("src").split("?");
