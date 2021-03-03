@@ -62,7 +62,7 @@
     </script>
 
     <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
-    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="./js/aframe.min.js"></script>
     <script src="//cdn.rawgit.com/donmccurdy/aframe-extras/v5.1.0/dist/aframe-extras.min.js"></script>
     <script src="https://unpkg.com/aframe-look-at-component@1.0.0/dist/aframe-look-at-component.min.js"></script>
     <script src="./js/aframe-particle-system-component.js?1"></script>
@@ -74,11 +74,11 @@
 
     <link rel="stylesheet" href="style/loading.css?1">
 
-    <link rel="stylesheet" href="style/tutorial.css?156">
-    <link rel="stylesheet" href="style/style.css?156">
-    <script src="./js/front-camera.js?156"></script>
-    <script id="scriptVersion" src="./js/main.js?156"></script>
-    <script src="./js/tutorial.js?156"></script>
+    <link rel="stylesheet" href="style/tutorial.css?158">
+    <link rel="stylesheet" href="style/style.css?158">
+    <script src="./js/front-camera.js?158"></script>
+    <script id="scriptVersion" src="./js/main.js?158"></script>
+    <script src="./js/tutorial.js?158"></script>
 </head>
 
 <body style="margin: 0; overflow: hidden;">
@@ -206,7 +206,7 @@
         arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;" light="defaultLightsEnabled: false">
         <a-entity objects visible="false" id="objects" smooth="true" smoothCount="10" smoothTolerance=".1"
             smoothThreshold="5" look-at="[gps-camera]">
-            <a-entity scene-objects position="0 -1 10" rotation="0 0 0">
+            <a-entity scene-objects position="0 0 10" rotation="0 0 0">
                 <a-entity>
                     <a-entity id="model" position="0 0 0" rotation="0 0 0" scale="5 5 5">
                         <a-entity model3dtaca id="model" gltf-model="url(models/taca-sem-fitas.glb)" cube-env-map="
@@ -221,6 +221,12 @@
                         </a-entity>
                     </a-entity>
                 </a-entity>
+
+                <a-light type="point" color="#FFF" intensity="1" position="5 2 15" rotation="0 0 0">
+                </a-light>
+
+                <a-light type="point" color="#FFF" intensity="1" position="5 2 -15" rotation="0 0 0">
+                </a-light>
             </a-entity>
 
             <a-entity id="particles" visible="false">
@@ -254,10 +260,9 @@
             </a-entity>
         </a-entity>
 
-        <a-light type="point" color="#FFF" intensity="3" position="-10 5 0" rotation="0 0 0"></a-light>
-        <a-light type="point" color="#FFF" intensity="3" position="10 5 0" rotation="0 0 0"></a-light>
-        <a-light type="point" color="#FFF" intensity="3" position="-10 -5 0" rotation="0 0 0"></a-light>
-        <a-light type="point" color="#FFF" intensity="3" position="10 -5 0" rotation="0 0 0"></a-light>
+        <!-- <a-light type="point" color="#FFF" intensity="3" position="-10 2 0" rotation="0 0 0"></a-light> -->
+        <!-- <a-light type="point" color="#FFF" intensity="3" position="-10 -5 0" rotation="0 0 0"></a-light> -->
+        <!-- <a-light type="point" color="#FFF" intensity="3" position="10 -5 0" rotation="0 0 0"></a-light> -->
     </a-scene>
 
     <main class="camera">
@@ -266,23 +271,26 @@
         <!-- Camera output -->
         <img src="//:0" alt="" id="camera--output">
         <!-- Camera trigger -->
-        <button class="btn" id="camera--trigger">
+        <button class="btn hidden" id="camera--trigger">
             <i class="fas fa-camera"></i>
         </button>
-        <button class="btn" id="camera--change">
-            <i class="fas fa-exchange-alt"></i>
+        <button class="btn hidden" id="camera--change">
+            <img src="./icon/change.svg" />
         </button>
-        <button class="btn" id="rotate-left">
+        <button class="btn hidden" id="rotate-left">
             <i class="fas fa-redo-alt"></i>
         </button>
-        <button class="btn" id="rotate-right">
+        <button class="btn hidden" id="rotate-right">
             <i class="fas fa-undo-alt"></i>
         </button>
-        <button class="btn" id="zoom-in">
+        <button class="btn hidden" id="zoom-in">
             <i class="fas fa-search-plus"></i>
         </button>
-        <button class="btn" id="zoom-out">
+        <button class="btn hidden" id="zoom-out">
             <i class="fas fa-search-minus"></i>
+        </button>
+        <button class="btn active hidden" id="enable-particles">
+            <img src="./icon/fireworks.svg" />
         </button>
         <button class="btn hidden" id="download--button">
             <i class="fas fa-download"></i>
@@ -290,21 +298,18 @@
         <button class="btn hidden" id="share--button">
             <i class="fas fa-share-alt"></i>
         </button>
-        <button class="btn active" id="enable-particles">
-            <i class="fas fa-fire"></i>
-        </button>
     </main>
 
     <!-- canvas env map -->
     <canvas class="canvas-env-map"></canvas>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/js/all.min.js"></script>
 
     <script>
         const splitted = document.getElementById("scriptVersion").getAttribute("src").split("?");
         const version = splitted.length > 1 ? splitted[1] : 1;
         // alert("Versão de teste " + version);
     </script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/js/all.min.js"></script>
 </body>
 
 </html>
