@@ -181,14 +181,14 @@
     position: fixed;
     left: 30px;
     top: 50%;
-    transform: translate(0, 75px);
+    transform: translate(0, 70px);
 }
 
 .tutorial--zoom .right {
     position: fixed;
     right: 30px;
     top: 50%;
-    transform: translate(0, 75px);
+    transform: translate(0, 70px);
 }
 
 .tutorial--picture {

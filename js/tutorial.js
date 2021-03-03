@@ -2,22 +2,27 @@ let tutorialConfirm, tutorialText, tutorialMain, tutorialStandard, tutorialClose
 
 let tutorials = [{
     el: ".tutorial--move",
-    text: "Você pode mover a taça passando o dedo na tela."
+    text: "Deslize o dedo pela tela para mover a taça."
 }, {
     el: ".tutorial--change-camera",
-    text: "Toque no botão na parte superior esquerda para mudar a camera."
+    text: "Pressione este botão para mudar a camera.",
+    btn: "#camera--change"
 }, {
     el: ".tutorial--particles",
-    text: "Toque no botão com fogo para mostrar ou não as partículas."
+    text: "Pressione este botão para mostrar ou não os confetes.",
+    btn: "#enable-particles"
 }, {
     el: ".tutorial--rotate",
-    text: "Toque nos botões com seta para rodar a taça."
+    text: "Toque nos botões com seta para rodar a taça.",
+    btn: ["#rotate-left", "#rotate-right"]
 }, {
     el: ".tutorial--zoom",
-    text: "Toque nos botões com lupa para dar zoom na taça."
+    text: "Toque nos botões com lupa para dar zoom na taça.",
+    btn: ["#zoom-in", "#zoom-out"]
 }, {
     el: ".tutorial--picture",
-    text: "Toque no botão na parte inferior para tirar uma foto."
+    text: "Toque no botão na parte inferior para tirar uma foto.",
+    btn: "#camera--trigger"
 }, {
     el: "",
     text: "Beleza, vamos começar!"
@@ -74,6 +79,8 @@ function nextTutorial() {
                 el.classList.add("show");
             }
 
+            showBtn(tutorial.btn);
+
             tutorialText.innerHTML = tutorial.text;
             tutorialStandard.classList.add("show");
         }, 500);
@@ -83,9 +90,27 @@ function nextTutorial() {
 }
 
 function finishTutorial() {
+    for (const tutorial of tutorials) {
+        showBtn(tutorial.btn);
+    }
+
     if (tutorialMain)
         tutorialMain.remove();
     tutorialMain = null;
     localStorage.setItem("tutorial", "1");
     tutorialCallback();
+}
+
+function showBtn(selector) {
+    if (selector) {
+        if (Array.isArray(selector)) {
+            for (const btn of selector) {
+                const button = document.querySelector(btn);
+                button.classList.remove("hidden");
+            }
+        } else {
+            const button = document.querySelector(selector);
+            button.classList.remove("hidden");
+        }
+    }
 }
