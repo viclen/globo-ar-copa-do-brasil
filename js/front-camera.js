@@ -41,7 +41,7 @@ function cameraStart() {
     if (facingMode == "user") {
         if (cameraView) cameraView.classList.add("reverse");
         document.querySelector("#camera-rig").setAttribute("rotation", "0 180 0");
-        document.querySelector("[scene-objects]").setAttribute("position", "0 0 10");
+        document.querySelector("[scene-objects]").setAttribute("position", "0 -3 10");
         document.querySelector("#objects").setAttribute("rotation", "0 0 0");
         document.querySelector("#model").setAttribute("rotation", "0 180 0");
         let scale = document.querySelector("#model").getAttribute("scale");
@@ -84,7 +84,7 @@ function cameraStart() {
     } else {
         if (cameraView) cameraView.classList.remove("reverse");
         document.querySelector("#camera-rig").setAttribute("rotation", "0 0 0");
-        document.querySelector("[scene-objects]").setAttribute("position", "0 0 -10");
+        document.querySelector("[scene-objects]").setAttribute("position", "0 -3 -10");
         document.querySelector("#objects").setAttribute("rotation", "0 0 0");
         document.querySelector("#model").setAttribute("rotation", "0 0 0");
         let scale = document.querySelector("#model").getAttribute("scale");
