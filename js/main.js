@@ -74,15 +74,6 @@ function showScreen(name) {
 
 AFRAME.registerComponent('ar-scene', {
     init: function () {
-        if (!window.mobileCheck()) {
-            document.getElementById("clickToStart").innerHTML = `
-                <img src="./img/qr-code.png" />
-            `;
-            document.getElementById("arScene").remove();
-            document.getElementsByTagName("video")[0].remove();
-            return;
-        }
-
         const clickToStart = document.getElementById('clickToStart');
 
         clickToStart.addEventListener('click', () => {
@@ -345,10 +336,19 @@ function handleMoveObjects(event) {
 
 document.addEventListener("readystatechange", function () {
     setTimeout(() => {
-        const el = document.querySelector("#first-loading");
+        if (!window.mobileCheck()) {
+            document.body.innerHTML = `
+                <div class="not-mobile">
+                    <div>Aponte a câmera do celular para o QRCode para mostrar a realidade aumentada.</div>
+                    <img src="./img/qr-code.png" />
+                </div>
+            `;
+        } else {
+            const el = document.querySelector("#first-loading");
 
-        if (el) {
-            el.remove();
+            if (el) {
+                el.remove();
+            }
         }
     }, 5000);
 });
