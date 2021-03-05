@@ -9,7 +9,7 @@ let tutorials = [{
     btn: "#camera--change"
 }, {
     el: ".tutorial--particles",
-    text: "Pressione este botão para mostrar ou não os confetes.",
+    text: "Pressione este botão para desabilitar os confetes.",
     btn: "#enable-particles"
 }, {
     el: ".tutorial--rotate",

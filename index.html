@@ -66,7 +66,6 @@
     <script src="//cdn.rawgit.com/donmccurdy/aframe-extras/v5.1.0/dist/aframe-extras.min.js"></script>
     <script src="https://unpkg.com/aframe-look-at-component@1.0.0/dist/aframe-look-at-component.min.js"></script>
     <script src="./js/aframe-particle-system-component.js?1"></script>
-    <script src="./js/cube-env-map-realtime.js"></script>
     <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
     <script>
         THREEx.ArToolkitContext.baseURL = 'https://rawgit.com/jeromeetienne/ar.js/master/three.js/';
@@ -74,19 +73,17 @@
 
     <link rel="stylesheet" href="style/loading.css?1">
 
-    <link rel="stylesheet" href="style/tutorial.css?158">
-    <link rel="stylesheet" href="style/style.css?158">
-    <script src="./js/front-camera.js?158"></script>
-    <script id="scriptVersion" src="./js/main.js?158"></script>
-    <script src="./js/tutorial.js?158"></script>
+    <link rel="stylesheet" href="style/tutorial.css?164">
+    <link rel="stylesheet" href="style/style.css?164">
+    <script src="./js/front-camera.js?164"></script>
+    <script id="scriptVersion" src="./js/main.js?164"></script>
+    <script src="./js/tutorial.js?164"></script>
 </head>
 
 <body style="margin: 0; overflow: hidden;">
     <div id="first-loading">
         <div>
-            Carregando...
-            <br />
-            Por favor espere
+            Por favor, aguarde.
             <br />
             <br />
 
@@ -110,9 +107,7 @@
 
     <div class="fixed-front" style="background: rgba(0, 0, 0, 0.5)" id="moveObjects">
         <div class="text" id="carregando" style="display: none;">
-            Carregando...
-            <br />
-            Por favor espere
+            Por favor, aguarde.
             <br />
             <br />
 
@@ -203,7 +198,8 @@
     </div>
 
     <a-scene id="arScene" ar-scene vr-mode-ui="enabled: false;" renderer="logarithmicDepthBuffer: true;" embedded
-        arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;" light="defaultLightsEnabled: false">
+        arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;" light="defaultLightsEnabled: false"
+        artoolkit>
         <a-entity objects visible="false" id="objects" smooth="true" smoothCount="10" smoothTolerance=".1"
             smoothThreshold="5" look-at="[gps-camera]">
             <a-entity scene-objects position="0 0 10" rotation="0 0 0">
@@ -231,38 +227,36 @@
 
             <a-entity id="particles" visible="false">
                 <a-entity particles-start particle-system="
-                    color:  yellow;
-                    randomise: true;
-                    tex: url(./img/square.png);
-                    particleCount: 2000;
-                    preset: snow;
-                "></a-entity>
+                            color:  yellow;
+                            randomise: true;
+                            tex: url(./img/square.png);
+                            particleCount: 2000;
+                            preset: snow;
+                        "></a-entity>
                 <a-entity particles-start particle-system="
-                    color:  blue;
-                    randomise: true;
-                    tex: url(./img/square.png);
-                    particleCount: 2000;
-                    preset: snow;
-                "></a-entity>
+                            color:  blue;
+                            randomise: true;
+                            tex: url(./img/square.png);
+                            particleCount: 2000;
+                            preset: snow;
+                        "></a-entity>
                 <a-entity particles-start particle-system="
-                    color:  green;
-                    randomise: true;
-                    tex: url(./img/square.png);
-                    particleCount: 2000;
-                    preset: snow;
-                "></a-entity>
+                            color:  green;
+                            randomise: true;
+                            tex: url(./img/square.png);
+                            particleCount: 2000;
+                            preset: snow;
+                        "></a-entity>
             </a-entity>
         </a-entity>
 
-        <a-entity id="camera-rig" rotation="0 180 0">
-            <a-entity camera id="camera" wasd-controls-enabled="false" gps-camera look-controls rotation-reader
-                camera-data alert="false">
+        <a-entity id="world-rotation">
+            <a-entity id="camera-rig" rotation="0 180 0">
+                <a-entity camera id="camera" wasd-controls-enabled="false" gps-camera look-controls rotation-reader
+                    camera-data alert="false">
+                </a-entity>
             </a-entity>
         </a-entity>
-
-        <!-- <a-light type="point" color="#FFF" intensity="3" position="-10 2 0" rotation="0 0 0"></a-light> -->
-        <!-- <a-light type="point" color="#FFF" intensity="3" position="-10 -5 0" rotation="0 0 0"></a-light> -->
-        <!-- <a-light type="point" color="#FFF" intensity="3" position="10 -5 0" rotation="0 0 0"></a-light> -->
     </a-scene>
 
     <main class="camera">
@@ -299,9 +293,6 @@
             <i class="fas fa-share-alt"></i>
         </button>
     </main>
-
-    <!-- canvas env map -->
-    <canvas class="canvas-env-map"></canvas>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/js/all.min.js"></script>
 

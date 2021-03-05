@@ -2,7 +2,7 @@ let facingMode = { exact: "environment" };
 
 const constraints = { audio: false };
 // Define constants
-let cameraView, cameraOutput, cameraCanvas, cameraTrigger, cameraChange, shareButton, downloadButton;
+let cameraView, cameraOutput, cameraCanvas, cameraTrigger, cameraChange, shareButton, downloadButton, objectsRotation;
 let canvas;
 let scene;
 let renderer;
@@ -24,6 +24,7 @@ function cameraStart() {
     cameraChange = document.querySelector("#camera--change");
     shareButton = document.querySelector("#share--button");
     downloadButton = document.querySelector("#download--button");
+    objectsRotation = document.getElementById("world-rotation");
 
     skyCanvas = document.querySelector("#sky--canvas");
     imagesEntity = document.querySelector("#images");
@@ -41,12 +42,19 @@ function cameraStart() {
     if (facingMode == "user") {
         if (cameraView) cameraView.classList.add("reverse");
         document.querySelector("#camera-rig").setAttribute("rotation", "0 180 0");
-        document.querySelector("[scene-objects]").setAttribute("position", "0 -3 10");
+        document.querySelector("[scene-objects]").setAttribute("position", "0 -4 10");
         document.querySelector("#objects").setAttribute("rotation", "0 0 0");
         document.querySelector("#model").setAttribute("rotation", "0 180 0");
+
         let scale = document.querySelector("#model").getAttribute("scale");
         scale.x = scale.x > 0 ? -scale.x : scale.x;
         document.querySelector("#model").setAttribute("scale", scale);
+
+        const rot = objectsRotation.getAttribute("rotation");
+        rot.x = 0;
+        rot.z = 0;
+        objectsRotation.setAttribute("rotation", rot);
+
         cameraTrigger.setAttribute("data-camera", "frontal");
         canvas.classList.add("reverse");
 
@@ -84,12 +92,19 @@ function cameraStart() {
     } else {
         if (cameraView) cameraView.classList.remove("reverse");
         document.querySelector("#camera-rig").setAttribute("rotation", "0 0 0");
-        document.querySelector("[scene-objects]").setAttribute("position", "0 -3 -10");
+        document.querySelector("[scene-objects]").setAttribute("position", "0 -4 -10");
         document.querySelector("#objects").setAttribute("rotation", "0 0 0");
         document.querySelector("#model").setAttribute("rotation", "0 0 0");
+
         let scale = document.querySelector("#model").getAttribute("scale");
         scale.x = scale.x < 0 ? -scale.x : scale.x;
         document.querySelector("#model").setAttribute("scale", scale);
+
+        const rot = objectsRotation.getAttribute("rotation");
+        rot.x = 0;
+        rot.z = 0;
+        objectsRotation.setAttribute("rotation", rot);
+
         cameraTrigger.setAttribute("data-camera", "traseira");
         canvas.classList.remove("reverse");
 

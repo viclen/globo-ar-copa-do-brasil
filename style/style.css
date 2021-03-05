@@ -46,7 +46,7 @@ body * {
 }
 
 #clickToStart {
-    z-index: 200 !important;
+    z-index: 900 !important;
 }
 
 .fixed-front .text {
@@ -120,6 +120,7 @@ body * {
     flex-direction: row;
     align-items: flex-end;
     color: white;
+    z-index: 200;
 }
 
 .camera-info>div {
@@ -273,4 +274,5 @@ main.camera, #camera--view, #camera--sensor, #camera--output {
     width: 100%;
     white-space: normal;
     padding: 10px;
+    text-align: center;
 }

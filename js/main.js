@@ -21,7 +21,7 @@ const moveSensitivity = {
     y: 0.02,
     x: 0.02
 };
-let sceneObjects;
+let sceneObjects, worldRotation;
 let cameraRig;
 let isOpening = false;
 let moveObjects;
@@ -36,7 +36,7 @@ let motions = {
     z: [],
     time: new Date().getTime()
 };
-
+let currentCameraRotation;
 let canAdd = true;
 
 let lastFrame = 0;
@@ -56,6 +56,14 @@ function showPosition(position) {
 
     objects.setAttribute("gps-entity-place", "latitude: " + position.coords.latitude + "; longitude: " + position.coords.longitude);
     objects.setAttribute("visible", true);
+
+    worldRotation = document.getElementById("world-rotation");
+
+    if (worldRotation) {
+        const objectsRotation = worldRotation.getAttribute("rotation");
+        objectsRotation.y = -currentCameraRotation.y;
+        worldRotation.setAttribute("rotation", objectsRotation);
+    }
 }
 
 function openurl(url) {
@@ -206,15 +214,45 @@ AFRAME.registerComponent('camera-data', {
     },
     tick: (function () {
         return function () {
-            if (window.facingMode == "user") {
-                const rotation = this.el.getAttribute("rotation");
-                const rigRotation = cameraRig.getAttribute("rotation");
+            const rotation = this.el.getAttribute("rotation");
+            currentCameraRotation = rotation;
 
-                rigRotation.x = -rotation.x * 2;
-                rigRotation.z = -rotation.z * 2;
+            // if (worldRotation) {
+            //     const objectsRotation = worldRotation.getAttribute("rotation");
+
+            //     document.getElementById("cameraPosition").innerHTML = `
+            //         ${objectsRotation.x}<br />
+            //         ${objectsRotation.y}<br />
+            //         ${objectsRotation.z}<br />
+            //     `;
+
+            //     document.getElementById("cameraRotation").innerHTML = `
+            //         ${rotation.x}<br />
+            //         ${rotation.y}<br />
+            //         ${rotation.z}<br />
+            //     `;
+            // }
+
+            if (window.facingMode == "user") {
+                const rigRotation = worldRotation.getAttribute("rotation");
+
+                if (rigRotation.y > 135 || rigRotation.y < -135) {
+                    rigRotation.x = -rotation.x * 2;
+                    rigRotation.z = -rotation.z * 2;
+                } else if (rigRotation.y > 45) {
+                    rigRotation.z = rotation.x * 2;
+                    rigRotation.x = -rotation.z * 2;
+                } else if (rigRotation.y < -45) {
+                    rigRotation.z = -rotation.x * 2;
+                    rigRotation.x = rotation.z * 2;
+                } else {
+                    rigRotation.x = rotation.x * 2;
+                    rigRotation.z = rotation.z * 2;
+                }
+
                 // rigRotation.y = - 180 + rotation.y * 0.5;
 
-                cameraRig.setAttribute("rotation", rigRotation);
+                worldRotation.setAttribute("rotation", rigRotation);
             }
         };
     })()
