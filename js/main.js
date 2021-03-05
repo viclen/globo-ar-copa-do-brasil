@@ -42,11 +42,15 @@ let canAdd = true;
 let lastFrame = 0;
 
 function getLocation(cb = () => { }) {
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(cb);
-    } else {
-        // alert("Geolocation is not supported by this browser.");
+    const onError = () => {
+        alert("Por favor, permita o acesso à sua localização para carregar a realidade aumentada.");
         window.tryReload();
+    }
+
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(cb, onError);
+    } else {
+        onError();
     }
 }
 

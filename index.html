@@ -5,6 +5,10 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-190372442-1"></script>
     <script>
+        if (!window.location.href.includes("https")) {
+            window.location.href = window.location.href.replace("http", "https");
+        }
+
         window.dataLayer = window.dataLayer || [];
         function gtag() { dataLayer.push(arguments); }
         gtag('js', new Date());
@@ -28,6 +32,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta aframe-injected="" name="mobile-web-app-capable" content="yes" />
+
+    <link rel="shortcut icon" href="favicon.ico" />
 
     <title>Globo Realidade Aumentada - Copa do Brasil</title>
 
@@ -73,11 +79,11 @@
 
     <link rel="stylesheet" href="style/loading.css?1">
 
-    <link rel="stylesheet" href="style/tutorial.css?166">
-    <link rel="stylesheet" href="style/style.css?166">
-    <script src="./js/front-camera.js?166"></script>
-    <script id="scriptVersion" src="./js/main.js?166"></script>
-    <script src="./js/tutorial.js?166"></script>
+    <link rel="stylesheet" href="style/tutorial.css?168">
+    <link rel="stylesheet" href="style/style.css?168">
+    <script src="./js/front-camera.js?168"></script>
+    <script id="scriptVersion" src="./js/main.js?168"></script>
+    <script src="./js/tutorial.js?168"></script>
 </head>
 
 <body style="margin: 0; overflow: hidden;">
