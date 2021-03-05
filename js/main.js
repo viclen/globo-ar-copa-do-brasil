@@ -345,6 +345,7 @@ function enableParticles() {
     visible = !visible;
 
     document.getElementById("particles").setAttribute("visible", visible);
+    document.getElementById("enable-particles").setAttribute("data-active", visible ? "1" : "0");
 
     if (visible) {
         document.getElementById("enable-particles").classList.add("active");
