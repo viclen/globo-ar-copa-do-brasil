@@ -102,15 +102,6 @@ body * {
     visibility: hidden;
 }
 
-.logo {
-    position: fixed;
-    top: 10px;
-    right: 10px;
-    z-index: 1000;
-    width: 75px;
-    height: 67px;
-}
-
 .camera-info {
     position: fixed;
     bottom: 0;
@@ -268,6 +259,9 @@ main.camera, #camera--view, #camera--sensor, #camera--output {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    position: fixed;
+    background-color: rgb(39, 32, 51);
+    color: #FFFFFF!important;
 }
 
 .not-mobile>div {
@@ -275,4 +269,15 @@ main.camera, #camera--view, #camera--sensor, #camera--output {
     white-space: normal;
     padding: 10px;
     text-align: center;
+}
+
+.not-mobile img {
+    border: 5px solid #FFFFFF;
+    border-radius: 12px;
+    margin: 10px;
+}
+
+​​​​​​​ .logo {
+    color: #FFFFFF!important;
+    fill: #FFFFFF;
 }
