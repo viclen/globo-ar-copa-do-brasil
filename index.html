@@ -77,13 +77,13 @@
         THREEx.ArToolkitContext.baseURL = 'https://rawgit.com/jeromeetienne/ar.js/master/three.js/';
     </script>
 
-    <link rel="stylesheet" href="style/loading.css?1">
+    <link rel="stylesheet" href="style/loading.css">
 
-    <link rel="stylesheet" href="style/tutorial.css?168">
-    <link rel="stylesheet" href="style/style.css?168">
-    <script src="./js/front-camera.js?168"></script>
-    <script id="scriptVersion" src="./js/main.js?168"></script>
-    <script src="./js/tutorial.js?168"></script>
+    <link rel="stylesheet" href="style/tutorial.css">
+    <link rel="stylesheet" href="style/style.css">
+    <script src="./js/front-camera.js"></script>
+    <script id="scriptVersion" src="./js/main.js"></script>
+    <script src="./js/tutorial.js"></script>
 </head>
 
 <body style="margin: 0; overflow: hidden;">
@@ -301,12 +301,6 @@
     </main>
 
     <script src="./js/all.min.js"></script>
-
-    <script>
-        const splitted = document.getElementById("scriptVersion").getAttribute("src").split("?");
-        const version = splitted.length > 1 ? splitted[1] : 1;
-        // alert("Versão de teste " + version);
-    </script>
 </body>
 
 </html>

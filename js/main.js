@@ -403,7 +403,7 @@ document.addEventListener("readystatechange", function () {
                     </div>
 
                     <div>Aponte a câmera do celular para o QRCode <br>para mostrar a realidade aumentada.</div>
-                    <img src="./img/qr-code.png">
+                    <img src="./img/qrcode.jpeg">
                 </div>
             `;
         } else {
