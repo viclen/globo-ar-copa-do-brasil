@@ -30,6 +30,11 @@ window.browserCheck = function () {
     let isEdgeChromium = isChrome && (navigator.userAgent.indexOf("Edg") != -1);
     let isBlink = (isChrome || isOpera) && !!window.CSS;
 
+    let isSamsung = navigator.userAgent.match(/SAMSUNG|Samsung|SGH-[I|N|T]|GT-[I|N]|SM-[A|N|P|T|Z]|SHV-E|SCH-[I|J|R|S]|SPH-L/i);
+    if (isSamsung) {
+        return false;
+    }
+
     return isChrome || isSafari || window.sayswho.includes("Chrome") || window.sayswho.includes("Safari");
 }
 
