@@ -3007,7 +3007,7 @@ ARjs.Source.prototype._initSourceWebcam = function (onReady, onError) {
         window.dispatchEvent(event);
 
         setTimeout(() => {
-            alert('Webcam Error\nName: ' + error.name + '\nMessage: ' + error.message)
+            alert('Não foi possível acessar a câmera do seu aparelho.')
         }, 1000);
     }
 
@@ -3118,7 +3118,7 @@ ARjs.Source.prototype.toggleMobileTorch = function () {
 
     var stream = arToolkitSource.domElement.srcObject
     if (stream instanceof MediaStream === false) {
-        alert('enabling mobile torch is available only on webcam')
+		alert('Não foi possível acessar a câmera do seu aparelho.')
         return
     }
 
@@ -3130,7 +3130,7 @@ ARjs.Source.prototype.toggleMobileTorch = function () {
     var capabilities = videoTrack.getCapabilities()
 
     if (!capabilities.torch) {
-        alert('no mobile torch is available on your camera')
+		alert('Não foi possível acessar a câmera do seu aparelho.')
         return
     }
 
@@ -5988,9 +5988,9 @@ AFRAME.registerComponent('arjs-webcam-texture', {
                 this.video.srcObject = stream;    
                 this.video.play();
             })
-            .catch(e => { alert(`Webcam error: ${e}`); });
+				.catch(e => { alert(`Não foi possível acessar a câmera do seu aparelho.`); });
         } else {
-            alert('sorry - media devices API not supported');
+			alert('Não foi possível acessar a câmera do seu aparelho.');
         }
     },
 
@@ -6112,11 +6112,9 @@ AFRAME.registerComponent('gps-camera', {
                 };
 
                 document.addEventListener('touchend', function () { handler() }, false);
-
-                alert('After camera permission prompt, please tap the screen to activate geolocation.');
             } else {
                 var timeout = setTimeout(function () {
-                    alert('Please enable device orientation in Settings > Safari > Motion & Orientation Access.')
+                    alert('Por favor, ative a geolocalização no seu aparelho.')
                 }, 750);
                 window.addEventListener(eventName, function () {
                     clearTimeout(timeout);
@@ -6212,12 +6210,12 @@ AFRAME.registerComponent('gps-camera', {
 
                 if (err.code === 1) {
                     // User denied GeoLocation, let their know that
-                    alert('Please activate Geolocation and refresh the page. If it is already active, please check permissions for this website.');
+					alert('Por favor, ative a geolocalização no seu aparelho.');
                     return;
                 }
 
                 if (err.code === 3) {
-                    alert('Cannot retrieve GPS position. Signal is absent.');
+                    alert('Não foi possível acessar o GPS do seu aparelho.');
                     return;
                 }
             };
@@ -6672,11 +6670,9 @@ AFRAME.registerComponent('gps-projected-camera', {
                 };
 
                 document.addEventListener('touchend', function() { handler() }, false);
-
-                alert('After camera permission prompt, please tap the screen to activate geolocation.');
             } else {
                 var timeout = setTimeout(function() {
-                    alert('Please enable device orientation in Settings > Safari > Motion & Orientation Access.')
+					alert('Por favor, ative a geolocalização no seu aparelho.');
                 }, 750);
                 window.addEventListener(eventName, function() {
                     clearTimeout(timeout);
@@ -6771,12 +6767,12 @@ AFRAME.registerComponent('gps-projected-camera', {
 
                 if (err.code === 1) {
                     // User denied GeoLocation, let their know that
-                    alert('Please activate Geolocation and refresh the page. If it is already active, please check permissions for this website.');
+					alert('Por favor, ative a geolocalização no seu aparelho.');
                     return;
                 }
 
                 if (err.code === 3) {
-                    alert('Cannot retrieve GPS position. Signal is absent.');
+                    alert('Não foi possivel acesar o GPS do aparelho.');
                     return;
                 }
             };

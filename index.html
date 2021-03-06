@@ -145,14 +145,18 @@
                 <i class="fas fa-3x fa-long-arrow-alt-right blink"></i>
             </div>
         </div>
-        <div class="tutorial--change-camera">
+        <div class="tutorial--particles">
             <div class="arrow">
                 <i class="fas fa-3x fa-long-arrow-alt-up blink"></i>
             </div>
         </div>
-        <div class="tutorial--particles">
+        <div class="tutorial--zoom">
+            <img src="./icon/pinch-icon.svg" />
+        </div>
+
+        <div class="tutorial--change-camera">
             <div class="arrow">
-                <i class="fas fa-3x fa-long-arrow-alt-up blink"></i>
+                <i class="fas fa-3x fa-long-arrow-alt-down blink"></i>
             </div>
         </div>
         <div class="tutorial--rotate">
@@ -163,12 +167,9 @@
                 <i class="fas fa-3x fa-long-arrow-alt-down blink"></i>
             </div>
         </div>
-        <div class="tutorial--zoom">
-            <div class="left">
-                <i class="fas fa-3x fa-long-arrow-alt-up blink"></i>
-            </div>
-            <div class="right">
-                <i class="fas fa-3x fa-long-arrow-alt-up blink"></i>
+        <div class="tutorial--center">
+            <div class="arrow">
+                <i class="fas fa-3x fa-long-arrow-alt-down blink"></i>
             </div>
         </div>
         <div class="tutorial--picture">
@@ -178,10 +179,15 @@
         </div>
 
         <div class="tutorial--standard">
-            <div class="tutorial--text">
+            <div>
+                <div class="tutorial--logo">
+                    <img src="./img/globo.svg" />
+                </div>
+                <div class="tutorial--text">
+                </div>
             </div>
             <button class="tutorial--confirm">
-                Avançar
+                Continuar
             </button>
         </div>
 
@@ -199,7 +205,13 @@
 
     <div class="fixed-front" id="clickToStart">
         <div class="text">
-            Clique para começar
+            <img src="./img/globo.svg" />
+            <br>
+            <br>
+            Toque na tela para começar
+            <br>
+            <br>
+            <img src="./icon/touch-icon.svg" />
         </div>
     </div>
 
@@ -271,26 +283,8 @@
         <!-- Camera output -->
         <img src="//:0" alt="" id="camera--output">
         <!-- Camera trigger -->
-        <button class="btn hidden" id="camera--trigger">
-            <i class="fas fa-camera"></i>
-        </button>
-        <button class="btn hidden" id="camera--change">
-            <img src="./icon/change.svg" />
-        </button>
-        <button class="btn hidden" id="rotate-left">
-            <i class="fas fa-redo-alt"></i>
-        </button>
-        <button class="btn hidden" id="rotate-right">
-            <i class="fas fa-undo-alt"></i>
-        </button>
-        <button class="btn hidden" id="zoom-in">
-            <i class="fas fa-search-plus"></i>
-        </button>
-        <button class="btn hidden" id="zoom-out">
-            <i class="fas fa-search-minus"></i>
-        </button>
         <button class="btn active hidden" id="enable-particles">
-            <img src="./icon/fireworks.svg" />
+            <img src="./icon/particles.svg" />
         </button>
         <button class="btn hidden" id="download--button">
             <i class="fas fa-download"></i>
@@ -298,7 +292,30 @@
         <button class="btn hidden" id="share--button">
             <i class="fas fa-share-alt"></i>
         </button>
+        <button class="btn hidden" id="help--button">
+            <i class="fas fa-question"></i>
+        </button>
+
+        <div class="bottom-buttons">
+            <button class="btn hidden" id="rotate-left">
+                <img src="./icon/rotate.svg" />
+            </button>
+            <button class="btn hidden" id="center--model">
+                <img src="./icon/trophy.svg" />
+            </button>
+            <button class="btn hidden" id="camera--trigger">
+                <div></div>
+            </button>
+            <button class="btn hidden" id="camera--change">
+                <img src="./icon/change.svg" />
+            </button>
+            <button class="btn hidden" id="rotate-right">
+                <img src="./icon/rotate.svg" style="transform: scaleX(-1);" />
+            </button>
+        </div>
     </main>
+
+    <div class="bg-icons"></div>
 
     <script src="./js/all.min.js"></script>
 </body>

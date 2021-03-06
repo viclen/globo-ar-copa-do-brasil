@@ -65,7 +65,7 @@ function cameraStart() {
                         .getUserMedia({ ...constraints, video: { facingMode } });
                     callback(stream);
                 } catch (error) {
-                    cameraTrigger.classList.add("hidden");
+                    alert("Seu navegador não dá suporte à câmera frontal.");
                     facingMode = { exact: "environment" };
                     cameraStart();
                 }
@@ -79,12 +79,12 @@ function cameraStart() {
                 navigator
                     .getUserMedia({ ...constraints, video: { facingMode } }, callback, function (error) {
                         // alert("Não foi possível executar por falta de permissões.");
-                        cameraTrigger.classList.add("hidden");
+                        alert("Seu navegador não dá suporte à câmera frontal.");
                         facingMode = { exact: "environment" };
                         cameraStart();
                     });
             } catch (error) {
-                cameraTrigger.classList.add("hidden");
+                alert("Seu navegador não dá suporte à câmera frontal.");
                 facingMode = { exact: "environment" };
                 cameraStart();
             }
@@ -129,6 +129,10 @@ function cameraStart() {
 
     // Take a picture when cameraTrigger is tapped
     cameraTrigger.onclick = function () {
+        let helpButton = document.getElementById("help--button");
+        if (helpButton)
+            helpButton.remove();
+
         const tutorial = document.querySelector(".tutorial");
         if (tutorial && tutorial.classList.contains("start")) return;
 

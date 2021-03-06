@@ -1,46 +1,64 @@
-let tutorialConfirm, tutorialText, tutorialMain, tutorialStandard, tutorialClose;
-
+let tutorialConfirm, tutorialText, tutorialMain, tutorialStandard, tutorialClose, helpButton;
+let finished = false;
 let tutorials = [{
+    el: "",
+    text: "Bem vind@! Vamos agora te explicar alguns pontos da nossa experiência RA, está bom?"
+}, {
     el: ".tutorial--move",
     text: "Deslize o dedo pela tela para mover a taça."
 }, {
-    el: ".tutorial--change-camera",
-    text: "Pressione este botão para mudar a camera.",
-    btn: "#camera--change"
+    el: ".tutorial--zoom",
+    text: "Faça o gesto de pinça na tela para ampliar ou reduzir a taça",
 }, {
     el: ".tutorial--particles",
     text: "Pressione este botão para desabilitar os confetes.",
     btn: "#enable-particles"
 }, {
     el: ".tutorial--rotate",
-    text: "Toque nos botões com seta para rodar a taça.",
+    text: "Pressione os botões com seta para rodar a taça.",
     btn: ["#rotate-left", "#rotate-right"]
 }, {
-    el: ".tutorial--zoom",
-    text: "Toque nos botões com lupa para dar zoom na taça.",
-    btn: ["#zoom-in", "#zoom-out"]
+    el: ".tutorial--change-camera",
+    text: "Pressione este botão para mudar a camera.",
+    btn: "#camera--change"
+}, {
+    el: ".tutorial--center",
+    text: "Pressione este botão para centralizar o objeto.",
+    btn: "#center--model"
 }, {
     el: ".tutorial--picture",
-    text: "Toque no botão na parte inferior para tirar uma foto.",
+    text: "E, por fim, pressione o botão do meio para tirar uma foto.",
     btn: "#camera--trigger"
 }, {
     el: "",
-    text: "Beleza, vamos começar!"
+    text: "Vamos começar!"
 }];
 
 let currentIndex = -1;
 let tutorialCallback = () => { };
 
 function shouldShowTutorial() {
-    return !localStorage.getItem("tutorial");
+    return !localStorage.getItem("tutorial") || localStorage.getItem("tutorial") == "0";
 }
 
 function startTutorial(cb) {
+    helpButton = document.getElementById("help--button");
+    if (helpButton) {
+        helpButton.classList.add("hidden");
+        helpButton.onclick = () => {
+            localStorage.setItem("tutorial", "0");
+            startTutorial(() => { });
+        };
+    }
+
     if (cb) {
         tutorialCallback = cb;
     }
 
     if (shouldShowTutorial()) {
+        finished = false;
+        currentIndex = -1;
+
         tutorialText = document.querySelector(".tutorial--text");
         tutorialConfirm = document.querySelector(".tutorial--confirm");
         tutorialConfirm.onclick = () => nextTutorial();
@@ -50,6 +68,7 @@ function startTutorial(cb) {
         tutorialStandard = document.querySelector(".tutorial--standard");
 
         tutorialMain = document.querySelector(".tutorial");
+
         tutorialMain.classList.add("start");
 
         setTimeout(() => nextTutorial(), 500);
@@ -72,6 +91,8 @@ function nextTutorial() {
         }
 
         setTimeout(() => {
+            if (finished) return;
+
             const tutorial = tutorials[currentIndex];
 
             if (tutorial.el) {
@@ -90,13 +111,22 @@ function nextTutorial() {
 }
 
 function finishTutorial() {
+    finished = true;
+
     for (const tutorial of tutorials) {
         showBtn(tutorial.btn);
     }
 
-    if (tutorialMain)
-        tutorialMain.remove();
-    tutorialMain = null;
+    currentIndex = tutorials.length;
+
+    if (tutorialMain) {
+        tutorialMain.classList.remove("start");
+    }
+
+    if (helpButton) {
+        helpButton.classList.remove("hidden");
+    }
+
     localStorage.setItem("tutorial", "1");
     tutorialCallback();
 }
