@@ -11,23 +11,23 @@ let tutorials = [{
     text: "Faça o gesto de pinça na tela para ampliar ou reduzir a taça",
 }, {
     el: ".tutorial--particles",
-    text: "Pressione este botão para desabilitar os confetes.",
+    text: "Toque este botão para desabilitar os confetes.",
     btn: "#enable-particles"
 }, {
     el: ".tutorial--rotate",
-    text: "Pressione os botões com seta para rodar a taça.",
+    text: "Toque os botões com seta para rodar a taça.",
     btn: ["#rotate-left", "#rotate-right"]
 }, {
     el: ".tutorial--change-camera",
-    text: "Pressione este botão para mudar a camera.",
+    text: "Toque este botão para mudar a camera.",
     btn: "#camera--change"
 }, {
     el: ".tutorial--center",
-    text: "Pressione este botão para centralizar o objeto.",
+    text: "Toque este botão para centralizar o objeto.",
     btn: "#center--model"
 }, {
     el: ".tutorial--picture",
-    text: "E, por fim, pressione o botão do meio para tirar uma foto.",
+    text: "E, por fim, toque o botão do meio para tirar uma foto.",
     btn: "#camera--trigger"
 }, {
     el: "",
