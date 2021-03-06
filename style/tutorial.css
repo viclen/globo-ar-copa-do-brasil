@@ -1,3 +1,23 @@
+@font-face {
+    font-family: "GlobotipoRounded-Bold";
+    font-style: bold;
+    font-weight: 600;
+    src: url("../font/globotipo/GLOBO\ RD\ BD.TTF") format("truetype");
+}
+
+@font-face {
+    font-family: "Globotipo Rounded";
+    font-style: normal;
+    font-weight: 400;
+    src: url("../font/globotipo/GLOBO\ RD\ RG.TTF") format("truetype");
+}
+
+.tutorial i, .tutorial svg {
+    color: white;
+    fill: white;
+    stroke: white;
+}
+
 .blink {
     animation: blink-animation 1s steps(5, start) infinite;
     -webkit-animation: blink-animation 1s steps(5, start) infinite;
@@ -31,14 +51,18 @@
     display: none;
 }
 
+.tutorial .tutorial--logo {
+    text-align: center;
+}
+
 .tutorial.start {
     display: block;
 }
 
 .tutorial .tutorial--close {
-    background: none;
+    background: white;
     outline: none;
-    border: 1px solid white;
+    border: none;
     position: fixed;
     top: 20px;
     right: 20px;
@@ -51,6 +75,12 @@
     text-align: center;
     vertical-align: middle;
     padding: 0px;
+}
+
+.tutorial--close>svg, .tutorial--close>i {
+    color: black !important;
+    fill: black !important;
+    stroke: black !important;
 }
 
 .tutorial * {
@@ -66,18 +96,12 @@
     opacity: 1;
 }
 
-.tutorial i, .tutorial svg {
-    color: white;
-    fill: white;
-    stroke: white;
-}
-
 .tutorial--standard {
     z-index: 100;
     position: fixed;
     left: 50%;
     top: 50%;
-    height: 60%;
+    height: 65%;
     width: 80%;
     transform: translate(-50%, -50%);
     display: flex !important;
@@ -86,23 +110,31 @@
     justify-content: space-between;
 }
 
+.tutorial--logo {
+    margin-bottom: 20px;
+}
+
 .tutorial--text {
     text-align: center;
     color: white;
     text-transform: uppercase;
     font-size: 20px;
+    font-weight: bold;
+    font-family: "Globotipo Rounded";
 }
 
 .tutorial--confirm {
     margin: 10px;
-    background-color: rgb(22, 69, 187);
-    color: white;
-    padding: 10px 20px;
-    border-radius: 5px;
+    background-color: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
+    padding: 15px 50px;
+    border-radius: 50px;
     border: none;
     outline: none;
     text-transform: uppercase;
     font-size: 20px;
+    font-weight: bold;
+    font-family: "Globotipo Rounded";
 }
 
 .tutorial--move {
@@ -117,7 +149,7 @@
     position: fixed;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -100px);
+    transform: translate(-50%, -80px);
 }
 
 .tutorial--move .left {
@@ -131,7 +163,7 @@
     position: fixed;
     bottom: 50%;
     left: 50%;
-    transform: translate(-50%, 100px);
+    transform: translate(-50%, 80px);
 }
 
 .tutorial--move .right {
@@ -151,8 +183,9 @@
 
 .tutorial--change-camera .arrow {
     position: fixed;
-    left: 30px;
-    top: 80px;
+    right: 20%;
+    bottom: 85px;
+    transform: translateX(calc(-50% - 18px));
 }
 
 .tutorial--particles {
@@ -165,8 +198,8 @@
 
 .tutorial--particles .arrow {
     position: fixed;
-    left: 97px;
-    top: 80px;
+    left: 31px;
+    top: 75px;
 }
 
 .tutorial--zoom {
@@ -177,18 +210,11 @@
     top: 0;
 }
 
-.tutorial--zoom .left {
+.tutorial--zoom img {
     position: fixed;
-    left: 30px;
     top: 50%;
-    transform: translate(0, 70px);
-}
-
-.tutorial--zoom .right {
-    position: fixed;
-    right: 30px;
-    top: 50%;
-    transform: translate(0, 70px);
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .tutorial--picture {
@@ -201,9 +227,9 @@
 
 .tutorial--picture .arrow {
     position: fixed;
-    bottom: 100px;
+    bottom: 90px;
     left: 50%;
-    transform: translate(-50%, 0);
+    transform: translateX(-50%);
 }
 
 .tutorial--rotate {
@@ -216,14 +242,27 @@
 
 .tutorial--rotate .left {
     position: fixed;
-    left: 30px;
-    top: 50%;
-    transform: translate(0, -115px);
+    left: 40px;
+    bottom: 80px;
 }
 
 .tutorial--rotate .right {
     position: fixed;
-    right: 30px;
-    top: 50%;
-    transform: translate(0, -115px);
+    right: 40px;
+    bottom: 80px;
+}
+
+.tutorial--center {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+}
+
+.tutorial--center .arrow {
+    position: fixed;
+    left: 20%;
+    bottom: 85px;
+    transform: translateX(calc(50% + 18px));
 }

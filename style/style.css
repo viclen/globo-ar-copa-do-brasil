@@ -1,6 +1,21 @@
+@font-face {
+    font-family: "GlobotipoRounded-Bold";
+    font-style: bold;
+    font-weight: 600;
+    src: url("../font/globotipo/GLOBO\ RD\ BD.TTF") format("truetype");
+}
+
+@font-face {
+    font-family: "Globotipo Rounded";
+    font-style: normal;
+    font-weight: 400;
+    src: url("../font/globotipo/GLOBO\ RD\ RG.TTF") format("truetype");
+}
+
 html, body {
     width: 100%;
     height: 100%;
+    font-family: "Globotipo Rounded";
 }
 
 body {
@@ -102,6 +117,12 @@ body * {
     visibility: hidden;
 }
 
+.btn.hidden {
+    display: block!important;
+    opacity: 0;
+    visibility: visible!important;
+}
+
 .camera-info {
     position: fixed;
     bottom: 0;
@@ -172,7 +193,7 @@ main.camera, #camera--view, #camera--sensor, #camera--output {
     font-size: 16px;
     border-radius: 50%;
     border: none;
-    padding: 15px;
+    padding: 10px;
     text-align: center;
     box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.2);
     position: fixed;
@@ -188,39 +209,38 @@ main.camera, #camera--view, #camera--sensor, #camera--output {
     height: 100%;
 }
 
+.bottom-buttons {
+    bottom: 0;
+    left: 20px;
+    right: 20px;
+    position: fixed;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    height: 100px;
+}
+
+.bottom-buttons .btn {
+    position: unset !important;
+}
+
 #camera--trigger {
-    bottom: 40px;
-    left: 50%;
-    transform: translateX(-50%);
+    width: 70px;
+    height: 70px;
+    padding: 3px;
+    margin: 0;
+    border: 5px solid #fbfbfb;
+    box-shadow: 0 5px 10px 0 rgb(0 0 0);
+    background: none;
 }
 
-#camera--change {
-    top: 20px;
-    left: 20px;
-}
-
-#rotate-left {
-    top: 50%;
-    left: 20px;
-    transform: translateY(calc(-40px - 50%));
-}
-
-#rotate-right {
-    top: 50%;
-    right: 20px;
-    transform: translateY(calc(-40px - 50%));
-}
-
-#zoom-in {
-    top: 50%;
-    right: 20px;
-    transform: translateY(calc(40px - 50%));
-}
-
-#zoom-out {
-    top: 50%;
-    left: 20px;
-    transform: translateY(calc(40px - 50%));
+#camera--trigger>div {
+    background: white;
+    box-shadow: 0 0px 5px 0 rgb(0 0 0);
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
 }
 
 #download--button {
@@ -235,7 +255,7 @@ main.camera, #camera--view, #camera--sensor, #camera--output {
 
 #enable-particles {
     top: 20px;
-    left: 86px;
+    left: 20px;
 }
 
 #enable-particles:not(.active) {
@@ -280,4 +300,65 @@ main.camera, #camera--view, #camera--sensor, #camera--output {
 ​​​​​​​ .logo {
     color: #FFFFFF!important;
     fill: #FFFFFF;
+}
+
+.browser-error {
+    font-family: 'Globotipo Rounded', sans-serif;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: 0;
+    background-color: rgb(39, 32, 51);
+    position: fixed;
+}
+
+.bg-icons {
+    width: 100%;
+    height: 20vh;
+    position: fixed;
+    bottom: 0;
+    background: rgb(0, 0, 0);
+    background: -moz-linear-gradient(0deg, rgba(0, 0, 0, 0.8309698879551821) 0%, rgba(0, 0, 0, 0) 100%);
+    background: -webkit-linear-gradient(0deg, rgba(0, 0, 0, 0.8309698879551821) 0%, rgba(0, 0, 0, 0) 100%);
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.8309698879551821) 0%, rgba(0, 0, 0, 0) 100%);
+}
+
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 70%;
+}
+
+.modal__logo {
+    text-align: center;
+}
+
+.modal__content {
+    background-color: white;
+    text-align: center;
+    font-size: 20px;
+    border: 5px solid #FFFFFF;
+    border-radius: 12px;
+    margin: 10px;
+    padding: 10px;
+    box-shadow: 0px 4px 15px #00000021;
+}
+
+.modal__button {
+    font-family: 'Globotipo Rounded', sans-serif;
+    display: block;
+    background-color: white;
+    color: black;
+    font-size: 18px;
+    width: 80%;
+    margin: auto;
+    font-weight: bold;
+    height: 50px;
+    border: 0px;
+    border-radius: 30px;
+    padding: 10px 0px;
+    box-shadow: 0px 4px 15px #00000021;
 }
